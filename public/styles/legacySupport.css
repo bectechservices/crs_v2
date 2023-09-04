@@ -1,0 +1,121 @@
+/**
+*** GRID BASE
+*** (C) JAB CLARI 2017
+*** Updates 2019-06
+**/
+
+.font-light {
+  font-weight: 300;
+}
+
+.font-regular {
+  font-weight: 400;
+}
+
+.font-heavy {
+  font-weight: 700;
+}
+
+/* POSITIONING */
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.justify {
+  text-align: justify;
+}
+.valignMiddle {
+  vertical-align: middle;
+}
+.userSelectNone {
+  user-select: none;
+}
+.cursorPointer {
+  cursor: pointer;
+}
+
+/* ==== GRID SYSTEM ==== */
+
+.section__container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  background: inherit;
+}
+
+
+@media (min-width: 768px) {
+  .section__container {
+    width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .section__container {
+    width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .section__container {
+    width: 1170px;
+  }
+}
+
+.float-r {
+  float: right;
+}
+.row {
+  position: relative;
+  width: 100%;
+}
+
+.row [class^="col"] {
+  float: left;
+  margin: 0.5rem 0%;
+  min-height: 0.125rem;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.col-1 {width: 6.33%;}
+.col-2 {width: 14.66%;}
+.col-3 {width: 23%;}
+.col-4 {width: 31.33%;}
+.col-5 {width: 39.66%;}
+.col-6 {width: 48%;}
+.col-7 {width: 56.33%;}
+.col-8 {width: 64.66%;}
+.col-9 {width: 73%;}
+.col-10 {width: 81.33%;}
+.col-11 {width: 89.66%;}
+.col-12 {width: 98%;}
+
+/* TABLE LAYOUT*/
+.jTable {
+  display: table;
+}
+.jTableRow {
+  display:table-row;
+}
+.jTableCell{
+  display:table-cell;
+  padding: 0 3px;
+}

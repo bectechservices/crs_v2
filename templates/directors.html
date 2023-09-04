@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — Directors</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    .addUser .uk-modal-dialog {
+      width: 500px !important;
+    }
+
+    form ul.helper-text {
+      display: block;
+      font-size: 14px;
+      color: hsl(201, 28%, 34%);
+      color: #0b2135;
+    }
+
+    form ul.helper-text li.valid {
+      color: blue;
+    }
+
+    form.valid input {
+      border: 2px solid blue;
+    }
+  </style>
+</head>
+
+<body style="overflow:hidden">
+<div class="root">
+  <div class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content genDash" id="genDashMain" style="height: auto;">
+      <div class="uk-container uk-container-expand" style="padding:5px 50px;">
+        <div class="crs-authPage--content w-100">
+          <div class="crs-authPage--header" style="padding: 5px;">
+            <div class="flex uk-margin-small-bottom jSticky" style="top:-3px;height:40px;">
+              <div class="flex-100 flex flex-center--y">
+                <button class="backBtn uk-padding-remove flex flex-center--y" onclick="goBack()">
+                  <span uk-icon="icon:  chevron-left; ratio: 1.3" style="color:#223CA9"></span>
+                  <span style="padding-left: 5px;">Back</span>
+                </button>
+                <h2 class="uk-margin-remove" style="font-size:20px;letter-spacing:0.3px">
+                  <span style="color:#656d78">Directors</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div class="crs-authPage--innerContent" style="height: 80vh">
+            <div class="h-100 uk-grid uk-child-width-1-1@l uk-grid-match uk-child-width-1-1@m uk-child-width-1-1@s"
+                 uk-grid>
+              <div>
+                <div
+                        class="uk-card uk-card-body uk-card-hover uk-card-default uk-card-bodyPaddingLesser card-radius--all "
+                        style="height: 79vh">
+                  <div class="userToolbar" style="height: 9%;padding:5px">
+                    <div class="row">
+                      <div class="col-5 uk-margin-remove" style="visibility: hidden">
+                        <div class="jTable" style="height:40px;width: 40%;">
+                            <span class="jTableRow">
+                              <span class="jTableCell" style="width:15%;color:var(--hue-textPrime)">Show</span>
+                              <form class="jTableCell" style="width:58%;" action="#0">
+                                <select class="uk-select w-100">
+                                  <option>10</option>
+                                </select>
+                              </form>
+                              <span class="jTableCell" style="width:20%;color:var(--hue-textPrime)">entries</span>
+                            </span>
+                        </div>
+                      </div>
+                      <div class="col-7 uk-margin-remove">
+                        <div class="jTable" style="height: 40px;width:90%;float:right;clear: both;">
+                            <span class="jTableRow">
+                              <form class=" userSearch jTableCell h-100" method="GET" action="javascript:void(0)"
+                                    style="width: 40%;">
+                                <div class="uk-inline w-100 h-100 myInputWrapper">
+                                  <span class="uk-form-icon" uk-icon="icon:search; ratio:1"></span>
+                                  <input id="myInput" onkeyup="myFunction()" class="uk-input w-100 h-100" type="text"
+                                         placeholder="Search">
+                                </div>
+                              </form>
+                              <!--
+                              <div class="jTableCell" style="width: 13%;">
+                                <button class="w-100 uk-button uk-padding-remove flex flex-center--x flex-center--y"
+                                  style="font-size: 13px;background-color:#F2F4FB;color:#223CA9;text-transform:initial">
+                                  <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                                  <span style="padding-left: 5px;">Export</span>
+                                </button>
+                              </div>
+                              <div class="jTableCell" style="width: 14%">
+                                <button class="w-100 uk-button uk-padding-remove flex flex-center--x flex-center--y"
+                                  style="font-size: 13px;background-color:#F2F4FB;color:#223CA9;text-transform: initial">
+                                  <span uk-icon="icon:history; ratio: 0.83" style="color:#223CA9"></span>
+                                  <span style="padding-left: 5px;">Audit Trail</span>
+                                </button>
+                              </div>
+                              -->
+                              <div class="jTableCell" style="width: 13%;">
+                                <a href="javascript:void(0)" class="w-100 h-100 uk-button uk-padding-remove"
+                                   style="background-color:var(--brandColorGreenAccent);font-size:13px;box-shadow: 0 8px 20px 0 rgba(34, 169,34, 0.25);color:var(--hue-lght);border-radius:6px;text-transform: none;font-weight: 500;"
+                                   uk-toggle="target: #modal-close-default">
+                                  <span uk-icon="icon: plus; ratio: 0.9" style="color:#ffffff"></span>
+                                  <span>Add Director</span>
+                                </a>
+                              </div>
+                            </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="userTblWrapper" style="height: 92%;margin-top: 12px;">
+                    <section style="height: 94%;max-height: 94%;overflow-y:auto;width:100%;margin-top: 2px;">
+                      <table class="uk-table-middle usersTbl uk-table uk-table-small uk-table-responsive"
+                             style="width: 100%;" id="myTable">
+                        <thead>
+                        <tr>
+                          <th class="uk-text-center">Fullname</th>
+                          <th class="uk-text-center">Residential Address</th>
+                          <th class="uk-text-center">Nationality</th>
+                          <th class="uk-text-center">Position</th>
+                          <th class="uk-text-center">Edit</th>
+                          <th class="uk-text-center">Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%= for(director) in directors {%>
+                        <tr>
+                          <td class="uk-text-center"><%= director.Fullname %></td>
+                          <td class="uk-text-center"><%= director.ResidentialAddress %></td>
+                          <td class="uk-text-center"><%= director.Nationality %></td>
+                          <td class="uk-text-center"><%= director.Position %></td>
+                          <td>
+                            <button class="actionBtn uk-button uk-button-default h-100 w-100 uk-padding-remove"
+                                    style="background-color:#5686f6;color:#ffffff;font-weight:medium;text-transform:none;border:1px solid transparent;letter-spacing:0.2px;"
+                                    uk-toggle="target: #edit-user-modal" onclick='editDirector(<%= json(director) %>)'>
+                              Edit
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                                    class="actionBtn uk-button uk-button-default h-100 w-100 uk-padding-remove"
+                                    onclick="deleteDirector(<%= director.ID %>)">Delete
+                            </button>
+                          </td>
+                        </tr>
+                        <% } %>
+                        </tbody>
+                      </table>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </main>
+  </div>
+</div>
+<!-- Modals -->
+<!-- ADD USER MODAL -->
+<div id="modal-close-default" class="addUser" uk-modal>
+  <div class="uk-modal-dialog">
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <div class="uk-modal-header">
+      <h4 class="uk-modal-title" style="font-size:25px;font-weight: 500;color: #0b2135;">
+        Add Director</h4>
+    </div>
+    <form method="POST">
+      <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+      <div class="uk-modal-body" uk-overflow-auto style="padding: 10px 10px;">
+        <div class="uk-container uk-container-expand" style="padding: 5px;">
+          <div style="width: 85%;margin:0 auto;">
+            <div class="uk-grid" uk-grid>
+              <div class="uk-width-1-1">
+                <div>
+                  <div style="padding: 5px;">
+                    <section class="uk-grid-small misxInput" uk-grid name="signup" action="#0" autocomplete="off">
+                      <input autocomplete="false" type="text" style="display:none;">
+                      <div class="uk-width-1-1@l uk-width-1-1@m uk-width-1-1@s">
+                        <div class="uk-inline w-100 h-100">
+                          <label
+                                  style="color:#0b2315;font-size:13px;font-weight:500;letter-spacing:0.3px;">Fullname</label>
+                          <input class="uk-input w-100" type="text" placeholder="Fullname" required
+                                 autocomplete="new-name" name="fullname">
+                        </div>
+                      </div>
+                      <div class="uk-width-1-1@l uk-width-1-2@m uk-width-1-1@s">
+                        <div class="uk-inline w-100 h-100">
+                          <label style="color:#0b2315;font-size:13px;font-weight:500;letter-spacing:0.3px;">Residential
+                            Address</label>
+                          <input class="uk-input w-100" type="text" placeholder="Residential address" required
+                                 auto-complete="new-name" name="address">
+                        </div>
+                      </div>
+                      <div class="uk-width-1-1@l uk-width-1-2@m uk-width-1-1@s">
+                        <div class="uk-inline w-100 h-100">
+                          <label style="color:#0b2315;font-size:13px;font-weight:500;letter-spacing:0.3px;">Nationality</label>
+                          <input class="uk-input w-100" type="text" placeholder="Nationality" required
+                                 auto-complete="new-name" name="nationality">
+                        </div>
+                      </div>
+                      <div class="uk-width-1-1@l uk-width-1-2@m uk-width-1-1@s">
+                        <div class="uk-inline w-100 h-100">
+                          <label style="color:#0b2315;font-size:13px;font-weight:500;letter-spacing:0.3px;">Current
+                            Position</label>
+                          <input class="uk-input w-100" type="text" placeholder="Current Position" required
+                                 auto-complete="new-name" name="position">
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="uk-modal-footer uk-text-right">
+        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+        <button class="uk-button uk-button-primary" type="submit">Save</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+<!-- ADD USER MODAL -->
+<!-- EDIT USER MODAL -->
+<div id="edit-user-modal" class="addUser" uk-modal>
+  <div class="uk-modal-dialog">
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <div class="uk-modal-header">
+      <h4 class="uk-modal-title" style="font-size:25px;font-weight: 500;color: #0b2135;">
+        Edit Director</h4>
+    </div>
+    <form method="POST">
+      <input name="_method" type="hidden" value="PATCH">
+      <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+      <input name="id" type="hidden" value="" id="edit_director_id">
+      <div class="uk-modal-body" uk-overflow-auto style="padding: 10px 10px;">
+        <div class="uk-container uk-container-expand" style="padding: 5px;">
+          <div style="width: 85%;margin:0 auto;">
+            <div class="uk-grid" uk-grid>
+              <div class="uk-width-1-1">
+                <div>
+                  <div style="padding: 5px;">
+                    <section class="uk-grid-small misxInput" uk-grid name="signup" action="#0" autocomplete="off">
+                      <input autocomplete="false" type="text" style="display:none;">
+                      <div class="uk-width-1-1@l uk-width-1-1@m uk-width-1-1@s">
+                        <div class="uk-inline w-100 h-100">
+                          <label
+                                  style="color:#0b2315;font-size:13px;font-weight:500;letter-spacing:0.3px;">Fullname</label>
+                          <input class="uk-input w-100" type="text" placeholder="Fullname" required
+                                 autocomplete="new-name" name="fullname" id="edit_director_fullname">
+                        </div>
+                      </div>
+                      <div class="uk-width-1-1@l uk-width-1-2@m uk-width-1-1@s">
+                        <div class="uk-inline w-100 h-100">
+                          <label style="color:#0b2315;font-size:13px;font-weight:500;letter-spacing:0.3px;">Residential
+                            Address</label>
+                          <input class="uk-input w-100" type="text" placeholder="Residential address" required
+                                 auto-complete="new-name" name="address" id="edit_director_address">
+                        </div>
+                      </div>
+                      <div class="uk-width-1-1@l uk-width-1-2@m uk-width-1-1@s">
+                        <div class="uk-inline w-100 h-100">
+                          <label style="color:#0b2315;font-size:13px;font-weight:500;letter-spacing:0.3px;">Nationality</label>
+                          <input class="uk-input w-100" type="text" placeholder="Nationality" required
+                                 auto-complete="new-name" name="nationality" id="edit_director_nationality">
+                        </div>
+                      </div>
+                      <div class="uk-width-1-1@l uk-width-1-2@m uk-width-1-1@s">
+                        <div class="uk-inline w-100 h-100">
+                          <label style="color:#0b2315;font-size:13px;font-weight:500;letter-spacing:0.3px;">Current
+                            Position</label>
+                          <input class="uk-input w-100" type="text" placeholder="Current Position" required
+                                 auto-complete="new-name" name="position" id="edit_director_position">
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="uk-modal-footer uk-text-right">
+        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+        <button class="uk-button uk-button-primary" type="submit">Save</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+<!-- EDIT USER MODAL -->
+<!-- Modals -->
+
+<form method="POST" action="/directors" id="delete_director_form">
+  <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+  <input name="_method" type="hidden" value="DELETE">
+  <input name="id" type="hidden" value="" id="delete_director_id"/>
+</form>
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script>
+    function deleteDirector(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.value) {
+                document.getElementById("delete_director_id").value = id;
+                document.getElementById("delete_director_form").submit();
+            }
+        });
+    }
+
+    function editDirector(director) {
+        document.getElementById("edit_director_id").value = director.id;
+        document.getElementById("edit_director_fullname").value = director.fullname;
+        document.getElementById("edit_director_address").value = director.residential_address;
+        document.getElementById("edit_director_nationality").value = director.nationality;
+        document.getElementById("edit_director_position").value = director.position;
+    }
+
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+
+</html>

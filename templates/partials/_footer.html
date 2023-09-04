@@ -1,0 +1,70 @@
+<script>
+    switch ((new URL(window.location.href)).pathname) {
+        case "/dashboard":
+        case "/quarter-overview":
+            document.getElementById("overview_link").classList.add("crs-activePageLink");
+            break;
+        case "/users":
+            document.getElementById("system_setup").classList.add("crs-activePageLink");
+            break;
+        case "/clients":
+        case "/client-view":
+        case "/client-add":
+        case "/client-edit":
+            document.getElementById("system_setup").classList.add("crs-activePageLink");
+            break;
+        case "/sec":
+        case "/custodian":
+        case "/scheme-pv":
+        case "/sec-report-preview":
+            document.getElementById("sec_link").classList.add("crs-activePageLink");
+            break;
+        case "/trustee-dashboard":
+        case "/template-setup":
+        case "/client-pvreport":
+        case "/unidentified-report":
+            document.getElementById("trustee_link").classList.add("crs-activePageLink");
+            break;
+        case "/npra-dashboard":
+        case "/npra":
+        case "/npra-preview":
+        case "/outstanding-fd":
+            document.getElementById("npra_link").classList.add("crs-activePageLink");
+            break;
+        case "/assetclass":
+        case "/securities":
+            document.getElementById("nprasec_link").classList.add("crs-activePageLink");
+            break;
+        case "/npra0301":
+        case "/npra0302":
+        case "/npra03021":
+        case "/npra0303":
+        case "/npra0303-view":
+        case "/npra0303-edit":
+        case "/npra0303-add":
+            document.getElementById("npra030_link").classList.add("crs-activePageLink");
+            break;
+        case "/billing":
+        case "/billing-dashboard":
+            document.getElementById("navbill_link").classList.add("crs-activePageLink");
+            break;
+        case "/fundmanager":
+        case "/fundmanager-edit":
+        case "/fundmanager-add":
+            document.getElementById("system_setup").classList.add("crs-activePageLink");
+            break;
+        case "/directors":
+            document.getElementById("directors").classList.add("crs-activePageLink");
+            break;
+        case "/client-letters":
+            document.getElementById("letterToClients").classList.add("crs-activePageLink");
+            break;
+        default:
+            // document.getElementById("reports_link").classList.add("crs-activePageLink");
+            break;
+    }
+
+    function logout() {
+        document.getElementById("logoutForm").submit();
+    }
+</script>

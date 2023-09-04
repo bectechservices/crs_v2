@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="118px" height="86px" viewBox="0 0 118 86" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Folder_118 x 86 (Web Grid)_Front Plate Closed</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="44.291469%" y1="50%" x2="44.291469%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#FFD75E" stop-opacity="0.3" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Folder_118-x-86-(Web-Grid)_Front-Plate-Closed" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-Copy-59" transform="translate(3.000000, 11.000000)">
+            <path d="M65.6568542,5.65685425 L60,0 L4,0 C1.790861,4.05812251e-16 -2.705415e-16,1.790861 0,4 L0,71 C6.76353751e-17,71.5522847 0.44771525,72 1,72 L111,72 C111.552285,72 112,71.5522847 112,71 L112,8 L71.3137085,8 C69.1919766,8 67.1571453,7.15714528 65.6568542,5.65685425 Z" id="Shape-Copy-731" fill="#FFD75E" fill-rule="nonzero" transform="translate(56.000000, 36.000000) scale(-1, 1) translate(-56.000000, -36.000000) "></path>
+            <path d="M65.6568542,5.65685425 L60,0 L4,0 C1.790861,4.05812251e-16 -2.705415e-16,1.790861 0,4 L0,71 C6.76353751e-17,71.5522847 0.44771525,72 1,72 L111,72 C111.552285,72 112,71.5522847 112,71 L112,8 L71.3137085,8 C69.1919766,8 67.1571453,7.15714528 65.6568542,5.65685425 Z" id="Shape-Copy-733" fill="url(#linearGradient-1)" fill-rule="nonzero" transform="translate(56.000000, 36.000000) scale(-1, 1) translate(-56.000000, -36.000000) "></path>
+            <path d="M0,71 L112,71 L112,71 C112,71.5522847 111.552285,72 111,72 L1,72 C0.44771525,72 6.76353751e-17,71.5522847 0,71 L0,71 Z" id="Rectangle" fill="#DA7B16"></path>
+            <path d="M7.15685425,5.65685425 L1.5,0 L0,0 L6.36396103,6.36396103 C8.05178844,8.05178844 10.3409737,9 12.7279221,9 L53.5,9 L53.5,8 L12.8137085,8 C10.6919766,8 8.65714528,7.15714528 7.15685425,5.65685425 Z" id="Shape-Copy-735" fill="#FFFFFF" fill-rule="nonzero" opacity="0.4" transform="translate(26.750000, 4.500000) scale(-1, 1) translate(-26.750000, -4.500000) "></path>
+        </g>
+    </g>
+</svg>

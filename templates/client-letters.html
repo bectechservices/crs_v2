@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — Client Letters</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    .addUser .uk-modal-dialog {
+      width: 500px !important;
+    }
+
+    form ul.helper-text {
+      display: block;
+      font-size: 14px;
+      color: hsl(201, 28%, 34%);
+      color: #0b2135;
+    }
+
+    form ul.helper-text li.valid {
+      color: blue;
+    }
+
+    form.valid input {
+      border: 2px solid blue;
+    }
+  </style>
+</head>
+
+<body style="overflow:hidden">
+<div class="root">
+  <div class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content genDash" id="genDashMain" style="height: auto;">
+      <div class="uk-container uk-container-expand" style="padding:5px 50px;">
+        <div class="crs-authPage--content w-100">
+          <div class="crs-authPage--header" style="padding: 5px;">
+            <div class="flex uk-margin-small-bottom jSticky" style="top:-3px;height:40px;">
+              <div class="flex-100 flex flex-center--y">
+                <button class="backBtn uk-padding-remove flex flex-center--y" onclick="goBack()">
+                  <span uk-icon="icon:  chevron-left; ratio: 1.3" style="color:#223CA9"></span>
+                  <span style="padding-left: 5px;">Back</span>
+                </button>
+                <h2 class="uk-margin-remove" style="font-size:20px;letter-spacing:0.3px">
+                  <span style="color:#656d78">Client Letters Log</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div class="crs-authPage--innerContent" style="height: 80vh">
+            <div class="h-100 uk-grid uk-child-width-1-1@l uk-grid-match uk-child-width-1-1@m uk-child-width-1-1@s"
+                 uk-grid>
+              <div>
+                <div
+                        class="uk-card uk-card-body uk-card-hover uk-card-default uk-card-bodyPaddingLesser card-radius--all "
+                        style="height: 79vh">
+                  <div class="userToolbar" style="height: 9%;padding:5px">
+                    <div class="row">
+                      <div class="col-5 uk-margin-remove" style="visibility: hidden">
+                        <div class="jTable" style="height:40px;width: 40%;">
+                            <span class="jTableRow">
+                              <span class="jTableCell" style="width:15%;color:var(--hue-textPrime)">Show</span>
+                              <form class="jTableCell" style="width:58%;" action="#0">
+                                <select class="uk-select w-100">
+                                  <option>10</option>
+                                </select>
+                              </form>
+                              <span class="jTableCell" style="width:20%;color:var(--hue-textPrime)">entries</span>
+                            </span>
+                        </div>
+                      </div>
+                      <%= if(!this_quarter_has_been_sent) { %>
+                      <div class="col-7 uk-margin-remove">
+                        <div class="jTable" style="height: 40px;width:90%;float:right;clear: both;margin-bottom: 7px;">
+                            <span class="jTableRow">
+                              <span class=" userSearch jTableCell h-100"
+                                    style="width: 40%;">
+                              </span>
+                              <div class="jTableCell" style="width: 13%">
+                                <a href="javascript:void(0)" onclick="sendLetters()"
+                                   class="w-100 h-100 uk-button uk-padding-remove"
+                                   style="background-color:var(--brandColorGreenAccent);font-size:13px;box-shadow: 0 8px 20px 0 rgba(34, 169,34, 0.25);color:var(--hue-lght);border-radius:6px;text-transform: none;font-weight: 500;">
+                                  <span uk-icon="icon: plus; ratio: 0.9" style="color:#ffffff"></span>
+                                  <span>Send Client Letters</span>
+                                </a>
+                              </div>
+                            </span>
+                        </div>
+                      </div>
+                      <% } %>
+                    </div>
+                  </div>
+                  <div class="userTblWrapper" style="height: 92%;margin-top: 12px;">
+                    <section style="height: 94%;max-height: 94%;overflow-y:auto;width:100%;margin-top: 2px;">
+                      <table class="uk-table-middle usersTbl uk-table uk-table-small uk-table-responsive"
+                             style="width: 100%;" id="myTable">
+                        <thead>
+                        <tr>
+                          <th class="uk-text-center">Quarter</th>
+                          <th class="uk-text-center">Sent By</th>
+                          <th class="uk-text-center">Sent On</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%= for(log) in logs { %>
+                        <tr>
+                          <td class="uk-text-center"><%= log.QuarterYear %></td>
+                          <td class="uk-text-center"><%= log.SentBy %></td>
+                          <td class="uk-text-center"><%= log.SentOn %></td>
+                        </tr>
+                        <% } %>
+                        </tbody>
+                      </table>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </main>
+  </div>
+</div>
+<form method="POST" action="/send-client-letters" id="send_client_letters">
+  <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+</form>
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script>
+    function sendLetters() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Send'
+        }).then((result) => {
+            if (result.value) {
+                document.getElementById("send_client_letters").submit();
+            }
+        });
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+
+</html>

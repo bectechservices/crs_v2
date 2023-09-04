@@ -1,0 +1,7 @@
+:root {
+  /* ZPLANE */
+  --baseStack: 0;
+  --baseStackHeader: 2;
+  --baseStack-popOver: 4;
+  --baseStack-fixedElement: 5;
+}

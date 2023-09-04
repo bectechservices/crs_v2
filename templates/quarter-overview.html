@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — Quartely Reports</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css" />
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body style="overflow:hidden">
+  <div class="root">
+    <div class="crs-authedPage">
+      <%= partial("./partials/navbar.html") %>
+      <main class="crs--content genDash" id="genDashMain">
+        <div class="uk-container uk-container-expand" style="padding:2px;">
+          <div class="crs-authPage--content w-100">
+            <div class="crs-authPage--innerContent uk-margin-remove">
+              <div class="homeLayoutWrapper">
+                <div class="HLlayout fileManagerContent">
+                  <!-- Content -->
+                  <main class="HLlayout__content">
+                    <div class="HLlayout__contentHeader" style="height:40px;display: flex;align-items:center;">
+                      <div class="crs-authPage--content w-100 uk-margin-remove">
+                        <div class="crs-authPage--header" style="padding: 10px;">
+                          <div class="uk-grid" uk-grid>
+                            <div class="uk-width-expand">
+                              <h2 style="font-size:20px;letter-spacing:0.3px;color:#656d78">
+                                <span>Quarter<span></span><span>&nbsp;overview</span>
+                              </h2>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="directoryWrapper" style="padding: 10px 20px 10px 20px;height:100%;">
+                      <div class="directoryWrapperInner" style="padding-bottom: 10px;max-width:980px;margin:0 auto">
+                        <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid style="margin-top:25px;">
+                          <div class="uk-width-1-1">
+                            <article>
+                              <div
+                                class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                                <div class="flex flex-direction--column h-100 w-100">
+                                  <header class="" style="flex:1;height: 40px;">
+                                    <div class="uk-grid" uk-grid>
+                                      <div class="uk-width-1-2">
+                                        <div class="flex flex-center--y flex-100 h-100">
+                                          <h4 class="userSelectNone uk-margin-remove flex"
+                                            style="font-size:18px;color:var(--hue-textPrime);font-weight:500">Securities
+                                          </h4>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </header>
+                                  <section class="uk-margin-small-top flex-100 h-100">
+                                    <div class="userSelectNone flex flex-direction--column w-100 h-100"
+                                      style="flex:1;height:280px">
+                                      <canvas id="groupedBar"></canvas>
+                                    </div>
+                                  </section>
+                                  <footer class="uk-margin-top"></footer>
+                                </div>
+                              </div>
+                            </article>
+                          </div>
+                        </section>
+                        <div class="uk-grid" uk-grid>
+                          <div class="uk-width-1-1">
+                            <article>
+                              <div
+                                class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                                <div class="flex flex-direction--column h-100 w-100">
+                                  <header class="" style="flex:1;height: 40px;">
+                                    <div class="uk-grid" uk-grid>
+                                      <div class="uk-width-1-2">
+                                        <div class="flex flex-center--y flex-100 h-100">
+                                          <h4 class="userSelectNone uk-margin-remove flex"
+                                            style="font-size:15px;color:var(--hue-textPrime);font-weight:500;letter-spacing: 0.25">
+                                            Security Total Valuation
+                                          </h4>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </header>
+                                  <section class="uk-margin-small-top flex-100 h-100">
+                                    <div class="userSelectNone flex flex-direction--column w-100 h-100"
+                                      style="flex:1;">
+                                      <table class="uk-table uk-table-divider previewMonthTable assetTableA">
+                                        <thead>
+                                          <th>BONDS</th>
+                                          <th style="text-align:right">VALUES(GHS)</th>
+                                        </thead>
+                                        <tbody>
+                                        <%= for(value) in summary{ %> 
+                                          <tr>
+                                            <td><%= value.Bond %></td>
+                                            <td style="text-align:right"><%= format_with_comma(value.Value,2) %></td>
+                                          </tr>
+                                        <% } %>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </section>
+                                </div>
+                              </div>
+                            </article>
+                          </div>
+                        </div>
+                        <!-- Pending reports End -->
+                      </div>
+                    </div>
+                  </main>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <style>
+    canvas {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center center;
+    }
+  </style>
+  <%= partial("./partials/footer.html") %>
+  <%= partial("./partials/system.html") %>
+  <script src="scripts/uikit.min.js"></script>
+  <script src="scripts/uikit-icons.min.js"></script>
+  <script src="scripts/chart.js"></script>
+
+  <script>
+   // CANVAS SETUP
+    // SETUP
+    let setup = canvas => {
+      let context, dpr;
+      context = canvas.getContext("2d");
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      dpr = window.devicePixelRatio || 1.4;
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      context.scale(dpr, dpr);
+      return context;
+    }; 
+    let quarterSecuritesSum = setup(document.querySelector('#groupedBar'));
+    new Chart(quarterSecuritesSum, {
+      type: 'bar',
+      data: {
+        labels: [<%= for(value) in summary{ %> "<%= value.Bond %>", <% } %>],
+        datasets: [{
+          data: [<%= for(value) in summary{ %> "<%= value.Value %>", <% } %>],
+          labels: [<%= for(value) in summary{ %> "<%= value.Bond %>", <% } %>],
+          borderColor: "#3e95cd",
+          fill: true,
+          backgroundColor: '#4a7ebb'
+        }
+        ]
+      },
+      options: {
+        legend: {
+          display: false,
+          labels: {
+            fontColor: '#0b2135',
+            fontSize: 15,
+            fontFamily: "'Helvetica', 'Arial'",
+          }
+        },
+        scales:{
+          yAxes:[{
+            ticks:{
+              callback: function(value){
+                if(value >= 1000 && value < 1000000){
+                  return `${value/1000}K`
+                }else if(value >= 1000000 && value < 1000000000){
+                  return `${value/1000000 }M`
+                }else if(value >=1000000000  ){
+                  return `${value/1000000000}B`
+                }else if(value < 2){
+                  return parseFloat(value).toFixed(2);
+                }
+              }
+            }
+          }]
+        },
+        tooltips: {
+          enabled: false
+        },
+        layout: {
+          padding: {
+            left: 35,
+            right: 35,
+            top: 0,
+            bottom: 0
+          }
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

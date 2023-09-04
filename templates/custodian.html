@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — SEC Report Input</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="/media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    .uk-tab > * {
+      padding-left: 10px;
+    }
+
+    .uk-tab > li a {
+      color: #0b2135;
+      font-weight: 500;
+    }
+
+    .uk-switcher {
+      padding: 10px;
+    }
+
+    .assetTableA,
+    .assetTableA td,
+    .assetTableA th {
+      padding: 2px;
+      border-collapse: collapse;
+      font-weight: 500;
+      text-transform: capitalize;
+      font-size: 14px;
+      color: #0b2135;
+      letter-spacing: 0.2px;
+    }
+
+    .assetTableA tbody.bodyTbl td {
+      font-weight: 400;
+      text-transform: none;
+    }
+
+    .assetTableA .dblHead th {
+      border: 1px solid #d8dbd9;
+      text-align: center;
+    }
+
+    .assetTableA .dblHead th:nth-last-child(-2n+2) {
+      border-right: none;
+    }
+
+    .assetTableA .dblHead th:last-child:empty {
+      border-left: none;
+    }
+
+    .assetTableA tr td {
+      border: 1px solid #d8dbd9;
+      vertical-align: middle
+    }
+
+    .assetTableA tr td input:not(.uk-radio) {
+      width: 100%;
+      border: none
+    }
+
+    .screena {
+      list-style-type: lower-alpha;
+    }
+
+    /* MODAL OPEN BUG */
+    html .uk-modal-page body.makerCheckBody {
+      overflow: hidden !important
+    }
+
+    body.makerCheckBody {
+      overflow: hidden !important;
+    }
+
+    table.egbami tbody tr:nth-child(1) {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body class="makerCheckBody">
+<div class="root">
+  <div class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content custodianPage">
+      <div class="uk-container uk-container-expand" style="padding:4px;">
+        <div class="crs-authPage--content w-100 uk-margin-small-top">
+          <div class="crs-authPage--innerContent uk-margin">
+            <!-- <div class="uk-grid" uk-grid>
+                <div class="uk-width-1-1">
+                  <div class="flex">
+                    <div class="uk-text-center"
+                      style="flex:1;display:flex;flex-direction:column;margin-bottom: 5px;align-items:center">
+                      <h4 class="uk-margin-remove"
+                        style="font-weight: 500;font-size:1.2em;font-family:var( --titleFont);">
+                        CUSTODIAN/TRUSTEE QUARTERLY/ANNUAL
+                        REPORT</h4>
+                      <h5 class="uk-margin-remove" style="font-weight: 500;font-size:0.85em">(<span
+                          style="font-style:italic">{{currentQuarter}}</span>)</h5>
+                    </div>
+                    <div style="width: 128px;">
+                      <a href="javascript:void(0);" @click="previewReport">Preview Report</a>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+            <div class="uk-grid" uk-grid>
+
+
+              <div class="uk-width-1-1">
+                <!-- TODO:POSITION BACK BUTTON INLINE -->
+
+                <div class="flex">
+                  <div class="uk-text-center"
+                       style="flex:1;display:flex;flex-direction:column;margin-bottom: 5px;align-items:center">
+                    <h4 class="uk-margin-remove"
+                        style="font-weight: 500;font-size:1.05em;font-family:var( --titleFont);">
+                      CUSTODIAN/TRUSTEE QUARTERLY/ANNUAL
+                      REPORT</h4>
+                    <h5 class="uk-margin-remove" style="font-weight: 500;font-size:0.82em">
+                      (<span>{{currentQuarter}}</span><span>
+                          </span>)</h5>
+                  </div>
+                </div>
+                <div class="flex flex-justifyContent--x1 flex-center--y" style="margin-bottom:5px;">
+                  <!-- TODO: FIRST THREE BUTTONS FOR THE CHECKER ONLY -->
+                  <a v-if="!governanceData.approved" class="flex flex-center--x flex-center--y reportBtn"
+                     href="javascript:void(0)" @click="submitChanges">
+                    <span uk-icon="play" style="padding-right:5px;"></span>
+                    <span>Submit Changes</span>
+                  </a>
+                  <a class="flex flex-center--x flex-center--y reportBtn" href="javascript:void(0)"
+                     @click="previewReport">
+                    <span uk-icon="play" style="padding-right:5px;"></span>
+                    <span>Preview Report</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="uk-card uk-card-default uk-card-body card-radius--all uk-card-bodyPaddingLesser"
+                 style="position:relative;height:81vh;padding-top: 2px!important;padding:0px!important;">
+              <div class="uk-grid uk-grid-small uk-grid-match" uk-grid>
+                <!-- SIDE A -->
+                <div class="uk-width-1-2@l uk-width-1-2@m uk-grid-match uk-width-1-1@s uk-margin-remove">
+                  <div class="userSelectNone" style="height:79.5vh;padding:2px;margin-top:5px;position:relative;">
+                    <div class="scrollbar" style="height:97%;overflow: auto;padding:0px;">
+
+                      <ul class="uk-margin-remove" uk-tab
+                          style="position:sticky;top:0;background:white;z-index:3;margin-top:-10px!important;margin-left:-10px!important;box-shadow: 0 2px 18px rgba(125,125,125,0.25)">
+                        <li><a href="#">1. Governance</a></li>
+                        <li><a href="#">2. Scheme Details</a></li>
+                        <li><a href="#">3. Other information</a></li>
+                        <li><a href="#">3a. Offshore client</a></li>
+                        <li><a href="#">4. Official Remarks</a></li>
+                      </ul>
+                      <ul class="uk-switcher uk-margin">
+                        <!-- QUESTION 1 -->
+                        <form @submit.prevent="submitGovernanceData" method="POST">
+                          <li>
+                            <div style="padding:5px;">
+                              <div class="uk-grid uk-child-width-1-2" uk-grid>
+                                <div class="form-group">
+                                  <label class="uk-form-label" for="form-stacked-text">Name of
+                                    custodian/Trustee</label>
+                                  <div class="uk-form-controls">
+                                    <input class="uk-input" id="form-stacked-text" type="text" placeholder=""
+                                           style="height:30px;" v-model="governanceData.clientName"
+                                           :style="{border: governanceDataError.clientName ? '1px solid red':''}"
+                                           :disabled="!canEditData">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label class="uk-form-label" for="form-stacked-text">Reporting period</label>
+                                  <div class="uk-form-controls">
+                                    <input class="uk-input" id="form-stacked-text" type="text" placeholder="" disabled
+                                           style="height:30px;" v-model="lastDayOfTheQuarter">
+                                  </div>
+                                </div>
+                                <div class="form-group uk-margin-small">
+                                  <label class="uk-form-label" for="form-stacked-text">Reporting officer(and
+                                    designation)</label>
+                                  <div class="uk-form-controls">
+                                    <input class="uk-input" id="form-stacked-text" type="text" placeholder=""
+                                           style="height:30px;" v-model="governanceData.reportingOfficer"
+                                           :style="{border: governanceDataError.reportingOfficer ? '1px solid red':''}"
+                                           :disabled="!canEditData">
+                                  </div>
+                                </div>
+                                <div class="form-group uk-margin-small">
+                                  <label class="uk-form-label" for="form-stacked-text">Date of report</label>
+                                  <div class="uk-form-controls">
+                                    <input class="uk-input uk-padding-remove" id="form-stacked-text" type="date"
+                                           placeholder="" style="padding: 3px;height:30px;"
+                                           v-model="governanceData.reportingDate"
+                                           :style="{border: governanceDataError.reportingDate ? '1px solid red':''}"
+                                           :disabled="!canEditData">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="uk-margin-small">
+                              <h6>Date of renewal of registration with the SEC: <span>{{lastSecLicenseRenewalDate}}</span>
+                                <b>NOTE: The term ‘as at end of period’ refers to the entire
+                                  life span of the scheme and ‘for the period/quarter’ refers to the quarter under
+                                  review
+                                  only.</b></h6>
+                            </div>
+                            <div>
+                              <div class="uk-margin-small">
+                                <div>
+                                  <h5 class="uk-margin-remove"
+                                      style="font-weight: bold;font-style: italic; text-decoration: underline">
+                                    1.Governance
+                                  </h5>
+                                  <p class="uk-margin-remove" style="margin-top:5px!important;">Names of substantial
+                                    shareholders( 5% and above)</p>
+                                </div>
+                              </div>
+                              <div>
+                                <table class="assetTableA uk-table uk-table-small uk-divider" style="width:100%"
+                                       style="padding:4px;">
+                                  <thead class="dblHead" style="width:100%">
+                                  <th style="width:30%">Name</th>
+                                  <th style="width:20%">Shareholding</th>
+                                  <th style="width:20%">Percentage</th>
+                                  <th style="width: 10%"></th>
+                                  </thead>
+                                  <tr>
+                                    <td colspan="4">Ordinary Shares</td>
+                                  </tr>
+                                  <template v-for="(share,index) in ordinarySharesComponents">
+                                    <ordinary-shares @add-ordinary-shares-clicked="addOrdinaryShareInput"
+                                                     :can-add="(index == (ordinarySharesComponents.length - 1)) && canEditData"
+                                                     :can-delete="(ordinarySharesComponents.length > 1) && (index !== (ordinarySharesComponents.length - 1) ) && canEditData"
+                                                     @delete-ordinary-shares-clicked="deleteOrdinaryShareInput(share)"
+                                                     :key="share.key" :share="share"/>
+                                  </template>
+                                  <tr>
+                                    <td colspan="4">Preference Shares</td>
+                                  </tr>
+                                  <template v-for="(share,index) in preferenceSharesComponents">
+                                    <preference-shares @add-preference-shares-clicked="addPreferenceShareInput"
+                                                       :can-add="(index == (preferenceSharesComponents.length - 1)) && canEditData"
+                                                       :can-delete="(preferenceSharesComponents.length > 1) && (index !== (preferenceSharesComponents.length - 1) ) && canEditData"
+                                                       @delete-preference-shares-clicked="deletePreferenceShareInput(share)"
+                                                       :key="share.key" :share="share"/>
+                                  </template>
+                                </table>
+                              </div>
+                              <div style="border:1px solid #eee;padding:5px;margin-top:5px;">
+                                <ul class="screena">
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        Have there been any changes in directors of the Custodian/Trustee during the
+                                        period? Yes/No (if yes, attach details if
+                                        the SEC is not yet notified)
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio" name="radio1" value="yes"
+                                                        v-model="governanceData.changeInDirectors"
+                                                        :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio" name="radio1" checked value="no"
+                                                        v-model="governanceData.changeInDirectors"
+                                                        :disabled="!canEditData"> No</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        Have there been any changes in custody/trustee agreement during the period?
+                                        Yes/No
+                                        (if yes, attach details if the SEC is
+                                        not yet notified)
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio" name="radio2"
+                                                        v-model="governanceData.changeInAgreement" value="yes"
+                                                        :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio" name="radio2" checked
+                                                        v-model="governanceData.changeInAgreement" value="no"
+                                                        :disabled="!canEditData"> No</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        Have all dealings between the schemes and their managers and/or manager’s
+                                        affiliates been appropriately
+                                        approved by the
+                                        board of directors or Trustee?
+                                      </div>
+                                      <div class="Answr" style="font-size: 15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio" name="radio3" checked
+                                                        v-model="governanceData.dealingsApprovedByBoard" value="yes"
+                                                        :disabled="!canEditData">
+                                            Yes</label>
+                                          <label><input class="uk-radio" type="radio" name="radio3"
+                                                        v-model="governanceData.dealingsApprovedByBoard" value="no"
+                                                        :disabled="!canEditData"> No</label>
+                                          <label><input class="uk-radio" type="radio" name="radio3"
+                                                        v-model="governanceData.dealingsApprovedByBoard" value="n/a"
+                                                        :disabled="!canEditData">
+                                            N/A</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        Does the Custodian/Trustee have an updated asset register of the schemes under
+                                        its custody?
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio" checked
+                                                        v-model="governanceData.custodianHasUpdatedAssetRegister"
+                                                        value="yes" :disabled="!canEditData">
+                                            Yes</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="governanceData.custodianHasUpdatedAssetRegister"
+                                                        value="no" :disabled="!canEditData">
+                                            No</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin flex">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        If yes for d above, when was the last update done?
+                                      </div>
+                                      <input class="uk-input " type="date"
+                                             style="align-self:center;justify-content:flex-end;height:30px;width:30%;"
+                                             v-model="governanceData.custodianAssetRegistrationDate"
+                                             :style="{border: governanceDataError.custodianAssetRegistrationDate ? '1px solid red':''}"
+                                             :disabled="!canEditData">
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        Do managers of the schemes consult the Custodian/Trustee in matters requiring
+                                        the Custodian/Trustee’s approval as
+                                        specified in the Law and regulations?
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="governanceData.doManagersOfTheSchemeConsultTheLaw"
+                                                        checked
+                                                        value="yes" :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="governanceData.doManagersOfTheSchemeConsultTheLaw"
+                                                        value="no" :disabled="!canEditData">No</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        Did the schemes have any other financial dealings, apart from custodian or
+                                        trustee relationship, with the custodian
+                                        and/or its affiliates during the period? (If yes, provide details in the table
+                                        below)
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="governanceData.schemeHadAnyOtherFinancialDealings"
+                                                        value="yes" :disabled="!canEditData">Yes</label>
+                                          <label><input class="uk-radio" type="radio" checked
+                                                        v-model="governanceData.schemeHadAnyOtherFinancialDealings"
+                                                        value="no" :disabled="!canEditData">No</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div style="font-size:15px!important;border:1px solid #EEE;padding:5px;margin-top:5px;">
+                                <div>
+                                  <span style="color:#000;font-weight: 500">1gi.</span>&nbsp;
+                                  <span style="color:#212121;font-weight: 500">Transactions with custodian/trustee
+                                      and/or affiliates for the
+                                      period</span>
+                                </div>
+                                <div class="uk-margin-small-top">
+                                  <table class="assetTableA uk-table uk-table-small uk-divider" style="width:100%"
+                                         style="padding:4px;">
+                                    <thead class="dblHead" style="width:100%">
+                                    <th style="width:27%;vertical-align:middle">Name of
+                                      (custodian/trustee/Affiliate)
+                                    </th>
+                                    <th style="width:27%;vertical-align:middle">Relationship with custodian/trustee
+                                    </th>
+                                    <th style="width: 15%;vertical-align:middle">Type of transaction</th>
+                                    <th style="width: 15%;vertical-align:middle">Amount involved</th>
+                                    <th style="width: 15%;vertical-align:middle"></th>
+                                    </thead>
+                                    <tbody class="bodyTbl">
+                                    <template v-for="(transaction,index) in custodianTransactionComponents">
+                                      <custodian-transactions
+                                              @add-custodian-transaction-clicked="addCustodianTransactionInput"
+                                              :can-add="(index == (custodianTransactionComponents.length - 1)) && canEditData"
+                                              :can-delete="(custodianTransactionComponents.length > 1) && (index !== (custodianTransactionComponents.length - 1) ) && canEditData"
+                                              @delete-custodian-transaction-clicked="deleteCustodianTransactionInput(transaction)"
+                                              :key="transaction.key" :transaction="transaction"/>
+                                    </template>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <!-- 1H -->
+                              <section style="border:1px solid #EEE;padding:5px;margin-top:5px;">
+                                <div>
+                                  <span style="color:#000;font-weight: 500">1h.</span>&nbsp;
+                                  <span style="color:#212121;font-weight: 500">State the value and volume of
+                                      shares/units held by the following in
+                                      schemes under your custody</span>
+
+                                  <table class="assetTableA uk-table uk-table-small uk-divider" style="width:100%"
+                                         style="padding:4px;">
+                                    <thead class="dblHead" style="width:100%">
+                                    <th style="width:18%;vertical-align:middle">Name of firm</th>
+                                    <th style="width:17%;vertical-align:middle">Name of scheme</th>
+                                    <th style="width:20%;vertical-align:middle">Relationship with trustee</th>
+                                    <th style="width: 15%;vertical-align:middle">Volume</th>
+                                    <th style="width: 15%;vertical-align:middle">Marked to market value</th>
+                                    <th style="width: 10%;vertical-align:middle"></th>
+                                    </thead>
+                                    <tbody class="bodyTbl">
+                                    <template v-for="(scheme,index) in schemesUnderCustodyComponents">
+                                      <schemes-under-custody
+                                              @add-scheme-under-custody-clicked="addSchemesUnderCustodyInput"
+                                              :can-add="(index == (schemesUnderCustodyComponents.length - 1)) && canEditData"
+                                              :can-delete="(schemesUnderCustodyComponents.length > 1) && (index !== (schemesUnderCustodyComponents.length - 1) ) && canEditData"
+                                              @delete-scheme-under-custody-clicked="deleteSchemesUnderCustodyInput(scheme)"
+                                              :key="scheme.key" :scheme="scheme"/>
+                                    </template>
+                                    </tbody>
+                                  </table>
+                                </div>
+                                <div class="flex flex-justifyContent--x1" v-if="canEditData">
+                                  <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                                          style="font-size: 14px;text-transform:none;width:170px;border-radius: 8px;box-shadow: 0 2px 12px 0 rgba(0,0,0,0.20); padding:7px 20px!important;line-height: initial;">
+                                    Save
+                                  </button>
+                                </div>
+                              </section>
+                            </div>
+                          </li>
+                        </form>
+                        <!-- END QUESTION 1 -->
+                        <!-- QUESTION 2 SECTION -->
+                        <li>
+                          <section>
+                            <div class="flex flex-justifyContent--x1">
+                              <input type="text" class="uk-input"
+                                     autocomplete="new-field" v-model="schemeSearch"
+                                     v-bind:style="{border: schemeSearchError ? '1px solid red' : ''}"
+                                     placeholder="Enter BPID"/>
+                              <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                                      style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 2px;padding: 7px 20px!important;line-height: initial;font-weight: 501"
+                                      @click="loadSchemeByBPID">Load
+                              </button>
+                              <div uk-form-custom>
+                                <input type="file" @change="onSchemeTemplateUpload"
+                                       accept=".xlsx"/>
+                                <span class="uk-link">Upload</span>
+                              </div>
+                            </div>
+                            <article style="border:1px solid #EEE;padding:5px;margin-top:5px;">
+
+                              <form @submit.prevent="saveSchemeDetails">
+                                <table class="assetTableA uk-table uk-table-small" style="width:100%">
+                                  <tr>
+                                    <th>BP ID</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" v-model="schemeDetails.bpid"
+                                               v-bind:style="{border: schemeDetailsError.bpid ? '1px solid red' : ''}"
+                                               :disabled="!canEditData"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Name of Scheme</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" v-model="schemeDetails.nameOfScheme"
+                                               v-bind:style="{border: schemeDetailsError.nameOfScheme ? '1px solid red' : ''}"
+                                               :disabled="!canEditData"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Number of shares outstanding</th>
+                                    <td><input type="number" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field"
+                                               v-model="schemeDetails.numberOfSharesOutstanding"
+                                               step="0.01"
+                                               v-bind:style="{border: schemeDetailsError.numberOfSharesOutstanding ? '1px solid red' : ''}"
+                                               :disabled="!canEditData"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Number of shareholders</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               v-model="schemeDetails.numberOfShareholders" autocomplete="new-field"
+                                               v-bind:style="{border: schemeDetailsError.numberOfShareholders ? '1px solid red' : ''}"
+                                               :disabled="!canEditData"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Number of redemptions</th>
+                                    <td>
+                                      <div class="flex">
+                                        <label>Volume</label>
+                                        <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field"
+                                               v-model="schemeDetails.numberOfRedemptions"
+                                               v-bind:style="{border: schemeDetailsError.numberOfRedemptions ? '1px solid red' : ''}"
+                                               :disabled="!canEditData"/>
+                                        <label>Value</label>
+                                        <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field"
+                                               v-model="schemeDetails.valueOfRedemptions"
+                                               v-bind:style="{border: schemeDetailsError.valueOfRedemptions ? '1px solid red' : ''}"
+                                               :disabled="!canEditData"/>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Name of manager</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" v-model="schemeDetails.nameOfManager"
+                                               v-bind:style="{border: schemeDetailsError.nameOfManager ? '1px solid red' : ''}"
+                                               :disabled="!canEditData"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th style="font-weight: bold;">Total value of scheme assets:</th>
+                                    <td style="border: none!important;"><input tabindex="-1" style="visibility: hidden"
+                                                                               type="text"
+                                                                               class="assetFormInput h-100 w-100 uk-input"
+                                                                               autocomplete="new-field"
+                                                                               v-model="schemeDetails.totalValueOfSchemeAssets"
+                                                                               v-bind:style="{border: schemeDetailsError.totalValueOfSchemeAssets ? '1px solid red' : ''}"
+                                                                               :disabled="!canEditData"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Net asset value of scheme</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" v-model="schemeDetails.netAssetValueOfScheme"
+                                               v-bind:style="{border: schemeDetailsError.netAssetValueOfScheme ? '1px solid red' : ''}"
+                                               :disabled="!canEditData"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Net asset value per share/unit</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" v-model="schemeDetails.netAssetValuePerShare"
+                                               v-bind:style="{border: schemeDetailsError.netAssetValuePerShare ? '1px solid red' : ''}"
+                                               :disabled="!canEditData"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Total(Value) equity investments</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" v-model="schemeDetails.totalEquityInvestments"
+                                               v-bind:style="{border: schemeDetailsError.totalEquityInvestments ? '1px solid red' : ''}"
+                                               :disabled="!canEditData"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Total (value) fixed income investments</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field"
+                                               v-model="schemeDetails.totalFixedIncomeInvestments"
+                                               v-bind:style="{border: schemeDetailsError.totalFixedIncomeInvestments ? '1px solid red' : ''}"
+                                               :disabled="!canEditData"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Net of medium term assets held by fund</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field"
+                                               v-model="schemeDetails.netOfMediumTermAssetsHeldByFund"
+                                               v-bind:style="{border: schemeDetailsError.netOfMediumTermAssetsHeldByFund ? '1px solid red' : ''}"
+                                               :disabled="!canEditData"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th style="font-weight:bold" colspan="2">others:</th>
+
+                                  </tr>
+                                  <tr>
+                                    <th style="font-weight: bold">Capital markets investments:</th>
+                                    <td style="border: none!important;"><input tabindex="-1" style="visibility: hidden"
+                                                                               type="text"
+                                                                               class="assetFormInput h-100 w-100 uk-input"
+                                                                               autocomplete="new-field"
+                                                                               v-model="schemeDetails.capitalMarketsInvestments"
+                                                                               v-bind:style="{border: schemeDetailsError.capitalMarketsInvestments ? '1px solid red' : ''}"
+                                                                               :disabled="!canEditData"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>&percnt; of Capital Market investment to total investments</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field"
+                                               v-model="schemeDetails.percentageOfCapitalInvestmentToTotalInvestment"
+                                               v-bind:style="{border: schemeDetailsError.percentageOfCapitalInvestmentToTotalInvestment ? '1px solid red' : ''}"
+                                               :disabled="!canEditData"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Are all certificates of investment with custodian/trustee? Yes/No</th>
+                                    <td>
+                                      <div class="uk-grid-small uk-child-width-auto uk-grid">
+                                        <label><input class="uk-radio" type="radio"
+                                                      v-model="schemeDetails.areAllCertificatesOfInvestmentWithCustodian"
+                                                      :disabled="!canEditData" value="yes">&nbsp;Yes</label>
+                                        <label><input class="uk-radio" type="radio"
+                                                      v-model="schemeDetails.areAllCertificatesOfInvestmentWithCustodian"
+                                                      :disabled="!canEditData" checked value="no">&nbsp;No</label>
+
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Total value of unutilized funds</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" placeholder="Enter Amount here..."
+                                             v-model="schemeDetails.totalValueOfUnutilizedFunds"
+                                             v-bind:style="{border: schemeDetailsError.totalValueOfUnutilizedFunds ? '1px solid red' : ''}"
+                                             :disabled="!canEditData"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Value of borrowed funds</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" v-model="schemeDetails.valueOfBorrowedFunds"
+                                             v-bind:style="{border: schemeDetailsError.valueOfBorrowedFunds ? '1px solid red' : ''}"
+                                             :disabled="!canEditData"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Reasons for borrowing</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" v-model="schemeDetails.reasonsForBorrowing"
+                                             v-bind:style="{border: schemeDetailsError.reasonsForBorrowing ? '1px solid red' : ''}"
+                                             :disabled="!canEditData"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Were all duly prepared accounts distributed to appropriate authorities?</th>
+                                    <td>
+                                      <div class="uk-grid-small uk-child-width-auto uk-grid">
+                                        <label>
+                                          <input class="uk-radio" type="radio" value="yes"
+                                                 v-model="schemeDetails.wereAllDulyPreparedAccountsDistributed"
+                                                 :disabled="!canEditData">Yes</label>
+                                        <label>
+                                          <input class="uk-radio" type="radio" value="no"
+                                                 v-model="schemeDetails.wereAllDulyPreparedAccountsDistributed"
+                                                 :disabled="!canEditData">
+                                          No
+                                        </label>
+
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th colspan="2" style="font-weight:bold">Outstanding</th>
+
+                                  </tr>
+                                  <tr>
+                                    <th>Redemptions</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" v-model="schemeDetails.redemptions"
+                                             v-bind:style="{border: schemeDetailsError.redemptions ? '1px solid red' : ''}"
+                                             :disabled="!canEditData"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Dividends/interests/capital gains</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" v-model="schemeDetails.dividends"
+                                             v-bind:style="{border: schemeDetailsError.dividends ? '1px solid red' : ''}"
+                                             :disabled="!canEditData"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Rights/bonus issues/stock splits</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" v-model="schemeDetails.rights"
+                                             v-bind:style="{border: schemeDetailsError.rights ? '1px solid red' : ''}"
+                                             :disabled="!canEditData"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Fees owed custodian/trustee</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" v-model="schemeDetails.feesOwedCustodian"
+                                             v-bind:style="{border: schemeDetailsError.feesOwedCustodian ? '1px solid red' : ''}"
+                                             :disabled="!canEditData"/>
+                                    </td>
+                                  </tr>
+                                </table>
+                                <div class="flex flex-justifyContent--x1" v-if="canEditData">
+                                  <button type="submit" class="uk-button uk-button-primary"
+                                          style="font-size: 14px;text-transform:none;width:90px;border:2px solid #eee;margin-right: 10px;border-radius: 8px;padding: 7px 20px!important;line-height: initial;color:white;font-weight: 501">
+                                    Save
+                                  </button>
+                                  <button type="button" class="uk-button uk-button-danger"
+                                          style="font-size: 14px;text-transform:none;width:90px;border:2px solid #eee;margin-right: 10px;border-radius: 8px;padding: 7px 20px!important;line-height: initial;color:white;font-weight: 501"
+                                          v-if="schemeDetails.bpid && schemeDetails.nameOfScheme" @click="deleteScheme">
+                                    Delete
+                                  </button>
+
+                                  <button type="button" class="uk-button uk-button-primary uk-padding-remove"
+                                          style="margin-right:15px;font-size: 14px;text-transform:none;width:120px;border-radius: 8px;box-shadow: 0 2px 12px 0 rgba(0,0,0,0.20); padding:7px 20px!important;line-height: initial;"
+                                          @click="recalculateFormulas">Recalculate
+                                  </button>
+                                  <button type="button" class="uk-button uk-button-primary uk-padding-remove"
+                                          style="font-size: 14px;text-transform:none;width:120px;border-radius: 8px;box-shadow: 0 2px 12px 0 rgba(0,0,0,0.20); padding:7px 20px!important;line-height: initial;"
+                                          @click="addMoreSchemes">Add Scheme
+                                  </button>
+                                </div>
+                              </form>
+                            </article>
+                          </section>
+                        </li>
+                        <!-- END QUESTION 2 SECTION -->
+                        <!-- QUESTION 3 -->
+                        <li>
+                          <form @submit.prevent="saveOtherSecInfo">
+                            <section>
+                              <div style="border:1px solid #eee;padding:5px;margin-top:5px;">
+                                <!-- <div>
+                                  <span style="color:#000;font-weight: 500">3.</span>&nbsp;
+                                  <span style="color:#212121;font-weight: 500">Other information</span>
+                                </div> -->
+                                <ul class="screena">
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        Are there any claims (in the form of collateral) on any scheme’s assets? Yes/No
+                                        (if yes, attach details e.g.
+                                        assets/amounts involved, claimants, maturity, etc)
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio" name="radio1" checked
+                                                        v-model="otherSecInformations.areThereAnyClaimOnSchemeAsset"
+                                                        value="yes" :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio" name="radio1"
+                                                        v-model="otherSecInformations.areThereAnyClaimOnSchemeAsset"
+                                                        value="no" :disabled="!canEditData"> No</label>
+                                          <label><input class="uk-radio" type="radio" name="radio1"
+                                                        v-model="otherSecInformations.areThereAnyClaimOnSchemeAsset"
+                                                        value="n/a" :disabled="!canEditData"> N/A</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        If yes to <strong>a</strong> above, was the custodian/trustee appropriately
+                                        informed and approval given
+                                        before assets were
+                                        collateralized? Yes/No
+                                        (if yes, attach details if the SEC is
+                                        not yet notified)
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio" name="radio2" checked
+                                                        v-model="otherSecInformations.yesWasCustodianInformedAndApproved"
+                                                        value="yes" :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio" name="radio2"
+                                                        v-model="otherSecInformations.yesWasCustodianInformedAndApproved"
+                                                        value="no" :disabled="!canEditData"> No</label>
+                                          <label><input class="uk-radio" type="radio" name="radio2"
+                                                        v-model="otherSecInformations.yesWasCustodianInformedAndApproved"
+                                                        value="n/a" :disabled="!canEditData"> N/A</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        Have there been any litigations involving the custodian/trustee or any scheme
+                                        (and related expenses) during
+                                        the period?
+                                      </div>
+                                      <div class="Answr" style="font-size: 15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.anyLitigationInvolvingCustodianSccheme"
+                                                        value="yes" :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.anyLitigationInvolvingCustodianSccheme"
+                                                        :disabled="!canEditData" value="no" checked> No</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.anyLitigationInvolvingCustodianSccheme"
+                                                        value="n/a" :disabled="!canEditData"> N/A</label>
+                                          (if yes,attach details)
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        Have there been any significant reductions in the assets of any scheme during
+                                        the period?
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.anySignificantReductionInAssetScheme"
+                                                        value="yes" :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.anySignificantReductionInAssetScheme"
+                                                        value="no" checked :disabled="!canEditData"> No</label>
+                                          (if yes,attach details)
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        Have there been any significant reductions in the market/offer price of the
+                                        scheme during the period
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.significantReductionInSchemeMarketPrice"
+                                                        value="yes" :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.significantReductionInSchemeMarketPrice"
+                                                        value="no" checked :disabled="!canEditData"> No</label>
+                                          (if yes,attach details)
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        Has the manager reconciled its asset register with that of the custodian/trustee
+                                        during the period?
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.hasMgrsReconciledAssetRegisterCustodian"
+                                                        value="yes" :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.hasMgrsReconciledAssetRegisterCustodian"
+                                                        value="no" checked :disabled="!canEditData"> No</label>
+                                          (if yes,attach details)
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">
+                                        How many times did the scheme publish its prices during the period?
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.howManyTimesDidSchemePublishedPrices"
+                                                        value="yes" :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.howManyTimesDidSchemePublishedPrices"
+                                                        value="no" checked :disabled="!canEditData"> No</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.howManyTimesDidSchemePublishedPrices"
+                                                        value="n/a" :disabled="!canEditData"> N/A</label>
+                                          (Attach details e.g. a copy of newspaper page where publication was done)
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">Were there any important
+                                        concerns raised by
+                                        investors at any meeting organized by the fund that you would want to draw
+                                        to the attention of the SEC?
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.anyConcernsByInvestors"
+                                                        value="yes" :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.anyConcernsByInvestors" value="no"
+                                                        :disabled="!canEditData"> No</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.anyConcernsByInvestors"
+                                                        value="n/a" :disabled="!canEditData"> N/A</label>
+                                          . If yes, attach details.
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">Are there any other
+                                        matters you would want to draw
+                                        to the attention of the SEC with regard to the management or custody
+                                        of the fund’s assets?
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.anyMattersAttentionSecMgtCustodyOfFund"
+                                                        value="yes" :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.anyMattersAttentionSecMgtCustodyOfFund"
+                                                        value="no" checked :disabled="!canEditData"> No</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.anyMattersAttentionSecMgtCustodyOfFund"
+                                                        value="n/a" :disabled="!canEditData"> N/A</label>
+                                          If yes, attach details.
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">Has the
+                                        custodian/trustee ensured that the accounts
+                                        of managers are separated from that of the schemes?
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.hasAccountOfManagersSeparateFromScheme"
+                                                        value="yes" :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.hasAccountOfManagersSeparateFromScheme"
+                                                        value="no" checked :disabled="!canEditData"> No</label>
+                                          <label><input class="uk-radio" type="radio"
+                                                        v-model="otherSecInformations.hasAccountOfManagersSeparateFromScheme"
+                                                        value="n/a" :disabled="!canEditData"> N/A</label>
+                                          If yes, attach details.
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="uk-margin">
+                                      <div class="Qstns" style="color: #212121;font-size:15px;">Is the company, its
+                                        parent, any of its affiliates or
+                                        directors involved in litigation?
+                                      </div>
+                                      <div class="Answr" style="font-size:15px;">
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                          <label><input class="uk-radio" type="radio" name="radio4" checked
+                                                        v-model="otherSecInformations.companyParentsAffiliateInvolvedInLitigation"
+                                                        value="yes" :disabled="!canEditData"> Yes</label>
+                                          <label><input class="uk-radio" type="radio" name="radio4  "
+                                                        v-model="otherSecInformations.companyParentsAffiliateInvolvedInLitigation"
+                                                        value="no" :disabled="!canEditData"> No</label>
+                                          <label><input class="uk-radio" type="radio" name="radio4  "
+                                                        v-model="otherSecInformations.companyParentsAffiliateInvolvedInLitigation"
+                                                        value="n/a" :disabled="!canEditData"> N/A</label>
+                                          If yes, type the details below
+                                        </div>
+                                        <div>
+                                          <textarea v-model="otherSecInformations.litigationDetails"
+                                                    v-bind:style="{border: otherSecInformationsError.litigationDetails ? '1px solid red' : ''}"
+                                                    :disabled="!canEditData"></textarea>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </section>
+                            <!-- OFFSHORE CLIENTS  -->
+                            <section>
+                              <div>
+                                <span style="color:#000;font-weight: 500">3i.</span>&nbsp;
+                                <span style="color:#212121;font-weight: 500">List of Offshore Clients, if any</span>
+                              </div>
+                            </section>
+                            <div class="flex flex-justifyContent--x1" v-if="canEditData">
+                              <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                                      style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 8px;padding: 7px 20px!important;line-height: initial;font-weight: 501">
+                                Save
+                              </button>
+
+                              <!-- <button type="button" class="uk-button uk-button-primary uk-padding-remove"
+                                style="font-size: 14px;text-transform:none;width:170px;border-radius: 8px;box-shadow: 0 2px 12px 0 rgba(0,0,0,0.20); padding:7px 20px!important;line-height: initial;">Add
+                                More Schemes</button> -->
+                            </div>
+                          </form>
+                          <!-- END OFFSHORE CLIENTS -->
+                        </li>
+                        <!-- END QUESTION 3 -->
+                        <!-- REMARKS SECTION-->
+                        <li>
+                          <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid>
+                            <div class="uk-width-1-1">
+                              <article>
+                                <div
+                                        class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                                  <div class="flex flex-direction--column h-100 w-100">
+                                    <section>
+                                      <table class="uk-table uk-table-divider assetTableA previewMonthTable">
+                                        <thead>
+                                        <th class="uk-text-center">Client</th>
+                                        <th class="uk-text-center">Home Country</th>
+                                        <th class="uk-text-center">Asset Value(GHS)</th>
+                                        </thead>
+                                        <tbody>
+                                        <%= for(client) in offshore_clients { %>
+                                        <tr>
+                                          <td class="uk-text-left"><%= client.Name %></td>
+                                          <td class="uk-text-center"><%= client.Country %></td>
+                                          <td class="uk-text-right"><%= format_with_comma(client.AssetValue,2) %></td>
+                                        </tr>
+                                        <% } %>
+                                        </tbody>
+                                      </table>
+                                    </section>
+                                  </div>
+                                </div>
+                              </article>
+                            </div>
+                          </section>
+                        </li>
+                        <li>
+                          <form @submit.prevent="saveOfficialRemarks">
+                            <section>
+                              <div style="padding:5px;margin-top:5px;">
+                                <div>
+                                  <span style="color:#212121;font-weight: 500;text-decoration: underline">FOR OFFICIAL
+                                    USE ONLY</span>
+                                </div>
+                                <article style="padding: 5px 10px;">
+                                  <div class="uk-margin">
+                                    <textarea class="uk-textarea" rows="4" placeholder="Enter remarks..."
+                                              v-model="officialRemarks.remarks"
+                                              v-bind:style="{border: officialRemarksError.remarks ? '1px solid red' : ''}"
+                                              disabled></textarea>
+                                  </div>
+                                  <div class=" uk-margin" style="max-width: 300px;">
+                                    <label
+                                            style="font-weight: 500;font-size:12px;letter-spacing: 0.2px;color:#0b2135;">Name
+                                      of reviewing officer</label>
+                                    <input class="uk-input" type="text" placeholder="" style="height:30px"
+                                           autocomplete="new-field" v-model="officialRemarks.reviewingOfficer"
+                                           v-bind:style="{border: officialRemarksError.reviewingOfficer ? '1px solid red' : ''}"
+                                           disabled/>
+                                  </div>
+                                  <div class="uk-grid-small uk-child-width-1-2" uk-grid>
+                                    <div class="uk-margin-remove" style="max-width: 300px;">
+                                      <label
+                                              style="font-weight: 500;font-size:12px;letter-spacing: 0.2px;color:#0b2135;">Date</label>
+                                      <input class="uk-input" type="date" style="height:30px"
+                                             v-model="officialRemarks.date"
+                                             v-bind:style="{border: officialRemarksError.date ? '1px solid red' : ''}"
+                                             disabled/>
+                                    </div>
+                                    <div class="uk-margin-remove" style="max-width: 300px;">
+                                      <label
+                                              style="font-weight: 500;font-size:12px;letter-spacing: 0.2px;color:#0b2135;">Signature</label>
+                                      <input class="uk-input" type="text" style="height:30px"
+                                             v-model="officialRemarks.signature" disabled/>
+                                    </div>
+                                  </div>
+                                </article>
+                              </div>
+                              <div class="flex flex-justifyContent--x1" v-if="false">
+                                <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                                        style="font-size: 14px;text-transform:none;width:170px;border-radius: 8px;box-shadow: 0 2px 12px 0 rgba(0,0,0,0.20); padding:7px 20px!important;line-height: initial;">
+                                  Save
+                                </button>
+                              </div>
+                            </section>
+                          </form>
+                        </li>
+                        <!-- END REMARKS SECTION-->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!-- END SIDE A -->
+                <!-- Side B -->
+                <div class="uk-width-1-2 uk-width-1-2@m uk-grid-match uk-width-1-1@s uk-margin-remove"
+                     style="padding:0px 5px 0!important">
+                  <div v-if="uploadedSchemeDetailsTemplate.length === 0">
+                    <div style="display:grid;place-content: center;" v-if="!filesUploaded">
+                      <form>
+                        <div class="js-upload uk-placeholder uk-text-center">
+                          <span uk-icon="icon: cloud-upload"></span>
+                          <span class="uk-text-middle">Attach files by dropping them here or</span>
+                          <div uk-form-custom>
+                            <input type="file" @change="onFileChange"
+                                   accept=".pdf"/>
+                            <span class="uk-link">selecting one</span>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="w-100 h-100" v-else style="place-content: center;padding-bottom:2.2rem">
+                      <object type="application/pdf" :data="activeFile.data" width="100%" height="100%">
+                      </object>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <table class="egbami uk-table assetTableA previewMonthTable">
+                      <tr>
+                        <thead>
+                        <th style="width:65%">Requirement</th>
+                        <th>Response</th>
+                        </thead>
+                      </tr>
+                      <tr v-for="(data,key) in uploadedSchemeDetailsTemplate" :key="key">
+                        <td>{{data[0]}}</td>
+                        <td class="uk-text-right">{{data[1]}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <!-- Side B end -->
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </main>
+</div>
+</div>
+
+<%= partial("./partials/footer.html") %>
+<%= javascriptTag("custodian.js") %>
+<%= partial("./partials/system.html") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+</body>
+
+</html>

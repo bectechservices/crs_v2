@@ -1,0 +1,95 @@
+:root {
+  --threshold: 0px;
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  font-family: "Lato";
+}
+body::after {
+  pointer-events: none;
+  box-sizing: border-box;
+  position: fixed;
+  width: calc(100vw - (var(--threshold) + var(--threshold)));
+  height: calc(100vh - (var(--threshold) + var(--threshold)));
+  z-index: 0;
+  content: "";
+  top: var(--threshold);
+  left: var(--threshold);
+}
+
+#container {
+  width: 840px;
+  margin: 20px 0;
+}
+
+.rd-container {
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  z-index: 9999;
+  height: 93vh;
+  max-height: 93vh;
+  overflow-y:scroll;
+}
+
+.rd-sections {
+  margin: 0;
+  padding: 0;
+}
+
+.rd-section {
+  position: relative;
+  list-style: none;
+  background-color: #fff;
+  border: 1px solid yellow;
+  display:flex;
+  /* align-items: center; */
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.rd-section * {
+  font-size: 10px!important;
+}
+
+.rd-marker {
+  position: absolute;
+  width: 100%;
+  background-color: rgba(33, 150, 243, 0.2);
+  box-sizing: border-box;
+}
+
+.rd-clone {
+  box-sizing: border-box;
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+  display: block;
+}
+
+section {
+  margin: 0 0 20px 0;
+}
+
+.page-chapter {
+  font-size: 11px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.page-num {
+  font-size: 11px;
+  text-align: right;
+  padding-right: 5px;
+}
+
+.dg.ac {
+  z-index: 10000 !important;
+}

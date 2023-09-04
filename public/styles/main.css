@@ -1,0 +1,35 @@
+@import url("fonts/fonts.css");
+@import url("basecomponent/base.css");
+@import url("pages/pages.css");
+@import url("legacySupport.css");
+
+* {
+  box-sizing: border-box;
+  word-wrap: break-word;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* font-family: ; */
+}
+html {
+  height: 100%;
+  background-color:var(--depthGray);
+}
+.uk-navbar {
+  height: 66px !important;
+}
+/* .crs--content{
+  height: 89.6vh!important;
+} */
+.uk-tab > * {
+  padding-left: 10px!important;
+}
+
+.uk-tab > li a {
+  color: #0b2135!important;
+  font-weight: 500!important;
+}
+
+.uk-switcher {
+  padding: 10px!important;
+}

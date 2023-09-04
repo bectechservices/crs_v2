@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — Select Table Of Content</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="/media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css" />
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body style="overflow: hidden">
+  <div class="root pptTemplatePage">
+    <div class="crs-authedPage">
+      <%= partial("./partials/navbar.html") %>
+      <main class="crs--content" style="height:100vh">
+        <div class="uk-container uk-container-expand" style="padding: 10px;">
+          <div class="crs-authPage--content w-100 uk-margin-top">
+            <div class="crs-authPage--innerContent uk-margin userSelectNone">
+              <div class="flex" style="align-items: center;">
+                <button class="backBtn uk-padding-remove flex flex-center--y" onclick="goBack()">
+                  <span uk-icon="icon:  chevron-left; ratio: 0.9" style="color:#223CA9"></span>
+                  <span style="padding-left: 5px;">Back</span>
+                </button>
+                <div class="uk-grid" uk-grid>
+                  <div class="uk-width-expand">
+                    <h2 style="font-size:20px;letter-spacing:0.3px">
+                      <span style="color:#656d78">Create Presentation</span>
+                    </h2>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- MAIN PAGE CONTENT -->
+            <section>
+              <section class="uk-grid-small uk-grid-match" uk-grid>
+                <div class="uk-width-1-1" style="height: 400px">
+                  <article>
+                    <div
+                      class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white" style="padding: 30px;">
+                      <div class="flex flex-direction--column h-100 w-100">
+                        <header class="" style="flex:1;height: 40px;margin-bottom:5px;">
+                          <div class="uk-grid" uk-grid>
+                            <div class="uk-width-1-2">
+                              <div class="flex flex-center--y flex-100 h-100">
+                                <h4 class="userSelectNone uk-margin-remove flex"
+                                  style="font-size:17px;color:var(--hue-textPrime);font-weight:500">
+                                  Choose Agenda</h4>
+                              </div>
+                            </div>
+                          </div>
+                        </header>
+                        <section>
+                          <form @submit.prevent="showPPTDemo">
+                            <div class="uk-margin">
+                              <div class="uk-form-controls uk-form-controls-text" style="column-count:3;column-gap:10px;">
+                                <label>
+                                  <input class="uk-checkbox" type="checkbox" v-model="all_template_options">
+                                  All
+                                </label><br>
+                                <label>
+                                  <input class="uk-checkbox" type="checkbox" v-model="template.total_summary_of_auc">
+                                  Total Summary of Assets under Custody
+                                </label><br>
+                                <label>
+                                  <input class="uk-checkbox" type="checkbox" v-model="template.auc_trend">
+                                  AUC Trend
+                                </label><br>
+                                <label>
+                                  <input class="uk-checkbox" type="checkbox" v-model="template.trade_volumes">
+                                  Trade Volumes
+                                </label><br>
+                                <label>
+                                  <input class="uk-checkbox" type="checkbox" v-model="template.pv_report">
+                                  Portfolio Valuation Report
+                                </label><br>
+                                <label>
+                                  <input class="uk-checkbox" type="checkbox" v-model="template.total_contribution">
+                                  Total Contributions
+                                </label><br>
+                                <label>
+                                  <input class="uk-checkbox" type="checkbox" v-model="template.corporate_action">
+                                  Corporate Action
+                                </label><br>
+                                <label>
+                                  <input class="uk-checkbox" type="checkbox" v-model="template.gog_and_fd_maturities">
+                                  GOG and FD Maturities
+                                </label><br>
+                                <label>
+                                  <input class="uk-checkbox" type="checkbox" v-model="template.appendix_i">
+                                  Appendix I - AUC per Fund Manager
+                                </label><br>
+                                <label>
+                                  <input class="uk-checkbox" type="checkbox" v-model="template.appendix_ii">
+                                  Appendix II - Contributions
+                                </label><br>
+                                <label>
+                                  <input class="uk-checkbox" type="checkbox" v-model="template.unidentified_payments">
+                                  Unidentified Payments
+                                </label><br>
+                              </div>
+                            </div>
+                            <div class="flex flex-justifyContent--x1 uk-margin-top">
+                              <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                                style="font-size: 14px;text-transform:none;width:200px;border-radius: 8px;box-shadow: 0 2px 12px 0 rgba(0,0,0,0.20); padding:7px 20px!important;line-height: initial;">Generate
+                                Presentation</button>
+                            </div>
+                          </form>
+                        </section>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </section>
+            </section>
+            <!-- END MAIN PAGE CONTENT -->
+          </div>
+        </div>
+    </div>
+  </div>
+  </main>
+  </div>
+  </div>
+  <%= partial("./partials/footer.html") %>
+  <%= partial("./partials/system.html") %>
+  <%= javascriptTag("ppt_template_options.js") %>
+  <script src="scripts/main.js"></script>
+  <script src="scripts/uikit.min.js"></script>
+  <script src="scripts/uikit-icons.min.js"></script>
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+
+</body>
+
+
+</html>

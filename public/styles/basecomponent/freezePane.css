@@ -1,0 +1,23 @@
+.freezePane tr th{
+  background:#ffffff;
+  text-transform: capitalize;
+}
+.scrolly_table {
+  white-space: nowrap !important;
+  overflow: auto;
+  max-height: 450px;
+}
+.fixed.freeze {
+  z-index: 10;
+  position: relative;
+}
+.fixed.freeze_vertical {
+  z-index: 5;
+  position: relative;
+}
+.fixed.freeze_horizontal {
+  z-index: 1;
+  position: relative;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}

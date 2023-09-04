@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — FD Certificates</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="/media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    table.auditExcelDataTable,
+    td {
+      border: 1px solid black;
+      border: 1px solid #DBDBDB;
+      border-collapse: collapse;
+      padding: .5rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .auditExcelDataTable input {
+      font: inherit;
+      display: block;
+      outline: none;
+      position: relative;
+      line-height: 1;
+      background: none;
+      border-radius: inherit;
+      border: 1px solid #eee;
+      width: 100%;
+      margin: 0;
+      padding: 2px;
+    }
+
+    .auditExcelDataTable .securityColsData td:first-child {
+      width: 29%
+    }
+
+    .auditExcelDataTable .securityColsData td:nth-child(n+2) input {
+      text-align: right;
+    }
+
+    .auditExcelDataTable input:hover,
+    input:focus {
+      border-color: #008888;
+      background: #fff;
+      box-shadow: 0 1px 0.75em rgba(0, 136, 136, 0.2);
+      z-index: 1;
+    }
+
+    .auditExcelDataTable input:focus {
+      box-shadow: 0 2px 1.2em rgba(0, 0, 0, 0.1), 0 2px 0.8em rgba(0, 136, 136, 0.2), 0 0 0 1px #008888, inset 0 0 0 1px #008888;
+      z-index: 2;
+    }
+  </style>
+</head>
+
+<body>
+<div class="root">
+  <div class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content">
+      <div class="uk-container uk-container-expand" style="padding:5px;">
+        <div class="crs-authPage--content w-100 uk-margin">
+          <div class="crs-authPage--innerContent uk-margin">
+            <div class="crs-authPage--header" style="padding: 10px;">
+              <!-- AUDIT PV TABLE -->
+              <div class="uk-margin-small-bottom flex flex-justifyContent--x1" style="height:45px;">
+                <button class="exportBtn uk-padding-remove flex flex-center--x flex-center--y"
+                        style="background-color:rgb(224, 36, 94);font-weight:600;letter-spacing:0.25px;color:white;border-radius:4px;cursor:pointer"
+                        onclick="deleteOutstandingCertificates()">
+                  Delete
+                </button>
+              </div>
+              <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid>
+                <div class="uk-width-1-1" style="height: 300px">
+                  <article>
+                    <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                      <div class="flex flex-direction--column h-100 w-100">
+                        <section class="previewWindow">
+                          <!-- EXCEL -->
+                          <table class="uk-table uk-table-divider assetTableA assetTableB previewMonthTable">
+                            <thead>
+                            <tr>
+                              <th style="width: 15%" title="Select fund manager">Fund Manager</th>
+                              <th>Client Name</th>
+                              <th>Amount(GHS)</th>
+                              <th class="uk-text-center">Issuer</th>
+                              <th class="uk-text-center" style="width: 5%">Rate <br/> &percnt;</th>
+                              <th class="uk-text-center">Tenor</th>
+                              <th class="uk-text-center">Term</th>
+                              <th class="uk-text-center">Effective Date</th>
+                              <th style="width: 10%; text-align: center">Maturity</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%= for(cert) in outstanding_fd_certs { %>
+                            <tr>
+                              <td><%= cert.FundManager %></td>
+                              <td><%= cert.ClientName %></td>
+                              <td><%= format_with_comma(cert.Amount,2) %></td>
+                              <td><%= cert.Issuer %></td>
+                              <td><%= cert.Rate %></td>
+                              <td><%= cert.Tenor %></td>
+                              <td><%= cert.Term %></td>
+                              <td><%= cert.EffectiveDate.Format("2 January 2006") %></td>
+                              <td><%= cert.Maturity.Format("2 January 2006") %></td>
+                            </tr>
+                            <% } %>
+                            </tbody>
+                          </table>
+                          <!-- EXCEL -->
+                        </section>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<form method="post" action="/outstanding-fd" id="outstanding_fd_cert_form">
+  <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+  <input name="_method" type="hidden" value="DELETE">
+  <input name="hash" id="outstanding_fd_certs_hash" type="hidden"/>
+</form>
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script>
+    function deleteOutstandingCertificates() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.value) {
+                const url = new URL(window.location.href);
+                document.getElementById('outstanding_fd_certs_hash').value = url.searchParams.get("hash");
+                document.getElementById('outstanding_fd_cert_form').submit();
+            }
+        });
+    }
+</script>
+</body>
+</html>

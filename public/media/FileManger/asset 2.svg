@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="118px" height="86px" viewBox="0 0 118 86" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Folder_118 x 86 (Web Grid)_Back Plate Closed</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M65.6568542,2.34314575 L60,8 L4,8 C1.790861,8 -1.13957379e-13,9.790861 -1.13686838e-13,12 L-1.13686838e-13,79 C-1.13619202e-13,79.5522847 0.44771525,80 1,80 L111,80 C111.552285,80 112,79.5522847 112,79 L112,4 C112,1.790861 110.209139,-4.05812251e-16 108,0 L71.3137085,0 C69.1919766,3.8975583e-16 67.1571453,0.842854723 65.6568542,2.34314575 Z" id="path-1"></path>
+        <filter x="-5.5%" y="-5.7%" width="111.1%" height="115.5%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="0.3" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.45" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.108000002 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feOffset dx="0" dy="1.6" in="SourceAlpha" result="shadowOffsetOuter2"></feOffset>
+            <feGaussianBlur stdDeviation="1.8" in="shadowOffsetOuter2" result="shadowBlurOuter2"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.131999998 0" type="matrix" in="shadowBlurOuter2" result="shadowMatrixOuter2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="shadowMatrixOuter2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Folder_118-x-86-(Web-Grid)_Back-Plate-Closed" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-Copy-60" transform="translate(3.000000, 3.000000)">
+            <g id="Shape-Copy-729" transform="translate(56.000000, 40.000000) scale(-1, 1) translate(-56.000000, -40.000000) ">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#FFB900" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — Overview</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css" />
+  <link rel="stylesheet" href="styles/main.css">
+  <meta name="csrf-token" content="<%= authenticity_token %>"/>
+  <meta name="worker_script" content='<%= assetPath("worker_script.js") %>'/>
+  <style>
+    html .uk-modal-page body.makerCheckBody {
+      overflow: hidden !important;
+    }
+
+    body.makerCheckBody {
+      overflow: hidden !important;
+    }
+  </style>
+</head>
+
+<body class="makerCheckBody">
+  <div class="root">
+    <div class="crs-authedPage">
+      <%= partial("./partials/navbar.html") %>
+      <main class="crs--content genDash" id="genDashMain">
+        <div class="uk-container uk-container-expand" style="padding:2px;">
+          <div class="crs-authPage--content w-100">
+            <div class="crs-authPage--innerContent uk-margin-remove">
+              <div class="homeLayoutWrapper">
+                <div class="HLlayout fileManagerContent">
+
+                  <!-- Content -->
+                  <main class="HLlayout__content">
+                    <div class="HLlayout__contentHeader" style="height:40px;display: flex;align-items:center;">
+                      <div class="crs-authPage--content w-100 uk-margin-remove">
+                        <div class="crs-authPage--header" style="padding: 10px 70px;">
+                          <div class="uk-grid" uk-grid>
+                            <div class="uk-width-expand">
+                              <h2 style="font-size:18px;letter-spacing:0.3px">
+                                <span style="color:#656d78;">SEC</span>
+                              </h2>
+                            </div>
+                            <!-- <div class=" uk-width-auto crs-breadCrumb flex flex-center--y">
+                              <div class="uk-breadcrumb">
+                                <li><a class="uk-icon-link" href="#0">Home</a></li>
+                                <li><a href="#0">Sec</a></li>
+                              </div>
+                            </div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="directoryWrapper" style="padding: 10px 70px;">
+                      <!-- CTA BUTTONS FOR THE SEC MAKER -->
+                      <div class="flex flex-100 uk-margin-small flex-justifyContent--x1">
+                        <%= if(!is_sec_checker()) { %>
+                          <a class="genCTA userSelectNone" href="javascript:void(0)"
+                            uk-toggle="target: #uploadandPreviewModal">Upload PV</a>
+                        <a class="genCTA userSelectNone" href="/client-letters" >Send Client Letters</a>
+                          <a class="genCTA userSelectNone" href="javascript:void(0)"
+                            uk-toggle="target: #maturedSecuritiesModal">Upload Matured Securities</a>
+                          <a class="genCTA userSelectNone brandGreen" href="/custodian">Current Quarter Report</a>
+                        <% }else{ %>
+                        <a class="genCTA userSelectNone" href="/client-letters" >Send Client Letters</a>
+                          <a class="genCTA userSelectNone brandGreen" href="/sec-report-preview">Current Quarter Report</a>
+                        <% } %>
+                      </div>
+                      <!-- CTA BUTTONS FOR THE SEC MAKER -->
+                      <div class="directoryWrapperInner">
+                        <!-- WORKSTATION ANALYTICS -->
+                        <section class="uk-grid-small uk-flex-center" uk-grid>
+                          <div class="uk-width-1-1">
+                            <article>
+                              <div
+                                class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser user-select base-bg--white">
+                                <div class="uk-grid" uk-grid>
+                                  <div class="uk-width-2-3">
+                                    <div class="" style="border:1px solid transparent">
+                                      <div class="jTable">
+                                        <div class="jTableRow">
+                                          <div class="jTableCell" style="font-weight:500;color:#0b2135">Reporting
+                                            Quarter:</div>
+                                          <div class="jTableCell" style="font-weight:500;color:#0b2135">
+                                            <%= shares.ReportingPeriod %>
+                                            (<%= quarter_name_from_date(shares.DateOfReport) %>)</div>
+                                        </div>
+                                      </div>
+                                      <div class="uk-margin-small-top">
+                                        <p class="text-color--primeDark uk-margin-remove">Names of substantial
+                                          shareholders(5&percnt; and
+                                          above)
+                                        </p>
+                                      </div>
+                                      <table
+                                        class="uk-table-stripped assetTableA uk-table uk-table-small uk-divider governanceTbl "
+                                        style="width:100%;padding:4px;margin-top:0!important;">
+                                        <thead class="dblHead" style="width:100%">
+                                          <th style="width:30%">Name</th>
+                                          <th style="width:20%">Shareholding</th>
+                                          <th style="width:15%">Percentage</th>
+                                        </thead>
+                                        <tr>
+                                          <td class="th_th" colspan="3">Ordinary Shares</td>
+                                        </tr>
+                                        <%= for (share) in shares.OrdinaryShares { %>
+                                        <tr>
+                                          <td class="text-fontWeight--light"><%= share.Name %></td>
+                                          <td class="uk-text-center"><%= format_with_comma(share.Shareholdings) %></td>
+                                          <td class="uk-text-center"><%= share.Percentage %></td>
+                                        </tr>
+                                        <% } %>
+                                        <tr>
+                                          <td class="th_th" colspan="3">Preference Shares</td>
+                                        </tr>
+                                        <%= for (share) in shares.PreferenceShares { %>
+                                        <tr>
+                                          <td class="text-fontWeight--light"><%= share.Name %></td>
+                                          <td class="uk-text-center"><%= format_with_comma(share.Shareholdings) %></td>
+                                          <td class="uk-text-center"><%= share.Percentage %></td>
+                                        </tr>
+                                        <% } %>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div class="uk-width-1-3">
+                                    <div style="border:1px solid #eeeeee;">
+                                      <header class="uk-padding-small" style="flex:1;height: 40px">
+                                        <div class="flex flex-center--y flex-100 h-100">
+                                          <h4 class="userSelectNone uk-margin-remove flex"
+                                            style="font-size:var(--baseFontSize);color:var(--hue-textPrime);font-weight:500">
+                                            Scheme</h4>
+                                        </div>
+                                      </header>
+                                      <section class="uk-margin-small-top flex-100 h-100">
+                                        <div class="userSelectNone flex flex-direction--column w-100 h-100"
+                                          style="flex:1;height:280px">
+                                          <canvas class="flex-100" id="schemeTrend"></canvas>
+                                        </div>
+                                      </section>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </article>
+                          </div>
+                        </section>
+                        <!-- WORKSTATION ANALYTICS END -->
+                        <!-- WORKSTATION TASK & ACTIVITIES -->
+                        <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid style="margin-top:25px;">
+                          <div class="uk-width-1-1">
+                            <article>
+                              <div
+                                class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                                <div class="flex flex-direction--column h-100 w-100">
+                                  <header class="flex" style="flex:1;height: 40px;justify-content: space-between">
+                                    <div class="flex flex-center--y flex-100 h-100">
+                                      <h4 class="userSelectNone uk-margin-remove flex"
+                                        style="font-size:calc(var(--baseFontSize)-1px);color:var(--hue-textPrime);font-weight:500;letter-spacing: 0.25">
+                                        Review Activity and Documents</h4>
+                                    </div>
+                                    <div style="padding:4px;width:17rem">
+                                      <form class=" userSearch jTableCell h-100" method="GET" action="javascript:void(0)"
+                                            style="width: 40%;">
+                                        <div class="uk-inline w-100 h-100 myInputWrapper">
+                                          <span class="uk-form-icon" uk-icon="icon:search; ratio:1"></span>
+                                          <input id="myInput" onkeyup="myFunction()" class="uk-input w-100 h-100" type="text"
+                                                 placeholder="Search activities" style="padding:4px;">
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </header>
+                                  <section class="uk-margin-small-top flex-100 h-100 scrollbar" style="max-height: 50vh;overflow-y:auto">
+                                    <%= if(len(recent_activities) == 0 ) {%>
+                                    <!-- EMPTY STATE -->
+                                    <div style="display:grid; place-content:center">
+                                      <h4 style="color:var(--hue-textPrime)">No Activity</h4>
+                                      </div>
+                                    <!-- END EMPTY STATE -->
+                                    <% }else{ %>
+                                    <div class="userSelectNone">
+                                      <table
+                                        class="uk-table-stripped assetTableA uk-table uk-table-small uk-divider unsetValue usersTbl" id="myTable">
+                                        <thead class="dblHead">
+                                          <th class="uk-text-left" style="width: 30%">Client</th>
+                                          <th class="uk-text-left">Date</th>
+                                          <th class="uk-text-left">Quarter</th>
+                                          <th class="uk-text-left">User</th>
+                                          <th class="uk-text-left">Activity</th>
+                                          <th class="uk-text-left" style="width:5%">Actions</th>
+                                        </thead>
+                                        <tbody>
+                                          <%= for(activity) in recent_activities {%>
+                                            <tr class="isClickable" data-href='url://'>
+                                              <%= if(activity.BPID != "") { %>
+                                              <td><%= activity.Client.Name %></td>
+                                              <% }else{ %>
+                                              <td>N/A</td>
+                                              <% } %>
+                                              <td><%= activity.Date.Format("02 January 2006, 15:04 PM") %></td>
+                                              <td><%= activities_quater(activity.QuarterDate) %></td>
+                                              <td><%= activity.User.Fullname %></td>
+                                              <td style="width:16%"><%= activity.Activity  %></td>
+                                              <td style="width:6%; text-align:center">
+                                                <%= if(activity.Activity == UploadScheme) {%>
+                                                  <a href='/scheme-pv?bpid=<%= activity.BPID %>&quarter=<%= activity.QuarterDate.Format("2006-01-02") %>'>View</a>
+                                                <% }else if(activity.Activity == UploadSecPV) {%>
+                                                  <a href='/audit-pv?bpid=<%= activity.BPID %>&quarter=<%= activity.QuarterDate.Format("2006-01-02") %>&type=sec'>View</a>
+                                                <% }else if(activity.Activity == UploadedMaturedSecurities) {%>
+                                                  <a href='/matured-securities?quarter=<%= activity.QuarterDate.Format("2006-01-02") %>'>View</a>
+                                                <% } %>
+                                              </td>
+                                            </tr>
+                                          <% } %>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <% } %>
+                                  </section>
+                                </div>
+                              </div>
+                            </article>
+                          </div>
+                        </section>
+                        <!-- WORKSTATION TASK & ACTIVITIES -->
+                      </div>
+                    </div>
+                  </main>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <%= if(is_sec_maker()) { %>
+  <!-- FILE UPLOAD AND PREVIEW MODAL -->
+  <div id="uploadandPreviewModal" class="uploadPreview uk-modal-full uploadablePVPage" uk-modal>
+    <div class="uk-modal-dialog">
+      <button class="uk-modal-close-default" type="button" uk-close @click="clearFileUploadContent"></button>
+      <div class="uk-modal-header">
+        <h4 class="uk-modal-title" style="font-size:24px;font-weight: 500;color: #0b2135;">
+          Preview and Upload PV Report</h4>
+      </div>
+      <form method="POST" enctype="multipart/form-data" v-on:submit.prevent="uploadDocument">
+        <div class="uk-modal-body" uk-overflow-auto style="padding: 10px 10px;">
+          <div class="uk-container uk-container-expand" style="padding: 5px;">
+            <div style="width: 95%;margin:0 auto;">
+              <div class="uk-grid" uk-grid>
+                <div class="uk-width-1-1">
+                  <input type="hidden" ref="pvTypeInput" value="sec" />
+                  <div>
+                    <section v-show="!hasLoadedExcelFile">
+                      <div style="display: grid;place-content: center;" v-if="loadingFiles">
+                        <p>Loading ...</p>
+                      </div>
+                      <div class="js-upload uk-placeholder uk-text-center userSelectNone" v-else>
+                        <span uk-icon="icon: cloud-upload"></span>
+                        <span class="uk-text-middle">Attach files by </span>
+                        <div uk-form-custom>
+                          <input type="file" name="document" @change="onFileChange" multiple accept=".xlsx,.xls" />
+                          <span class="uk-link">selecting one</span>
+                        </div>
+                      </div>
+                    </section>
+                    <section class="previewWindow">
+                      <aside style="width: 400px;display: none;">
+                        <div class="form_group" style="visibility: hidden">
+                          <label class="jLabel">Enter Cash Balance for Summary</label>
+                          <input type="number" class="uk-input" v-model="cashBalance" step="0.01"/>
+                        </div>
+                      </aside>
+                      <template v-if="hasLoadedExcelFile">
+                        <template v-if="hasLoadedExcelAsList">
+                          <excel-data-list :reports="excelFileList"/>
+                        </template>
+                        <template v-else>
+                          <excel-data-preview :reports="excelFileData"/>
+                        </template>
+                      </template>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="uk-modal-footer uk-text-right flex" style="justify-content:flex-end" v-if="!loadingFiles">
+          <button class="uk-button uk-button-default uk-modal-close" type="button"
+                  @click="clearFileUploadContent" style="margin-right:10px;" :disabled="loading">Cancel</button>
+          <button class="has-loader" type="submit" :disabled="loading" v-if="excelFileData.length">
+            <span class="submit">Upload</span>
+            <span class="loading">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path fill="#ffffff" d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>
+              <path d="M0 0h24v24H0z" fill="none"/></svg>
+          </span>
+            <span class="check">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0z"/>
+              <path fill="#ffffff" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+            </svg>
+          </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- FILE UPLOAD AND PREVIEW MODAL END -->
+
+  <div id="maturedSecuritiesModal" class="maturedSecuritiesApp" uk-modal style="padding-top: 25px;padding-left: 40px; padding-right: 40px;">
+    <div class="uk-modal-dialog" style="width: unset">
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <div class="uk-modal-header">
+        <h4 class="uk-modal-title" style="font-size:24px;font-weight: 500;color: #0b2135;">
+          Preview and Upload Matured Securities</h4>
+      </div>
+      <form method="POST" enctype="multipart/form-data" v-on:submit.prevent="uploadDocument">
+        <div class="uk-modal-body" uk-overflow-auto style="padding: 10px 10px;">
+          <div class="uk-container uk-container-expand" style="padding: 5px;">
+            <div style="width: 95%;margin:0 auto;">
+              <div class="uk-grid" uk-grid>
+                <div class="uk-width-1-1">
+                  <div>
+                    <section v-if="!hasLoadedExcelFile">
+                      <div class="js-upload uk-placeholder uk-text-center userSelectNone">
+                        <span uk-icon="icon: cloud-upload"></span>
+                        <span class="uk-text-middle">Attach files by </span>
+                        <div uk-form-custom>
+                          <input type="file" name="document" @change="onFileChange" multiple accept=".xlsx,.xls" />
+                          <span class="uk-link">selecting one</span>
+                        </div>
+                      </div>
+                    </section>
+                    <section class="previewWindow" v-else>
+                      <table class="uk-table excelData auditExcelDataTable" style="margin-top: 22px">
+                        <thead>
+                        <tr>
+                          <th colspan="9" rowspan="3" style="text-align: center">
+                            <div style="font-size: 18px">MATURED SECURITIES REPORT WITH NON-RECEIPT OF FUNDS OR RE-INVESTMENT COMMUNICATION</div>
+                          </th>
+                        </tr>
+                        </thead>
+                        <tr class="securityCols">
+                          <th>{{header[0]}}</th>
+                          <th>{{header[1]}}</th>
+                          <th>{{header[2]}}</th>
+                          <th>{{header[3]}}</th>
+                        </tr>
+                        <tbody>
+                        <tr class="securityColsData" v-for="(security,key) in maturedSecurities" :key="key">
+                          <td>{{security[0]}}</td>
+                          <td>{{security[1]}}</td>
+                          <td>{{security[2]}}</td>
+                          <td>{{security[3]}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="uk-modal-footer uk-text-right flex" style="justify-content:flex-end">
+          <button class="uk-button uk-button-default uk-modal-close" type="button" style="margin-right:10px;" :disabled="loading">Cancel</button>
+          <button class="has-loader" type="submit" :disabled="loading" v-if="maturedSecurities.length">
+            <span class="submit">Upload</span>
+            <span class="loading">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path fill="#ffffff" d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>
+              <path d="M0 0h24v24H0z" fill="none"/></svg>
+          </span>
+            <span class="check">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0z"/>
+              <path fill="#ffffff" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+            </svg>
+          </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <% } %>
+  <%= partial("./partials/footer.html") %>
+  <%= partial("./partials/system.html") %>
+  <%= javascriptTag("portal.js") %>
+  <%= javascriptTag("matured_securities.js") %>
+  <script src="scripts/uikit.min.js"></script>
+  <script src="scripts/uikit-icons.min.js"></script>
+  <script src="scripts/chart.js"></script>
+  <script>
+    // CANVAS SETUP
+    let setup = canvas => {
+      let context, dpr;
+      context = canvas.getContext("2d");
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.style.marginTop = '5px';
+      dpr = window.devicePixelRatio || 1.4;
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      context.scale(dpr, dpr);
+      return context;
+    };
+    // CHARTS
+    // Chart.defaults.global.legend.display = false;
+    // Chart.defaults.global.tooltips.enabled = false;
+    let schemeTrend = setup(document.querySelector('#schemeTrend'));
+    new Chart(schemeTrend, {
+      type: 'bar',
+      data: {
+        labels: ["Uploaded Schemes" ],
+        datasets: [{
+            labels: ['Completed'],
+            data: [ <%= scheme_submission_details %>],
+            borderColor: "#ffffff",
+            fill: true,
+            backgroundColor: '#0277bd'
+          }
+        ]
+      },
+      options: {
+        legend: {
+          display: false,
+          labels: {
+            fontColor: '#0b2135',
+            fontSize: 15,
+            fontFamily: "'Helvetica', 'Arial'",
+          }
+        },
+        plugins: {
+          datalabels: {
+            formatter: (value, ctx) => {
+              let datasets = ctx.chart.data.datasets;
+
+              if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+                let sum = 0;
+                datasets.map(dataset => {
+                  sum += dataset.data[ctx.dataIndex];
+                });
+                let percentage = (value * 100 / sum).toFixed(2) + "%"
+                return percentage;
+              } else {
+                return percentage;
+              }
+            },
+            color: '#fff',
+          }
+        },
+        scales: {
+          xAxes: [{
+            stacked: true,
+          }],
+          yAxes: [{
+            stacked: true,
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        },
+        tooltips: {
+          mode: 'index',
+          intersect: false,
+          callbacks: {
+            label: function (tooltipItem, data) {
+              var dataset = data.datasets[tooltipItem.datasetIndex];
+              var index = tooltipItem.index;
+              return dataset.labels[index] + ': ' + dataset.data[index];
+            }
+          }
+        },
+        layout: {
+          padding: {
+            left: 35,
+            right: 35,
+            top: 0,
+            bottom: 0
+          }
+        }
+      }
+    });
+  </script>
+  <script>
+      function myFunction() {
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("myTable");
+          tr = table.getElementsByTagName("tr");
+          for (i = 0; i < tr.length; i++) {
+              td = tr[i].getElementsByTagName("td")[0];
+              if (td) {
+                  txtValue = td.textContent || td.innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                      tr[i].style.display = "";
+                  } else {
+                      tr[i].style.display = "none";
+                  }
+              }
+          }
+      }
+  </script>
+</body>
+
+</html>

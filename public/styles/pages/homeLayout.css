@@ -1,0 +1,333 @@
+:root {
+  --alertPane: 410px;
+  --baseSize: 61px;
+  --minHeight: 92.5vh;
+}
+
+.homeLayoutWrapper {
+  padding: 1px;
+}
+
+.homeLayoutWrapper .alertAside {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+.homeLayoutWrapper .alertAside nav {
+  position: sticky;
+  top: 0;
+  height: 52px;
+  padding: 0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-size: 15px;
+}
+
+/* DETAILS/SORT REGION */
+.homeLayoutWrapper .alertAside nav .sortDetailActivityRegion {
+  width: var(--alertPane);
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  flex-wrap: nowrap;
+}
+
+/* Files Section */
+
+/* Layout */
+.HLlayout {
+  display: flex;
+  width: 100%;
+  min-height: var(--minHeight);
+  position: relative;
+  flex-direction: row;
+}
+
+.HLlayout__content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-height: 89vh;
+  padding: 8px;
+  overflow-y: auto;
+  background-color: #f2f8fb;
+}
+
+/* Sidebar */
+.HLsidebar__trigger {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3em;
+  background: #192b3c;
+}
+
+.HLsidebar__nav {
+  position: sticky;
+  top: 0;
+  left: -15em;
+  overflow: hidden;
+  transition: all 0.3s ease-in;
+  width: calc(var(--alertPane) - 30px);
+  height: 100%;
+  background: var(--hue-lght, #ffffff);
+  color: #0b2135;
+  box-shadow: 1px 13px 20px 0px rgba(125, 125, 135, 0.45);
+}
+
+.HLsidebar__nav:hover,
+.HLsidebar__nav:focus,
+.HLsidebar__trigger:focus + .HLsidebar__nav,
+.HLsidebar__trigger:hover + .HLsidebar__nav {
+  left: 0;
+}
+
+.HLsidebar__nav ul {
+  position: absolute;
+  top: 4em;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.sideBarLinkWrapper {
+  /* height: 40px; */
+  height: auto;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  width: 99%;
+}
+
+/* Mobile First */
+@media (min-width: 42em) {
+  .HLlayout__content {
+    margin-left: 4em;
+  }
+
+  /* Sidebar */
+  .HLsidebar__trigger {
+    width: 4em;
+  }
+
+  .HLsidebar__nav {
+    width: 4em;
+    left: 0;
+  }
+
+  .HLsidebar__nav:hover,
+  .HLsidebar__nav:focus,
+  .HLsidebar__trigger:hover + .HLsidebar__nav,
+  .HLsidebar__trigger:focus + .HLsidebar__nav {
+    width: calc(var(--alertPane) - var(--baseSize));
+  }
+}
+
+@media (min-width: 68em) {
+  .HLlayout__content {
+    margin-left: 2px;
+  }
+
+  /* Sidebar */
+  .HLsidebar__trigger {
+    display: none;
+  }
+
+  .HLsidebar__nav {
+    width: calc(var(--alertPane) - var(--baseSize));
+  }
+
+  .HLsidebar__nav ul {
+    top: 1.3em;
+  }
+}
+
+/* INDIVIDUAL STYLES */
+.genDash {
+  height: 93vh;
+  background-color: white;
+}
+
+.genDash .crs-authPage {
+  margin-top: 2px;
+}
+/* GENDASH SIDEBAR */
+.genDash .HLsidebar__nav {
+  display: flex;
+  flex-direction: column;
+}
+.genDash .HLTopSection {
+  flex: 1;
+  padding: 0 1px;
+  display: flex;
+  flex-direction: column;
+  max-height: 56%;
+  overflow-y: auto;
+  height: 56%;
+  border-bottom: 1px solid #d8dbd9;
+}
+.genDash .HLTopSection.quarterData {
+  max-height: 100%;
+}
+.genDash .HLTopSection header {
+  display: flex;
+  align-items: center;
+  height: 35px;
+  padding: 5px;
+  box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.024);
+  user-select: none;
+}
+
+.genDash .HLTopSection header .headerText {
+  color: var(--hue-textPrime, #0b2135);
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  padding-left: 5px;
+}
+.genDash .HLAlertTbl {
+  margin: 0;
+}
+.genDash .HLAlertTbl,
+.genDash .HLAlertTbl tr th,
+.genDash .HLAlertTbl tr td,
+.excelData,
+.excelData tr th,
+.excelData tr td {
+  padding: 2px;
+  border: 1px solid #d8d9db;
+  font-size: 15px;
+  letter-spacing: 0.25px;
+  cursor: pointer;
+  font-family: "Calibri";
+  color: var(--hue-textPrime, #0b2135);
+}
+.excelData,
+.excelData tr th {
+  border-bottom: none;
+}
+.excelDataSummary,
+.excelDataSummary tr:not(.securityCols) th {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+/* EXCEL PREVIEW STYLING */
+#uploadandPreviewModal.uk-modal-full {
+  background: rgba(0, 0, 0, 0.6);
+}
+@media (min-width: 960px) {
+  #uploadandPreviewModal.uk-modal-full {
+    padding-top: 25px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+#uploadandPreviewModal .uk-dialog {
+  box-shadow: 0 4px 20px 7px rgba(125, 125, 125, 0.3);
+}
+#uploadandPreviewModal .uk-placeholder {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 60px 50px;
+  border: 2px dashed #e5e5e5;
+}
+#uploadandPreviewModal .uk-progress {
+  height: 10px;
+  border-radius: 10px;
+}
+
+.excelData,
+.excelData tr th,
+.excelData tr td {
+  cursor: default;
+}
+.excelData thead tr th div {
+  font-weight: bold;
+  letter-spacing: 0.55px;
+}
+.excelData thead tr th div:first-child {
+  font-size: 22px;
+}
+.excelData thead tr th div:nth-child(2) {
+  font-size: 18px;
+  text-transform: capitalize;
+}
+.excelData thead tr th div:nth-child(3):not(.clientName) {
+  font-size: 16px;
+  text-transform: capitalize;
+}
+.excelData tr.securityHead th,
+.excelData tr.securityCols th {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.25px;
+  border-top: none;
+}
+.excelData tr.securityCols th {
+  font-size: 14px;
+  background: #e7f3fd;
+  border: none;
+  border-top: 1px solid #313135;
+  border-bottom: 1px solid #313135;
+}
+.excelData tr.securityCols th:not(:first-child) {
+  text-align: right;
+}
+.excelData tbody tr td:not(:first-child) {
+  text-align: right;
+}
+.excelDataSummary {
+  margin-top: 20px;
+}
+.excelDataSummary tr.securityHead th {
+  text-transform: capitalize;
+  text-align: center;
+}
+.excelData.excelDataSummary tbody tr.securityColsData td:first-child {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 600;
+}
+.excelData.excelDataSummary tbody tr.securityColsData:last-child td {
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 700;
+}
+/* END EXCEL PREVIEW */
+
+/* GENDASH GENERAL CARDS OVERVIEW */
+#genDashMain .crs-authPage--innerContent .crs-quarterCta {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+  margin-top: calc(var(--baseFontSize) - 4px);
+}
+#genDashMain
+  .crs-authPage--innerContent
+  .uk-card-body.uk-card-bodyPaddingLesser {
+  --dx: 0px;
+  padding: 9px !important;
+}
+#genDashMain .crs-authPage--innerContent .crs-quarterMonthRange {
+  font-family: var(--titleFont);
+  color: #0b2135;
+  font-size: calc(var(--baseFontSize) + 2px);
+  margin: 0;
+  font-weight: bold;
+}
+/* #genDashMain .crs-authPage--innerContent .crs-quarterStatus {
+  width: 99px;
+  justify-content: flex-start;
+  margin-top: 5px;
+} */
+#genDashMain .crs-quarterStatus .crs-statusLabel {
+  font-size: calc(var(--baseFontSize) - 4px) !important;
+  height: 23px !important;
+}

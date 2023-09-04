@@ -1,0 +1,85 @@
+:root {
+  --threshold: 0px;
+}
+
+/* body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+body::after {
+  pointer-events: none;
+  box-sizing: border-box;
+  position: fixed;
+  width: calc(100vw - (var(--threshold) + var(--threshold)));
+  height: calc(100vh - (var(--threshold) + var(--threshold)));
+  z-index: 0;
+  content: "";
+  top: var(--threshold);
+  left: var(--threshold);
+} */
+#scrollContainer {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  /* justify-content: center; */
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+#scrollContainer::after{
+  pointer-events: none;
+  box-sizing: border-box;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  content: "";
+  /* top: var(--threshold); */
+  /* left: var(--threshold); */
+}
+
+.rd-container {
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  z-index: 10;
+}
+
+.rd-sections {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+.rd-section {
+  position: relative;
+  list-style: none;
+  background-color: #fff;
+  border: 2px solid purple;
+  overflow: hidden;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.rd-marker {
+  position: absolute;
+  width: 100%;
+  background-color: rgba(33, 150, 243, 0.2);
+  border: 2px solid #2196f3;
+  box-sizing: border-box;
+}
+
+.rd-clone {
+  box-sizing: border-box;
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+  display: block;
+}
+.dg.ac {
+  z-index: 10000 !important;
+}

@@ -1,0 +1,68 @@
+.crs-LoginApp-root {
+  height: 100vh;
+  background: url("../../media/standardChartered\ \(2\).jpg");
+  background-size: cover;
+  overflow: hidden;
+}
+.crs-scbStripe::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  transform: rotate(180deg);
+  background-image: var(--brand-StripImage);
+  background-size: 100% 10px;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+}
+
+.crs-LoginRoot {
+  height: 100%;
+  padding: 60px 0 60px 0;
+  z-index: var(--baseStack);
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.crs-LoginContainer {
+  z-index: var(--baseStackHeader);
+  user-select: none;
+}
+.crs-form__title--back {
+  flex: 1;
+  font-size: 50px;
+  line-height: 57px;
+  color: var(--hue-lght);
+  letter-spacing: 0.15px;
+  max-width: 425px;
+  font-weight: bold;
+  margin-top: 100px;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.55);
+}
+.crs-LoginContainer .formSection {
+  background-color: rgba(255, 255, 255, 0.95);
+  background-image: var(--brand-StripImage);
+  background-size: 100% 10px;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  box-shadow: var(--box-shadowSm);
+}
+.crs-LoginContainer .crs-LoginLabel {
+  font-size: 52px;
+  font-weight: lighter;
+  text-align: left;
+}
+.crs-accessWarning {
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 0, 0.55);
+  padding: 8px;
+  margin-top: 10px;
+}
+
+
+
+/*CUSTOM POP-TOAST*/
+
+/*END CUSTOM POP-TOAST*/

@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — SEC Reports</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="/media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <meta name="csrf-token" content="<%= authenticity_token %>"/>
+  <style>
+    .crs--content {
+      counter-reset: contentSlideCount articleHeading;
+    }
+
+    .pageNumCount {
+      margin-left: 5px;
+      width: 15px;
+      text-align: center;
+      color: #999999;
+      font-size: 14px;
+      font-weight: 500;
+      counter-increment: contentSlideCount;
+    }
+
+    .pageNumCount::before {
+      content: counter(contentSlideCount);
+    }
+
+    .documentSection .contentTitle {
+      font-weight: 500;
+      color: var(--hue-textPrime);
+      font-size: 18px;
+      counter-increment: articleHeading;
+      text-decoration: underline;
+      letter-spacing: 0.25px;
+    }
+
+    .documentSection:not(:last-child) .contentTitle::before {
+      content: counter(articleHeading) ".";
+    }
+
+    .secRep {
+      color: var(--hue-textPrime);
+      font-size: 16px;
+    }
+
+    .secRep .jTable {
+      color: var(--hue-textPrime);
+      font-size: 16px;
+    }
+
+    .secRep .jTable .jTableRow {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      height: 30px;
+    }
+
+    .secRep .jTable .jTableCell:nth-child(2) {
+      text-decoration: underline;
+      padding-left: 30px;
+    }
+
+    .qstn {
+      margin: 15px 0;
+      color: #313135;
+    }
+
+    .qstn .answer {
+      font-weight: 500;
+      color: #0b2135;
+      background-color: rgba(234, 221, 6, 0.9);
+      text-transform: capitalize
+    }
+
+    .review_comments_wrapper span {
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 0.25px;
+      margin: 5px 0;
+    }
+
+    .review_comments p {
+      letter-spacing: 0.25px;
+      color: var(--hue-textPrime);
+    }
+  </style>
+</head>
+
+<body style="overflow:hidden;">
+<div class="root secReportPage">
+  <div class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content">
+      <div class="uk-container uk-container-expand" style="padding:4px;">
+        <div class="crs-authPage--content w-100 uk-margin">
+          <div class="crs-authPage--innerContent uk-margin">
+            <article style="height: 86vh;padding:2px;overflow:auto;scroll-behavior:auto;">
+              <section class="uk-container" style="max-width:1240px;">
+                <div class="flex uk-margin-small-bottom jSticky" style="top:-3px;height:50px;">
+                  <div class="flex-100 flex flex-center--y">
+                    <button class="backBtn uk-padding-remove flex flex-center--y" onclick="goBack()">
+                      <span uk-icon="icon:  chevron-left; ratio: 1.3" style="color:#223CA9"></span>
+                      <span style="padding-left: 5px;">Back</span>
+                    </button>
+                    <h2 class="uk-margin-remove" style="font-size:20px;letter-spacing:0.3px">
+                      <span style="color:#656d78">SEC Report</span>
+                    </h2>
+                  </div>
+                </div>
+                <article class="uk-flex-center userSelectNone">
+                  <ul class="uk-flex-center jSticky" uk-tab style="top:45px;height:35px;">
+                    <li class="uk-active"><a href="#quarterlyReport">Quarterly Report</a></li>
+                    <li><a href="#">Scheme</a></li>
+                    <li><a href="#">Offshore Clients</a></li>
+                    <li><a href="#">Local Variance</a></li>
+                    <li><a href="#">Foreign Variance</a></li>
+                    <li><a href="#">Matured Securities</a></li>
+                  </ul>
+                  <ul class="uk-switcher">
+                    <!-- QUARTERLY TAB -->
+                    <li>
+                      <div class="flex flex-direction--row flex-justifyContent--x1" style="
+                    margin-bottom:6px;padding:2px 30px;">
+                        <form @submit.prevent="loadQuarterlyReport">
+                          <select class="uk-select" style="width:200px;" v-model="quarterlyReportSearchData.quarter">
+                            <%= partial("./partials/quarters.html") %>
+                          </select>
+                          <select class="uk-select" style="width:200px;" v-model="quarterlyReportSearchData.year">
+                            <%= partial("./partials/years.html") %>
+                          </select>
+                          <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                                  style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 2px;padding: 7px 20px!important;line-height: initial;font-weight: 501">
+                            Load
+                          </button>
+                        </form>
+                        <button class="uk-button uk-padding-remove flex flex-center--x flex-center--y"
+                                style="font-size: 13px;background-color:#d2F4FB;color:#223CA9;text-transform:initial;width:120px;"
+                                @click="exportSecQuarterlyReport" v-if="quarterlyReport.report.approved">
+                          <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                          <span style="padding-left: 5px;">Export word</span>
+                        </button>
+                      </div>
+                      <article class="uk-container" style="max-width:1240px;">
+                        <article class="uk-grid uk-grid-stack" uk-grid>
+                          <section class="uk-width-1-1">
+                            <div class="uk-card uk-card-default userSelectNone secRep"
+                                 style="height: auto;padding:40px;">
+                              <div class="h-100 flex flex-direction--column">
+                                <div style="height:50px;">
+                                  <div class=""
+                                       style="flex:1;align-items:center;text-align: center;font-weight: 500;font-size:17px;color:var(--hue-textPrime);">
+                                    CUSTODIAN/TRUSTEE QUATERLY/ANNUAL REPORT
+                                  </div>
+                                  <div class=""
+                                       style="flex:1;align-items: center;text-align: center;font-weight: 500;font-size:14px;color:var(--hue-textPrime);">
+                                      {{quarterlyReport.quarterDate}}
+                                  </div>
+                                </div>
+                                <article class="flex-100 articleTOCount" style="margin-bottom:10px;">
+                                  <article>
+                                    <div class="jTable">
+                                      <div class="jTableRow">
+                                        <div class="jTableCell">Name of
+                                          Custodian/Trustee
+                                        </div>
+                                        <div class="jTableCell text-color--primeDark">
+                                            {{quarterlyReport.report.custodianName}}
+                                        </div>
+                                      </div>
+                                      <div class="jTableRow">
+                                        <div class="jTableCell">Reporting Period&#58;</div>
+                                        <div class="jTableCell">{{quarterlyReport.reportingPeriod}}</div>
+                                      </div>
+                                      <div class="jTableRow">
+                                        <div class="jTableCell">Reporting
+                                          officer(and designation)&#58;
+                                        </div>
+                                        <div class="jTableCell">{{quarterlyReport.report.reportingOfficer}}
+                                        </div>
+                                      </div>
+                                      <div class="jTableRow">
+                                        <div class="jTableCell">Date of
+                                          report&#58;
+                                        </div>
+                                        <div class="jTableCell">{{quarterlyReport.report.dateOfReport}}
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <section class="uk-margin-small">
+                                      <div>Date of renewal of registration with the
+                                        SEC: <span>{{secReportRegistrationRenewalDate}}</span></div>
+                                      <div style="font-weight:bold;font-style:italic"><span
+                                                class="">NOTE&#58;&nbsp;</span>The
+                                        term 'as at the end of period'
+                                        refers to the entire life span of the scheme
+                                        and 'for the period/quarter' refers to
+                                        the quarter under review <span style="text-decoration:underline">only</span>
+                                      </div>
+                                    </section>
+                                    <!-- GOVERNANCE -->
+                                    <article class="documentSection">
+                                      <div class="contentTitle">Governance</div>
+                                      <p class="text-color--primeDark">Names of
+                                        substantial shareholders(5&percnt; and
+                                        above)
+                                      </p>
+                                      <div style="width: 70%">
+                                        <table class="assetTableA uk-table uk-table-small uk-divider governanceTbl"
+                                               style="width:100%" style="padding:4px;">
+                                          <thead class="dblHead" style="width:100%">
+                                          <th style="width:30%">Name</th>
+                                          <th style="width:20%">Shareholding</th>
+                                          <th style="width:20%">Percentage</th>
+                                          </thead>
+                                          <tr>
+                                            <td class="th_th" colspan="3">
+                                              Ordinary Shares
+                                            </td>
+                                          </tr>
+                                          <tr v-for="(report,key) in quarterlyReport.report.ordinaryShares"
+                                              :key="'d'+key">
+                                            <td class="text-fontWeight--light">
+                                                {{report.name}}
+                                            </td>
+                                            <td class="uk-text-center">{{report.shareholding}}
+                                            </td>
+                                            <td class="uk-text-center">{{report.percentage}}
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td class="th_th" colspan="3">
+                                              Preference Shares
+                                            </td>
+                                          </tr>
+                                          <tr v-for="(report,key) in quarterlyReport.report.preferenceShares"
+                                              :key="'e'+key">
+                                            <td class="text-fontWeight--light">
+                                                {{report.name}}
+                                            </td>
+                                            <td class="uk-text-center">{{report.shareholding}}
+                                            </td>
+                                            <td class="uk-text-center">{{report.percentage}}
+                                            </td>
+                                          </tr>
+                                        </table>
+                                      </div>
+                                      <div class="questionSection">
+                                        <div class="qstn">
+                                          <span>(a).</span>
+                                          <span>Have there been any changes in directors of the Custodian/Trustee
+                                              during
+                                              the
+                                              period? Yes/No (if yes, attach details if
+                                              the SEC is not yet notified)</span>
+                                          <span class=" text-cap"> {{quarterlyReport.report.changeInDirectors}}</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(b).</span>
+                                          <span>
+                                        Have there been any changes in custody/trustee agreement during the period?
+                                        Yes/No
+                                        (if yes, attach details if the SEC is
+                                        not yet notified)
+                                      </span>
+                                          <span class=" text-cap"> {{quarterlyReport.report.changeInAgreement}}</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(c).</span>
+                                          <span>
+                                        Have all dealings between the schemes and their managers and/or manager’s
+                                        affiliates been appropriately
+                                        approved by the
+                                        board of directors or Trustee?
+                                      </span>
+                                          <span class=" text-cap"> {{quarterlyReport.report.dealingsApprovedByBoard}}</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(d).</span>
+                                          <span>
+                                        Does the Custodian/Trustee have an updated asset register of the schemes under
+                                        its custody?
+                                      </span>
+                                          <span class=" text-cap"> {{quarterlyReport.report.custodianHasUpdatedAssetRegister}}</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(e).</span>
+                                          <span>
+                                        If yes for d above, when was the last update done?
+                                      </span>
+                                          <span class=" text-cap"> {{formatDate(quarterlyReport.report.custodianAssetRegistrationDate,"Do MMMM YYYY")}}</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(f).</span>
+                                          <span>
+                                        Do managers of the schemes consult the Custodian/Trustee in matters requiring
+                                        the Custodian/Trustee’s approval as
+                                        specified in the Law and regulations?
+                                      </span>
+                                          <span class=" text-cap"> {{quarterlyReport.report.doManagersOfTheSchemeConsultTheLaw}}</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(g).</span>
+                                          <span>
+                                        Did the schemes have any other financial dealings, apart from custodian or
+                                        trustee relationship, with the custodian
+                                        and/or its affiliates during the period? (If yes, provide details in the table
+                                        below)
+                                      </span>
+                                          <span class=" text-cap"> {{quarterlyReport.report.schemeHadAnyOtherFinancialDealings}}</span>
+                                        </div>
+                                        <div class="qstn uk-margin-small-top">
+                                            <span>1g(i).&nbsp; Transactions with custodian/trustee and/or affiliates for
+                                              the
+                                              period</span>
+                                          <div class="uk-margin-small-top">
+                                            <table class="assetTableA uk-table uk-table-small uk-divider"
+                                                   style="width:100%" style="padding:4px;">
+                                              <thead class="dblHead" style="width:100%">
+                                              <th style="width:27%;vertical-align:middle">
+                                                Name of
+                                                (custodian/trustee/Affiliate)
+                                              </th>
+                                              <th style="width:27%;vertical-align:middle">
+                                                Relationship with
+                                                custodian/trustee
+                                              </th>
+                                              <th style="width: 15%;vertical-align:middle">
+                                                Type of transaction
+                                              </th>
+                                              <th style="width: 15%;vertical-align:middle">
+                                                Amount involved
+                                              </th>
+                                              </thead>
+                                              <tbody class="bodyTbl">
+                                              <!-- the key here is different from the one at the backed -->
+                                              <tr v-for="(report,key) in quarterlyReport.report.affiliateTransactions"
+                                                  :key="'f'+key">
+                                                <td style="text-align: center">
+                                                    {{report.nameOfAffiliate}}
+                                                </td>
+                                                <td style="text-align: center">
+                                                    {{report.relationshipWithCustodian}}
+                                                </td>
+                                                <td style="text-align: center">
+                                                    {{report.typeOfTransaction}}
+                                                </td>
+                                                <td style="text-align: center">
+                                                    {{report.amount}}
+                                                </td>
+                                              </tr>
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                        </div>
+                                        <div class="qstn uk-margin-small-top">
+                                            <span>1h.&nbsp;State the value and volume of
+                                              shares/units held by the following in
+                                              schemes under your custody</span>
+                                          <table class="assetTableA uk-table uk-table-small uk-divider"
+                                                 style="width:100%" style="padding:4px;">
+                                            <thead class="dblHead" style="width:100%">
+                                            <th style="width:18%;vertical-align:middle">
+                                              Name of firm
+                                            </th>
+                                            <th style="width:17%;vertical-align:middle">
+                                              Name of scheme
+                                            </th>
+                                            <th style="width:20%;vertical-align:middle">
+                                              Relationship with trustee
+                                            </th>
+                                            <th style="width: 15%;vertical-align:middle">
+                                              Volume
+                                            </th>
+                                            <th style="width: 15%;vertical-align:middle">
+                                              Marked to market value
+                                            </th>
+                                            </thead>
+                                            <tbody class="bodyTbl">
+                                            <!-- the key here is different from the one at the backed -->
+                                            <tr v-for="(report,key) in quarterlyReport.report.valueVolumeOfShares"
+                                                :key="'g'+key">
+                                              <td style="text-align: center">
+                                                  {{report.nameOfFirm}}
+                                              </td>
+                                              <td style="text-align: center">
+                                                  {{report.nameOfScheme}}
+                                              </td>
+                                              <td style="text-align: center">
+                                                  {{report.relationshipWithCustodian}}
+                                              </td>
+                                              <td style="text-align: center">
+                                                  {{report.volume}}
+                                              </td>
+                                              <td style="text-align: center">
+                                                  {{report.markedToMarketValue}}
+                                              </td>
+                                            </tr>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                    </article>
+                                    <!-- END GOVERNANCE -->
+                                    <!-- SCHEME DETAILS -->
+                                    <article class="documentSection uk-margin-small-top">
+                                      <div class="contentTitle">Scheme details</div>
+                                      <div class="scrolly_table scrolling_table_2 scrollbar" id="scrolling_table_2">
+                                        <table
+                                                class="freezePane assetTableA uk-table uk-table-small uk-divider w-100 previewMonthTable">
+                                          <tr>
+                                            <th class="fixed freeze">Name of
+                                              Scheme
+                                            </th>
+                                            <th class="fixed freeze_vertical"
+                                                v-for="(scheme,key) in quarterlyReport.schemes" :key="'h'+key">
+                                                {{scheme.nameOfScheme}}
+                                            </th>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              No. of shares outstanding
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'i'+key">{{scheme.numberOfSharesOutstanding}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              No. of sharesholders
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'j'+key">{{scheme.numberOfShareholders}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Redemptions for the period
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes" :key="'k'+key">
+                                              <div>
+                                                <strong>Volume:&nbsp;</strong>{{formatMoney(scheme.numberOfRedemptions)}}
+                                              </div>
+                                              <div>
+                                                <strong>Value:&nbsp;</strong>{{scheme.valueOfRedemptions}}
+                                              </div>
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Name of managers
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'l'+key">{{scheme.nameOfManager}}</td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <th class="fixed freeze_horizontal">
+                                              Total value of scheme's assets
+                                            </th>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Net asset value of scheme
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'m'+key">{{scheme.netAssetValueOfScheme}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Net asset value per share/unit
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'n'+key">{{parseFloat(scheme.netAssetValuePerShare)}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Total (value) equity investments
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'o'+key">{{scheme.totalEquityInvestments}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Total (value) fixed income
+                                              investments
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'p'+key">{{scheme.totalFixedIncomeInvestments}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Net of medium term assets held
+                                              by fund (Debt securities 1- 4
+                                              year)No. of shares outstanding
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'q'+key">{{scheme.netOfMediumTermAssetsHeldByFund}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              OTHERS
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes" :key="'r'+key"></td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <th class="fixed freeze_horizontal">
+                                              Capital market
+                                              investments
+                                            </th>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              &percnt; of Capital Market
+                                              investment to total investments
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'s'+key">{{scheme.percentageOfCapitalInvestmentToTotalInvestment}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Are all certificates of
+                                              investment with
+                                              custodian/trustee? Yes/No
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'t'+key">{{scheme.areAllCertificatesOfInvestmentWithCustodian}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Total value of unutilized funds
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'u'+key">{{scheme.totalValueOfUnutilizedFunds}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Value of borrowed funds
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'v'+key">{{scheme.valueOfBorrowedFunds}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Reasons for borrowing
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'w'+key">{{scheme.reasonsForBorrowing}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Were all duly prepared accounts
+                                              distributed to appropriate
+                                              authorities?
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'x'+key">{{scheme.wereAllDulyPreparedAccountsDistributed}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <th class="fixed freeze_horizontal">
+                                              Outstanding
+                                            </th>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes" :key="'y'+key"></td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Redemptions
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'z'+key">{{scheme.redemptions}}</td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Dividends/Interests/Capital
+                                              gains
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'A'+key">{{scheme.dividends}}</td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Rights/bonus issues/stock splits
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'B'+key">{{scheme.rights}}</td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Fees owed custodian/trustee
+                                            </td>
+                                            <td v-for="(scheme,key) in quarterlyReport.schemes"
+                                                :key="'C'+key">{{scheme.feesOwedCustodian}}
+                                            </td>
+                                          </tr>
+                                        </table>
+                                      </div>
+                                    </article>
+                                    <!-- END SCHEME DETAILS -->
+                                    <!-- OTHER INFORMATION -->
+                                    <article class="documentSection uk-margin-small-top">
+                                      <div class="contentTitle">Other information
+                                      </div>
+                                      <div class="questionSection">
+                                        <div class="qstn">
+                                          <span>(a).</span>
+                                          <span>Are there any claims (in the form of collateral) on any scheme’s
+                                              assets?</span>
+                                          <span class="answer ">
+                                              {{quarterlyReport.info.areThereAnyClaimOnSchemeAsset}}</span>
+                                          <span>(if yes, attach details e.g. assets/amounts involved, claimants,
+                                              maturity, etc)</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(b).</span>
+                                          <span>If yes to a above, was the custodian/trustee appropriately informed
+                                              and
+                                              approval given before assets were
+                                              collateralized?</span>
+                                          <span
+                                                  class="answer">{{quarterlyReport.info.yesWasCustodianInformedAndApproved}}</span>
+                                          <span>(if yes, attach details e.g. approval letter or correspondence with
+                                              custodian/trustee or minutes of approval meeting)</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(c).</span>
+                                          <span>Have there been any litigations involving the custodian/trustee or any
+                                              scheme (and related expenses) during the period?</span>
+                                          <span
+                                                  class="answer ">{{quarterlyReport.info.anyLitigationInvolvingCustodianSccheme}}</span>
+                                          <span>(if yes, attach details)</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(d).</span>
+                                          <span>Have there been any significant reductions in the assets of any scheme
+                                              during the period?</span>
+                                          <span
+                                                  class=" answer ">{{quarterlyReport.info.anySignificantReductionInAssetScheme}}</span>
+                                          <span>(if yes, attach details)</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(e).</span>
+                                          <span>Have there been any significant reductions in the market/offer price
+                                              of
+                                              the scheme during the period?</span>
+                                          <span
+                                                  class="answer ">{{quarterlyReport.info.hasMgrsReconciledAssetRegisterCustodian}}</span>
+                                          <span>(if yes, attach details)</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(f).</span>
+                                          <span>Has the manager reconciled its asset register with that of the
+                                              custodian/trustee during the period?</span>
+                                          <span
+                                                  class=" answer ">{{quarterlyReport.info.significantReductionInSchemeMarketPrice}}</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(g).</span>
+                                          <span>How many times did the scheme publish its prices during the
+                                              period?</span>
+                                          <span
+                                                  class=" answer ">{{quarterlyReport.info.howManyTimesDidSchemePublishedPrices}}</span>
+                                          <span>(Attach details e.g. a copy of newspaper page where publication was
+                                              done)</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(h).</span>
+                                          <span>Were there any important concerns raised by investors at any meeting
+                                              organized by the fund that you would want to draw
+                                              to the attention of the SEC?</span>
+                                          <span class="answer ">{{quarterlyReport.info.anyConcernsByInvestors}}</span>
+                                          <span>If yes, Attach details</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(i).</span>
+                                          <span>Are there any other matters you would want to draw to the attention of
+                                              the SEC with regard to the management or custody
+                                              of the fund’s assets?</span>
+                                          <span
+                                                  class=" answer ">{{quarterlyReport.info.anyMattersAttentionSecMgtCustodyOfFund}}</span>
+                                          <span>If yes, Attach details</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(j).</span>
+                                          <span>Has the custodian/trustee ensured that the accounts of managers are
+                                              separated from that of the schemes?</span>
+                                          <span
+                                                  class="answer ">{{quarterlyReport.info.hasAccountOfManagersSeparateFromScheme}}</span>
+                                        </div>
+                                        <div class="qstn">
+                                          <span>(k).</span>
+                                          <span>Is the company, its parent, any of its affiliates or directors
+                                              involved
+                                              in litigation?</span>
+                                          <span
+                                                  class=" answer">{{quarterlyReport.info.companyParentsAffiliateInvolvedInLitigation}}</span>
+                                          <span>If yes, type details below</span>
+                                        </div>
+                                      </div>
+                                    </article>
+                                    <!-- END INFORAMATION -->
+                                    <!-- OFFICIAL SECTION -->
+                                    <article class="documentSection uk-margin-small">
+                                      <div
+                                              class="uk-margin-small-top contentTitle text-upperCase  text-fontWeight--medium">
+                                        for official use only
+                                      </div>
+                                      <div class="flex flex-direction--column review_comments_wrapper"
+                                           style="width: 600px;">
+                                        <section class="flex flex-direction--column">
+                                          <span>Review:</span>
+                                          <div class="review_comments">
+                                            <p class="uk-margin-remove">{{quarterlyReport.remarks.remarks}}</p>
+                                          </div>
+                                        </section>
+                                        <section class=" uk-margin-small-top flex flex-center--y">
+                                          <span> Name of reviewing officer:&nbsp;</span>
+                                          <div style="padding-left: 10px;">
+                                            <p class="uk-margin-remove">{{quarterlyReport.remarks.reviewingOfficer}}</p>
+                                          </div>
+                                        </section>
+                                        <section class="flex uk-margin-small-top">
+                                          <div class="flex flex-100 flex-center--y">
+                                            <span>Date:&nbsp;</span>
+                                            <div>
+                                              <p class="uk-margin-remove">{{quarterlyReport.remarks.date}}</p>
+                                            </div>
+                                          </div>
+                                          <div class="flex flex-100 flex-center--y">
+                                            <span>Signature:&nbsp;</span>
+                                            <div>
+                                              <p class="uk-margin-remove"></p>
+                                            </div>
+                                          </div>
+                                        </section>
+                                      </div>
+                                    </article>
+                                    <!-- END OFFICIAL SECTION -->
+                                  </article>
+                                </article>
+                                <div class="flex flex-center--y"
+                                     style="height: 30px;margin-right:15px;margin-top:10px">
+                                    <span style="width: 840px;font-size:15px;font-weight: 500;letter-spacing: 0.2px">LI
+                                      1728
+                                      Reg. 33(3a): SEC Form/Custodian quarterly and yearly report</span>
+                                  <span class="pageNumCount flex-100 flex-justifyContent--x1"
+                                        style="text-align:right;"></span>
+                                </div>
+                          </section>
+                        </article>
+                      </article>
+
+                    </li>
+                    <!-- END QUARTERLY TAB -->
+                    <!-- SCHEME TAB -->
+                    <li>
+                      <div class="flex flex-direction--row flex-justifyContent--x1" style="
+                    margin-bottom:6px;padding:2px 30px;">
+                        <form @submit.prevent="loadClientSchemeDetails">
+                          <div class="uk-inline h-100" style="width:300px">
+                              <span class="uk-form-icon uk-icon" uk-icon="icon:search; ratio:1.1"
+                                    style="color:#000000"><svg width="22" height="22" viewBox="0 0 20 20"
+                                                               xmlns="http://www.w3.org/2000/svg" data-svg="search">
+                                  <circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7"></circle>
+                                  <path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"></path>
+                                </svg></span>
+                            <input class="uk-input w-100 h-100" type="text" placeholder="Search"
+                                   v-model="schemeSearchData.bpid" required>
+                          </div>
+                          <select class="uk-select" style="width:200px;" v-model="schemeSearchData.quarter">
+                            <%= partial("./partials/quarters.html") %>
+                          </select>
+                          <select class="uk-select" style="width:200px;" v-model="schemeSearchData.year">
+                            <%= partial("./partials/years.html") %>
+                          </select>
+                          <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                                  style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 2px;padding: 7px 20px!important;line-height: initial;font-weight: 501">
+                            Load
+                          </button>
+                        </form>
+                      </div>
+                      <article class="uk-container" style="max-width:1200px;">
+                        <article class="uk-grid uk-grid-stack" uk-grid>
+                          <section class="uk-width-1-1">
+                            <div class="uk-card uk-card-default userSelectNone secRep"
+                                 style="height: auto;padding:40px;">
+                              <div class="h-100 flex flex-direction--column">
+                                <div style="height:50px;">
+                                  <div class=""
+                                       style="flex:1;align-items:center;text-align: center;font-weight: 500;font-size:17px;color:var(--hue-textPrime);">
+                                    CUSTODIAN/TRUSTEE QUATERLY/ANNUAL REPORT
+                                  </div>
+                                  <div class=""
+                                       style="flex:1;align-items: center;text-align: center;font-weight: 500;font-size:14px;color:var(--hue-textPrime);">
+                                      {{schemeSearchData.quarterDate}}
+                                  </div>
+                                </div>
+                                <article class="flex-100 articleTOCount" style="margin-bottom:10px;">
+                                  <article>
+                                    <!-- SCHEME DETAILS -->
+                                    <!-- FIXME:SCHEME DETAIL REPORT SHOULD BE BASED ONLY ON THE SEARCHED CLIENT -->
+                                    <article class="documentSection uk-margin-small-top">
+                                      <div class="contentTitle">Scheme details</div>
+                                      <div class="scrolly_table scrolling_table_2 scrollbar" id="scrolling_table_2">
+                                        <table
+                                                class="freezePane assetTableA uk-table uk-table-small uk-divider w-100 previewMonthTable">
+                                          <tr>
+                                            <th class="fixed freeze">Name of
+                                              Scheme
+                                            </th>
+                                            <th class="fixed freeze_vertical">
+                                                {{schemes.nameOfScheme}}
+                                            </th>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              No. of shares outstanding
+                                            </td>
+                                            <td>{{formatMoney(schemes.numberOfSharesOutstanding)}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              No. of sharesholders
+                                            </td>
+                                            <td>{{formatMoney(schemes.numberOfShareholders)}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Redemptions for the period
+                                            </td>
+                                            <td>
+                                              <div>
+                                                <strong>Volume:&nbsp;</strong>{{formatMoney(schemes.numberOfRedemptions)}}
+                                              </div>
+                                              <div>
+                                                <strong>Value:&nbsp;</strong>{{formatMoney(schemes.valueOfRedemptions)}}
+                                              </div>
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Name of managers
+                                            </td>
+                                            <td>{{schemes.nameOfManager}}</td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <th class="fixed freeze_horizontal">
+                                              Total value of scheme's assets
+                                            </th>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Net asset value of scheme
+                                            </td>
+                                            <td>{{formatMoney(schemes.netAssetValueOfScheme,10)}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Net asset value per share/unit
+                                            </td>
+                                            <td>{{schemes.netAssetValuePerShare.toFixed(10)}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Total (value) equity investments
+                                            </td>
+                                            <td>{{formatMoney(schemes.totalEquityInvestments)}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Total (value) fixed income
+                                              investments
+                                            </td>
+                                            <td>{{formatMoney(schemes.totalFixedIncomeInvestments)}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Net of medium term assets held
+                                              by fund (Debt securities 1- 4
+                                              year)No. of shares outstanding
+                                            </td>
+                                            <td>{{formatMoney(schemes.netOfMediumTermAssetsHeldByFund)}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              OTHERS
+                                            </td>
+                                            <td></td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <th class="fixed freeze_horizontal">
+                                              Capital market
+                                              investments
+                                            </th>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              &percnt; of Capital Market
+                                              investment to total investments
+                                            </td>
+                                            <td>{{schemes.capitalMarketsInvestments}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Are all certificates of
+                                              investment with
+                                              custodian/trustee? Yes/No
+                                            </td>
+                                            <td>{{schemes.areAllCertificatesOfInvestmentWithCustodian}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Total value of unutilized funds
+                                            </td>
+                                            <td>{{formatMoney(schemes.totalValueOfUnutilizedFunds)}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Value of borrowed funds
+                                            </td>
+                                            <td>{{formatMoney(schemes.valueOfBorrowedFunds)}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Reasons for borrowing
+                                            </td>
+                                            <td>{{schemes.reasonsForBorrowing}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Were all duly prepared accounts
+                                              distributed to appropriate
+                                              authorities?
+                                            </td>
+                                            <td>{{schemes.wereAllDulyPreparedAccountsDistributed}}
+                                            </td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <th class="fixed freeze_horizontal">
+                                              Outstanding
+                                            </th>
+                                            <td></td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Redemptions
+                                            </td>
+                                            <td>{{formatMoney(schemes.redemptions)}}</td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Dividends/Interests/Capital
+                                              gains
+                                            </td>
+                                            <td>{{formatMoney(schemes.dividends)}}</td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Rights/bonus issues/stock splits
+                                            </td>
+                                            <td>{{formatMoney(schemes.rights)}}</td>
+                                          </tr>
+                                          <tr class="tr_shaded">
+                                            <td class="fixed freeze_horizontal">
+                                              Fees owed custodian/trustee
+                                            </td>
+                                            <td>{{formatMoney(schemes.feesOwedCustodian)}}
+                                            </td>
+                                          </tr>
+                                        </table>
+                                      </div>
+                                    </article>
+                                    <!-- END SCHEME DETAILS -->
+                                  </article>
+                                </article>
+                                <div class="flex flex-center--y"
+                                     style="height: 30px;margin-right:15px;margin-top:10px">
+                                      <span
+                                              style="width: 840px;font-size:15px;font-weight: 500;letter-spacing: 0.2px">LI
+                                        1728
+                                        Reg. 33(3a): SEC Form/Custodian quarterly and yearly report</span>
+                                  <span class="pageNumCount flex-100 flex-justifyContent--x1"
+                                        style="text-align:right;"></span>
+                                </div>
+                          </section>
+                        </article>
+                      </article>
+                    </li>
+                    <!-- END SCHEME TAB -->
+                    <!-- OFFSHORE CLIENTS TABLE -->
+                    <li>
+                      <div class="flex flex-direction--row flex-justifyContent--x1" style="
+                    margin-bottom:6px;padding:2px 30px;">
+                        <form @submit.prevent="loadOffshoreClients">
+                          <div class="uk-inline h-100" style="width:300px">
+                              <span class="uk-form-icon uk-icon" uk-icon="icon:search; ratio:1.1"
+                                    style="color:#000000"><svg width="22" height="22" viewBox="0 0 20 20"
+                                                               xmlns="http://www.w3.org/2000/svg" data-svg="search">
+                                  <circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7"></circle>
+                                  <path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"></path>
+                                </svg></span>
+                            <input class="uk-input w-100 h-100" type="text" placeholder="Search"
+                                   v-model="offshoreClientSearchData.bpid">
+                          </div>
+                          <select class="uk-select" style="width:200px;" v-model="offshoreClientSearchData.quarter">
+                            <%= partial("./partials/quarters.html") %>
+                          </select>
+                          <select class="uk-select" style="width:200px;" v-model="offshoreClientSearchData.year">
+                            <%= partial("./partials/years.html") %>
+                          </select>
+                          <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                                  style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 2px;padding: 7px 20px!important;line-height: initial;font-weight: 501">
+                            Load
+                          </button>
+                        </form>
+                        <button class="uk-button uk-padding-remove flex flex-center--x flex-center--y"
+                                style="font-size: 13px;background-color:#d2F4FB;color:#223CA9;text-transform:initial;width:120px;margin-left: 4px;"
+                                @click="exportOffshoreClients">
+                          <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                          <span style="padding-left: 5px;">Export Excel</span>
+                        </button>
+                      </div>
+                      <div
+                              class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                        <div class="flex flex-direction--column h-100 w-100">
+                          <section>
+                            <table class="assetTableA uk-table uk-table-small uk-divider previewMonthTable"
+                                   style="width:100%" style="padding:4px;">
+                              <thead class="dblHead" style="width:100%">
+                              <th style="width:18%;vertical-align:middle;text-align:left">
+                                Client
+                              </th>
+                              <th style="width:17%;vertical-align:middle;text-align:center">Home
+                                Country
+                              </th>
+                              <th style="width:20%;vertical-align:middle;text-align:right">Asset
+                                Value(GHS)
+                              </th>
+                              </thead>
+                              <tbody class="bodyTbl">
+                              <tr v-for="(client,key) in offshoreClients" :key="'Z'+key">
+                                <td style="text-align:left">{{client.name}}</td>
+                                <td style="text-align: center">{{client.country}}</td>
+                                <td style="text-align: right">{{formatMoney(client.assetValue)}}</td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </section>
+                        </div>
+                      </div>
+
+                    </li>
+                    <!-- END OFFSHORE CLIENTS TABLE -->
+                    <!-- LOCAL VARIANCE TAB -->
+                    <li>
+                      <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid>
+                        <div class="uk-width-1-1" style="height: auto">
+                          <article>
+                            <div class="flex flex-direction--row flex-justifyContent--x1" style="
+                    margin-bottom:6px;padding:2px 30px;">
+                              <form @submit.prevent="fetchLocalVariance">
+
+                                <select class="uk-select" style="width:200px;"
+                                        v-model="localVarianceSearchData.quarter">
+                                  <%= partial("./partials/quarters.html") %>
+                                </select>
+                                <select class="uk-select" style="width:200px;" v-model="localVarianceSearchData.year">
+                                  <%= partial("./partials/years.html") %>
+                                </select>
+                                <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                                        style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 2px;padding: 7px 20px!important;line-height: initial;font-weight: 501">
+                                  Load
+                                </button>
+                              </form>
+                              <button class="uk-button uk-padding-remove flex flex-center--x flex-center--y"
+                                      style="font-size: 13px;background-color:#d2F4FB;color:#223CA9;text-transform:initial;width:120px;margin-left: 4px;"
+                                      @click="exportLocalVariance">
+                                <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                                <span style="padding-left: 5px;">Export Excel</span>
+                              </button>
+                            </div>
+                            <div
+                                    class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                              <div class="flex flex-direction--column h-100 w-100">
+                                <section>
+                                  <table class="uk-table uk-table-divider previewMonthTable assetTableA">
+                                    <thead>
+                                    <th>Client</th>
+                                    <th>Home Country</th>
+                                    <th>AUA as at {{localVarianceLastAUADate}}</th>
+                                    <th>AUA as at {{localVarianceCurrentAUADate}}</th>
+                                    <th>Amount</th>
+                                    <th>Variance &percnt;</th>
+                                    <th>Remarks</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(variance,key) in localVariance" :key="'aA'+key">
+                                      <td>{{variance.name}}</td>
+                                      <td class="uk-text-center">{{variance.country}}</td>
+                                      <td class="uk-text-right">{{formatMoney(variance.last_aua)}}</td>
+                                      <td class="uk-text-right">{{formatMoney(variance.current_aua)}}</td>
+                                      <td class="uk-text-right"
+                                          :style="{color: (variance.variance <= -5 || variance.variance >= 5) ? 'red' : 'black'}">{{variance.amount >= 0 ? formatMoney(variance.amount) : '('+formatMoney(Math.abs(variance.amount))+')' }}</td>
+                                      <td class="uk-text-right"
+                                          :style="{color: (variance.variance <= -5 || variance.variance >= 5) ? 'red' : 'black'}">{{variance.variance >= 0 ? formatMoney(variance.variance) : '('+formatMoney(Math.abs(variance.variance))+')'}}
+                                      </td>
+                                      <td>{{variance.remarks }}</td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                </section>
+                              </div>
+                            </div>
+                          </article>
+                        </div>
+
+                      </section>
+                    </li>
+                    <!-- END LOCAL VARIANCE TAB -->
+                    <!-- FOREIGN VARIANCE TAB -->
+                    <li>
+                      <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid>
+                        <div class="uk-width-1-1" style="height: auto">
+                          <article>
+                            <div class="flex flex-direction--row flex-justifyContent--x1" style="
+                    margin-bottom:6px;padding:2px 30px;">
+                              <form @submit.prevent="fetchForeignVariance">
+
+                                <select class="uk-select" style="width:200px;"
+                                        v-model="foreignVarianceSearchData.quarter">
+                                  <%= partial("./partials/quarters.html") %>
+                                </select>
+                                <select class="uk-select" style="width:200px;"
+                                        v-model="foreignVarianceSearchData.year">
+                                  <%= partial("./partials/years.html") %>
+                                </select>
+                                <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                                        style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 2px;padding: 7px 20px!important;line-height: initial;font-weight: 501">
+                                  Load
+                                </button>
+                              </form>
+                              <button class="uk-button uk-padding-remove flex flex-center--x flex-center--y"
+                                      style="font-size: 13px;background-color:#d2F4FB;color:#223CA9;text-transform:initial;width:120px;margin-left: 4px;"
+                                      @click="exportForeignVariance">
+                                <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                                <span style="padding-left: 5px;">Export Excel</span>
+                              </button>
+                            </div>
+                            <div
+                                    class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                              <div class="flex flex-direction--column h-100 w-100">
+                                <section>
+                                  <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                    <thead>
+                                    <th>Client</th>
+                                    <th>Home Country</th>
+                                    <th>AUA as at {{foreignVarianceLastAUADate}}</th>
+                                    <th>AUA as at {{foreignVarianceCurrentAUADate}}</th>
+                                    <th>Amount</th>
+                                    <th>Variance &percnt;</th>
+                                    <th>Remarks</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(variance,key) in foreignVariance" :key="'aB'+key">
+                                      <td>{{variance.name}}</td>
+                                      <td class="uk-text-center">{{variance.country}}</td>
+                                      <td class="uk-text-right">{{formatMoney(variance.last_aua)}}</td>
+                                      <td class="uk-text-right">{{formatMoney(variance.current_aua)}}</td>
+                                      <td class="uk-text-right"
+                                          :style="{color: (variance.variance <= -5 || variance.variance >= 5) ? 'red' : 'black'}">{{variance.amount >= 0 ? formatMoney(variance.amount) : '('+formatMoney(Math.abs(variance.amount))+')' }}</td>
+                                      <td class="uk-text-right"
+                                          :style="{color: (variance.variance <= -5 || variance.variance >= 5) ? 'red' : 'black'}">{{variance.variance > 0 ? formatMoney(variance.variance) : variance.variance == 0 ? 0 :'('+formatMoney(Math.abs(variance.variance))+')'}}
+                                      </td>
+                                      <td>{{variance.remarks }}</td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                </section>
+                              </div>
+                            </div>
+                          </article>
+                        </div>
+
+                      </section>
+                    </li>
+                    <!-- END FOREIGN VARIANCE TAB -->
+                    <li>
+                      <div class="flex flex-direction--row flex-justifyContent--x1" style="
+                    margin-bottom:6px;padding:2px 30px;">
+                        <form @submit.prevent="loadMaturedSecurities">
+                          <select class="uk-select" style="width:200px;" v-model="maturedSecurities.quarter">
+                            <%= partial("./partials/quarters.html") %>
+                          </select>
+                          <select class="uk-select" style="width:200px;" v-model="maturedSecurities.year">
+                            <%= partial("./partials/years.html") %>
+                          </select>
+                          <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                                  style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 2px;padding: 7px 20px!important;line-height: initial;font-weight: 501">
+                            Load
+                          </button>
+                        </form>
+                        <button class="uk-button uk-padding-remove flex flex-center--x flex-center--y"
+                                style="font-size: 13px;background-color:#d2F4FB;color:#223CA9;text-transform:initial;width:120px;"
+                                @click="exportMaturedSecurities">
+                          <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                          <span style="padding-left: 5px;">Export Excel</span>
+                        </button>
+                      </div>
+                      <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid>
+                        <div class="uk-width-1-1" style="height: auto">
+                          <article>
+                            <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                              <div class="flex flex-direction--column h-100 w-100">
+                                <section class="previewWindow">
+                                  <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                    <thead>
+                                    <tr>
+                                      <th colspan="9" rowspan="3" style="text-align: center">
+                                        <div style="font-size: 18px">MATURED SECURITIES REPORT WITH NON-RECEIPT OF FUNDS OR
+                                          RE-INVESTMENT COMMUNICATION
+                                        </div>
+                                      </th>
+                                    </tr>
+                                    </thead>
+                                    <tr class="securityCols">
+                                      <th>Client</th>
+                                      <th>Issuer</th>
+                                      <th class="uk-text-right">Amount Invested</th>
+                                      <th class="uk-text-right">Value As At {{maturedSecurities.formalDate}} (GHS)</th>
+                                    </tr>
+                                    <tbody>
+                                      <template v-if="maturedSecuritiesData.length > 0">
+                                        <tr v-for="(security,Skey) in maturedSecuritiesData" :key="Skey">
+                                          <td>{{security.client}}</td>
+                                          <td>{{security.issuer}}</td>
+                                          <td class="uk-text-right">{{formatMoney(security.amount_invested,2)}}</td>
+                                          <td class="uk-text-right">{{formatMoney(security.value,2)}}</td>
+                                        </tr>
+                                      </template>
+                                      <tr v-else>
+                                        <td>Nil</td>
+                                        <td>Nil</td>
+                                        <td>Nil</td>
+                                        <td>Nil</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </section>
+                              </div>
+                            </div>
+                          </article>
+                        </div>
+
+                      </section>
+                    </li>
+                  </ul>
+                </article>
+              </section>
+            </article>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<style>
+  canvas {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+  }
+</style>
+<%= javascriptTag("secreport.js") %>
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+
+</html>

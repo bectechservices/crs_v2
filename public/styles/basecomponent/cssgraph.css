@@ -1,0 +1,80 @@
+/* colors: ["#9cdbff", "#87bbfd", "#555abf", "#43458b", "#32325d"] */
+:root {
+    --height: 17px;
+    --basePercent: 0.8
+}
+.background--blue4{background:#6772e5;}
+.background--blueSky{
+    background: #2980B9;
+background: -webkit-linear-gradient(to right, #FFFFFF, #6DD5FA, #2980B9); 
+background: linear-gradient(to right, #FFFFFF, #87bbfd, #6772e5);
+}
+.background--blueHaven{
+background: linear-gradient(to left, #a0c0d4, #c6d9e5, #ffffff);
+}
+
+.BarChart-Group {
+    width: 300px;
+    /* width: calc(100%/4); */
+    /* border:1px solid black; */
+}
+.BarChart-Group + .BarChart-Group {
+    margin-left: 5px;
+}
+.BarChart-Group header p {
+    color:#32325d;
+    line-height:28px;
+    font-weight:600;
+    letter-spacing:0.25px;
+}
+.BarChart-Group .BarChart{
+    position: relative;
+    display: flex;
+    align-items: center
+}
+
+.BarChart+.BarChart {
+    margin-top: -5px;
+}
+.BarChart .BarChart__label{
+    color:#32325d;
+    margin: 0 4px 2px;
+    font-size: 12px;
+    width: 125px;
+    font-weight:500;
+    line-height:32px; 
+    text-align: right;
+    letter-spacing:0.2px;
+}
+.BarChart .BarChart__outer{
+    background-color:#f1fbfc;
+    overflow:hidden;
+    /* border-radius: calc(var(--height) /2); */
+
+}
+
+.BarChart .BarChart__outer, 
+.BarChart .BarChart__inner {
+    height: 10px;
+    height:var(--height);
+    width:100%;
+    flex:1
+}
+
+.BarChart__outer .BarChart__inner {
+    display:flex;
+    align-items: center;
+    transition:transform .4s cubic-bezier(.215,.61,.355,1);
+    transform: translateX(-100%) translateX(calc(var(--percent) * 100%));
+}
+.BarChart__outer .BarChart__inner  + .BarChart__inner-text {
+    /*transform: translateX(15em) translateX(calc(var(--basePercent) * 100%));*/
+    color:var(--hue-textPrime, #2196f3);
+    font-weight: 500;
+    letter-spacing: 0.25px;
+    display: flex;
+    position: absolute;
+    right: 5px;
+    font-size: 13px;
+    top: 5px;
+}

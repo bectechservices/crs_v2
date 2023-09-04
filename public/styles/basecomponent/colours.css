@@ -1,0 +1,72 @@
+:root {
+  --hue-lght: #ffffff;
+  --hue-dark: #211b17;
+  --hue-textDark: #2a2f45;
+  --hue-textPrime: #0b2135;
+  --hue-black: #000;
+  --bg-snow-white: hsl(0, 0%, 98%);
+  --brandColorBlue: hsl(200, 100%, 33%);
+  --brandColorBlue-a8: hsl(203, 88%, 39%);
+  --brandColorBlue-a9: hsl(211, 97%, 47%);
+  --brandColorBlue-a10: hsl(205, 50%, 65%);
+  --brandColorBlueAccent-a7: hsl(115, 34%, 72%);
+  --brandColorGreen: hsl(137, 67%, 40%);
+  --brandColorGreenAccent: hsl(145, 100%, 32%, 1);
+  --brandColorGreenDark-A1: hsl(141, 99%, 26%);
+  --brandColorGreenLght-A10: hsl(137, 47%, 94%);
+
+  --metalCyan: hsl(189, 82%, 87%);
+  --coolGrey: hsl(213, 23%, 91%);
+  --ethalGrey-lght: hsl(0, 0%, 96%);
+  --depthGray: hsl(207, 53%, 97%);
+
+  --brand-StripImage: linear-gradient(
+    to right,
+    #5fb74c,
+    #5fb74c 9%,
+    #249d2c 9%,
+    #249d2c 36%,
+    #014572 36%,
+    #014572 73%,
+    #0085d4 73%,
+    #0085d4 87%,
+    #015a9c 87%,
+    #015a9c
+  );
+}
+
+/* COLOUR UTILITIES */
+.base-bg--white {
+  background-color: var(--hue-lght);
+}
+.base-bg--gray{
+  background-color: var(--depthGray);
+}
+[data-statusColor="warning"] {
+  background-color: #f2cd41;
+  color: var(--hue-lght);
+}
+[data-statusColor="danger"] {
+  background-color: #f24545;
+  color: var(--hue-lght);
+}
+[data-statusColor="success"] {
+  background-color: #52cf7d;
+  color: var(--hue-lght);
+}
+[data-statusColor="warningFlipped"] {
+  background-color: #f9edc7;
+  color: #63321c;
+}
+[data-statusColor="dangerFlipped"] {
+  background-color: #ffe0e0;
+  color: #6f2323;
+}
+[data-statusColor="successFlipped"] {
+  background-color: #d2f0cd;
+  color: #153311;
+}
+[data-statusColor="completeFlipped"]{
+  background-color:#edf7ff;
+  color:#4d30b9bf;
+}

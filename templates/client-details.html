@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — Client Details</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    .profile .jTable {
+      border-spacing: 0 12px;
+    }
+
+    .profile .jTable .field_description {
+      width: 220px;
+    }
+
+    .profile .jTable input[disabled] {
+      background-color: #f1f1f1;
+      color: #0b2135;
+      border: 1px solid #eeee;
+    }
+
+    .profile .jTable input {
+      border-radius: 2px;
+      width: 272px;
+      border: 2px solid #eee;
+      transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .profile .jTable input:focus {
+      border: 2px solid #1e87f0;
+    }
+
+    .profile form ul.helper-text {
+      display: block;
+      font-size: 13px;
+      line-height: 1.5em;
+      font-weight: 500;
+      color: #241c15;
+      padding: 0 4px;
+    }
+
+    .profile form ul li {
+      list-style: none;
+      position: relative;
+      padding: 0 0 0 22px;
+      margin: 4px 0;
+      letter-spacing: 0.2px;
+    }
+
+    .profile form ul.helper-text li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      border: solid 8px #d8dbd9;
+      border-radius: 8px;
+      transition: border 0.25s cubic-bezier(.4, 0, 0.2, 1);
+    }
+
+    .profile form ul.helper-text li::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      width: 3px;
+      height: 6px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .profile form ul.helper-text li.valid {
+      color: #bdbbb9;
+      -webkit-text-decoration-line: line-through;
+      text-decoration-line: line-through;
+    }
+
+    .profile form ul.helper-text li.valid::before {
+      border: solid 8px #1e87f0;
+    }
+
+    .profile form .jTable .jTableRow:last-child {
+      border-spacing: 15px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="root">
+  <div class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content genDash" id="genDashMain" style="height: auto;">
+      <div class="uk-container uk-container-expand" style="padding:5px 50px;">
+        <div class="crs-authPage--content w-100">
+          <div class="crs-authPage--header" style="padding: 5px;">
+            <div class="flex uk-margin-small-bottom jSticky" style="top:-3px;height:40px;">
+              <div class="flex-100 flex flex-center--y">
+                <button class="backBtn uk-padding-remove flex flex-center--y" onclick="goBack()">
+                  <span uk-icon="icon:  chevron-left; ratio: 1.3" style="color:#223CA9"></span>
+                  <span style="padding-left: 5px;">Back</span>
+                </button>
+                <h2 class="uk-margin-remove" style="font-size:20px;letter-spacing:0.3px">
+                  <span style="color:#656d78">Client Details</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div class="crs-authPage--innerContent" style="height: auto">
+            <div class="h-100 uk-grid uk-child-width-1-1@l uk-grid-match uk-child-width-1-1@m uk-child-width-1-1@s"
+                 uk-grid>
+              <div>
+                <div class="uk-card uk-card-body uk-card-hover uk-card-default uk-card-bodyPaddingLesser card-radius--all "
+                     style="height: auto">
+                  <form>
+                    <ul class="uk-flex-left" uk-tab>
+                      <li><a href="#">General</a></li>
+                      <li><a href="#">Billing</a></li>
+                    </ul>
+                    <ul class="uk-switcher">
+                      <li>
+                        <section class="userSelectNone profile">
+                          <article class="jTable" autocomplete="off">
+                            <div class="row">
+                              <div class="col-6" style="margin-right:30px">
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Client Name</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input" type="text"
+                                           disabled="disabled"
+                                           value="<%= client.Name %>"/>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">BPID</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input password"
+                                           disabled="disabled" type="text" value="<%= client.BPID %>"/>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Home Country</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input password"
+                                           disabled="disabled" type="text" value="<%= client.HomeCountry %>"/>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Email</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input password"
+                                           disabled="disabled" type="email" value="<%= client.Email %>"/>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Client Tier</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input password"
+                                           disabled="disabled" type="text" value="<%= client.Tier %>"/>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Address Line1</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input" type="text"
+                                           auto-complete="confirm"
+                                           disabled="disabled" value="<%= client.AddressLine1 %>"/>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Address Line3</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input" type="text"
+                                           auto-complete="confirm"
+                                           disabled="disabled" value="<%= client.AddressLine3 %>"/>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div>
+                                    <img src="<%= client.ImageBuffer() %>" width="150" height="150">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-6">
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Location</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input" type="text"
+                                           disabled="disabled" value="<%= client.Location %>"/>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Telephone Number</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input" type="text"
+                                           disabled="disabled" value="<%= client.Phone %>"/>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Client Type</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input" type="text"
+                                           required="required" disabled="disabled" value="<%= client.Type %>"/>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Contact Person</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input" type="text"
+                                           required="required" disabled="disabled" value="<%= client.ContactPerson %>"/>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Contact Person Number</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input" type="text"
+                                           required="required" disabled="disabled"
+                                           value="<%= client.ContactPersonPhone %>"/>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Address Line2</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input" type="text"
+                                           auto-complete="confirm"
+                                           disabled="disabled" value="<%= client.AddressLine2 %>"/>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell field_description">
+                                    <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Address Line4</span>
+                                  </div>
+                                  <div class="jTableCell">
+                                    <input class="uk-input" type="text"
+                                           auto-complete="confirm"
+                                           disabled="disabled" value="<%= client.AddressLine4 %>"/>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div style="margin-top:6px;"></div>
+                          </article>
+                        </section>
+                      </li>
+                      <li>
+                        <section class="userSelectNone profile">
+                          <div class="jTable" autocomplete="off">
+                            <div class="jTableRow">
+                              <div class="jTableCell field_description">
+                                <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Minimum Charge</span>
+                              </div>
+                              <div class="jTableCell">
+                                <input class="uk-input" type="number" auto-complete="newname" disabled
+                                       value="<%= billing_info.MinimumCharge %>"/>
+                              </div>
+                            </div>
+                            <div class="jTableRow">
+                              <div class="jTableCell field_description">
+                                <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Charge Per Transaction</span>
+                              </div>
+                              <div class="jTableCell">
+                                <input class="uk-input" type="number" auto-complete="newname" disabled
+                                       value="<%= billing_info.ChargePerTransaction %>"/>
+                              </div>
+                            </div>
+                            <div class="jTableRow">
+                              <div class="jTableCell field_description">
+                                <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Third Party Transfer</span>
+                              </div>
+                              <div class="jTableCell">
+                                <input class="uk-input" type="number" auto-complete="newname"
+                                       value="<%= billing_info.ThirdPartyTransfer %>"/>
+                              </div>
+                            </div>
+                            <%= if(len(basis_points) == 0) {%>
+                            <div class="jTableRow">
+                              <div class="jTableCell field_description">
+                                <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Basis Point</span>
+                              </div>
+                              <div class="jTableCell">
+                                <input class="uk-input" type="number" auto-complete="newname"
+                                       value="0"/>
+                              </div>
+                            </div>
+                            <% }else if(len(basis_points) == 1){ %>
+                            <div class="jTableRow">
+                              <div class="jTableCell field_description">
+                                <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Basis Point</span>
+                              </div>
+                              <div class="jTableCell">
+                                <input class="uk-input" type="number" auto-complete="newname"
+                                       value="<%= first_basis_points_basis_point(basis_points) %>"/>
+                              </div>
+                            </div>
+                            <% } %>
+                            <div style="margin-top:6px;"></div>
+                          </div>
+                          <%= if(len(basis_points) > 1) {%>
+                          <div class="flex flex-direction--column h-100 w-100">
+                            <section class="previewWindow">
+                              <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                <tr class="securityCols">
+                                  <th>Minimum</th>
+                                  <th>Maximum</th>
+                                  <th>Basis Points</th>
+                                </tr>
+                                <tbody>
+                                <%= for(bp) in basis_points { %>
+                                <tr>
+                                  <td><%= format_with_comma(bp.Minimum) %></td>
+                                  <td><%= format_with_comma(bp.Maximum) %></td>
+                                  <td><%= bp.BasisPoints %></td>
+                                </tr>
+                                <% } %>
+                                </tbody>
+                              </table>
+                            </section>
+                          </div>
+                          <% } %>
+                        </section>
+                      </li>
+                    </ul>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<!-- Modals -->
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+
+</html>

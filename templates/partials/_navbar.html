@@ -1,0 +1,213 @@
+<header class="uk-navbar-container uk-container-expand uk-sticky uk-sticky-fixed" uk-sticky="media:960"
+        style="background:white;">
+  <div class="uk-container uk-container-expand" style="padding-left: 20px;">
+    <nav class="uk-navbar" role="navigation" uk-navbar>
+      <div class="uk-navbar-left">
+        <div class="flex h-100 crs-authedPageLogoWrapper">
+          <a href="/dashboard" class="uk-navbar-item uk-logo" style="padding:0 8px;">
+            <div class="crs-logo h-100" style="width: 95px;">
+              <img src="media/logo/standardchartered@2x.png" alt="Standard Chartered Bank logo"/>
+            </div>
+          </a>
+          <span class="userSelectNone"
+                style="font-weight:501;font-size:calc(var--baseFontSize);margin-top:3px;">Custody
+						Reporting System
+						<div class="flex countryCode userSelectNone"
+                 style="justify-content:flex-end;color:#212121;text-transform:capitalize;text-align:right;font-size:12px;font-style:italic">
+							ghana
+						</div>
+					</span>
+        </div>
+      </div>
+      <div class="uk-navbar-center" style="margin-left: 30px;">
+        <ul class="uk-navbar-nav uk-visible@m">
+          <li id="overview_link"><a href="/dashboard">overview</a></li>
+          <%= if(is_sec_maker() || is_sec_checker() || is_admin() || is_manager()) {%>
+          <li id="sec_link"><a href="/sec">SEC</a></li>
+          <% } %>
+          <%= if(is_sec_maker() || is_sec_checker()) { %>
+          <li class="" id="directors">
+            <a href="/directors">DIRECTORS</a>
+          </li>
+          <li class="" id="letterToClients">
+            <a href="/client-letters">Client Letters</a>
+          </li>
+          <% } %>
+          <%= if(is_nav_maker() || is_nav_checker()||is_admin() || is_manager()) {%>
+          <li id="navbill_link" class=""><a href="/billing-dashboard">Billing</a></li>
+          <% } %>
+          <%= if(is_trustee_maker() || is_trustee_checker()||is_admin() || is_manager()) {%>
+          <li id="trustee_link"><a href="/trustee-dashboard">Trustee</a></li>
+          <% } %>
+          <%= if(is_npra_maker()||is_admin() || is_manager()) {%>
+          <li id="npra_link"><a href="/npra-dashboard">NPRA</a></li>
+          <% }else if( is_npra_checker()){ %>
+          <li id="npra_link"><a href="/npra-preview">NPRA</a></li>
+          <% } %>
+          <%= if(is_npra_maker() || is_npra_checker() || is_admin() || is_manager()) {%>
+            <li id="npra030_link">
+              <a href=" ">
+                <span class="flex flex-center--y uk-icon-link" uk-icon="chevron-down">NPRA Reports</span>
+              </a>
+              <div class="uk-navbar-dropdown" uk-dropdown="pos:bottom-center; mode:click">
+                <span class="triangle--top"></span>
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                  <li><a href="/npra03011">NPRA 0301</a></li>
+                  <li class="uk-nav-divider"></li>
+                  <li><a href="/npra03021">NPRA 0302</a></li>
+                  <li class="uk-nav-divider"></li>
+                  <li><a href="/npra0303">NPRA 0303 </a></li>
+                </ul>
+              </div>
+            </li>
+            <% } %>          
+          <%= if(!is_admin()) {%>
+          <li id="npra_link"><a href="/client-readonly">Clients</a></li>
+          <% } %>
+          <li id="nprasec_link">
+            <a href="">
+            <span class="flex flex-center--y uk-icon-link" uk-icon="chevron-down">Securities</span>
+          </a>
+          <div class="uk-navbar-dropdown" uk-dropdown="pos:bottom-center; mode:click">
+            <span class="triangle--top"></span>
+            <ul class="uk-nav uk-navbar-dropdown-nav">
+              <li><a href="/securities">PV Securities</a></li>
+              <%= if(is_npra_maker() || is_npra_checker() || is_admin() || is_manager()) {%>
+              <li class="uk-nav-divider"></li>
+              <li><a href="/assetclass">NPRA Asset Classes</a></li>   
+              <% } %>   
+            </ul>
+          </div>                    
+          </li>
+          <!--
+          <%= if(can_do(AccessMailPage)) {%>
+          <li><a href="mailer.html">Mail</a></li>
+          <% } %>-->
+          <li id="reports_link">
+            <a class="" href="#">
+              <span class="flex flex-center--y uk-icon-link" uk-icon="chevron-down">REPORTS</span>
+            </a>
+            <div class="uk-navbar-dropdown" uk-dropdown="pos:bottom-center; mode:click">
+              <span class="triangle--top"></span>
+              <ul class="uk-nav uk-navbar-dropdown-nav">
+                <%= if(is_sec_maker() || is_sec_checker() || is_admin() || is_manager()) {%>
+                <li class="">
+                  <a class="uk-icon" href="/secreport">
+									<span class="uk-visible@m"
+                        style="padding-right:10px;font-size:calc(var(--baseFontSize)- 1px)">SEC</span>
+                  </a>
+                </li>
+                <% } %>
+                <%= if(is_npra_maker() || is_npra_checker() || is_admin() || is_manager()) {%>
+                <li class="uk-nav-divider"></li>
+                <li class="" style="margin:10px 0">
+                  <a class="uk-icon" href="/npra-report">
+									<span class="uk-visible@m"
+                        style="padding-right:10px;font-size:calc(var(--baseFontSize)- 1px)">NPRA</span>
+                  </a>
+                </li>
+                <% } %>
+                <%= if(is_nav_maker() || is_nav_checker() || is_admin() || is_manager()) {%>
+                <li class="uk-nav-divider"></li>
+                <li class="" style="margin:10px 0">
+                  <a class="uk-icon" href="/billing-report?bpOrSca=N_A&period=1990-01">
+                    <span class="uk-visible@m" style="padding-right:10px;font-size:calc(var(--baseFontSize)- 1px)">BILLING</span>
+                  </a>
+                </li>
+                <li class="uk-nav-divider"></li>
+                <li class="" style="margin:10px 0">
+                  <a class="uk-icon" href="/billed-clients">
+                    <span class="uk-visible@m" style="padding-right:10px;font-size:calc(var(--baseFontSize)- 1px)">BILLED CLIENTS</span>
+                  </a>
+                </li>
+                <% } %>
+                <%= if(is_trustee_maker() || is_trustee_checker() || is_admin() || is_manager()) {%>
+                <li class="uk-nav-divider"></li>
+                <li class="" style="margin:10px 0">
+                  <a class="uk-icon" href="/trustee-report">
+									<span class="uk-visible@m"
+                        style="padding-right:10px;font-size:calc(var(--baseFontSize)- 1px)">TRUSTEE</span>
+                  </a>
+                </li>
+                <% } %>
+                <li class="uk-nav-divider"></li>
+                <li class="" style="margin:10px 0">
+                  <a class="uk-icon" href="/pv-history">
+									<span class="uk-visible@m"
+                        style="padding-right:10px;font-size:calc(var(--baseFontSize)- 1px)">PVs</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <%= if(is_admin()) {%>
+          <li id="system_setup">
+            <a href=" ">
+              <span class="flex flex-center--y uk-icon-link" uk-icon="chevron-down">SYSTEM SETUP</span>
+            </a>
+            <div class="uk-navbar-dropdown" uk-dropdown="pos:bottom-center; mode:click">
+              <span class="triangle--top"></span>
+              <ul class="uk-nav uk-navbar-dropdown-nav">
+                <%= if(is_admin() || is_manager()) {%>
+                <li><a href="/users">USERS</a></li>
+                <% } %>
+                <li class="uk-nav-divider"></li>
+                <li><a href="/fundmanager">FUND MANAGER</a></li>
+                <li class="uk-nav-divider"></li>
+                <li><a href="/clients">CLIENTS</a></li>
+                <li class="uk-nav-divider"></li>
+                <li><a href="/directors">DIRECTORS</a></li>
+                <li class="uk-nav-divider"></li>
+                <li><a href="/mail-service">MAIL SERVICE</a></li>
+              </ul>
+            </div>
+          </li>
+          <% } %>
+        </ul>
+      </div>
+      <div class="uk-navbar-right">
+        <ul class="uk-navbar-nav uk-visible@m">
+          <li class="dropli">
+            <a href="#" class="dropliA">
+							<span class="crs-userAvatar">
+								<span uk-icon="user" style="height:100%;display:grid;place-content:center;"></span>
+							</span>
+              <span class="uk-icon-link" uk-icon="chevron-down"><%= auth_user.Fullname %></span>
+            </a>
+            <div class="uk-navbar-dropdown" uk-dropdown="pos:bottom-right;mode:click">
+              <span class="triangle--top"></span>
+              <ul class="uk-nav uk-navbar-dropdown-nav">
+                <li class="" style="margin: 10px 0;">
+                  <a class="uk-icon" href="/profile">
+                    <canvas uk-icon="icon:cog" width="20" height="20" class="uk-icon"
+                            hidden="true"></canvas>
+                    <span class="uk-visible@m" style="padding-right:10px">Account &
+											Security</span>
+                  </a>
+                </li>
+                <li class="" style="margin: 10px 0;">
+                  <a class="uk-icon" href="#0">
+                    <canvas uk-icon="icon:question" width="20" height="20" class="uk-icon"
+                            hidden="true"></canvas>
+                    <span class="uk-visible@m" style="padding-right:10px">Help</span>
+                  </a>
+                </li>
+                <li class="" style="margin: 10px 0;">
+                  <a class="uk-icon" href="#0" onclick="logout()">
+                    <canvas uk-icon="icon:sign-out" width="20" height="20" class="uk-icon"
+                            hidden="true"></canvas>
+                    <span class="uk-visible@m" style="padding-right:10px">Sign
+											out</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+<form method="POST" id="logoutForm" action="/logout">
+  <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+</form>

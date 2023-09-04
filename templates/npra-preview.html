@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — NPRA Report</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="/media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    .npra_table .npra_header th[role="heading"] {
+      color: var(--hue-lght, #ffffff);
+      background: #999999;
+    }
+  </style>
+</head>
+
+<body style="overflow: hidden">
+<div class="root">
+  <article class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content npraReportPage">
+      <div class="uk-container uk-container-expand" style="padding:4px;">
+        <div class="crs-authPage--content w-100 uk-margin-small-top">
+          <article class="crs-authPage--innerContent uk-margin">
+            <article style="height:85vh;padding:2px;overflow: auto;scroll-behavior: auto;">
+              <article class="uk-container" style="max-width:1240px;">
+                <div class="flex uk-margin-small-bottom jSticky" style="top:-3px;height:40px;">
+                  <div class="flex-100 flex uk-flex-between">
+                    <button class="backBtn uk-padding-remove flex flex-center--y"
+                            onclick="goBack()">
+                                            <span uk-icon="icon:  chevron-left; ratio: 1.3"
+                                                  style="color:#223CA9"></span>
+                      <span style="padding-left: 5px;">Back</span>
+                    </button>
+                    <div class="flex">
+                      <%= if(is_npra_checker() && !npra_report_approved) {%>
+                      <button class="flex flex-center--x flex-center--y reportBtn" uk-toggle="target: #reviewComment">
+                        <span uk-icon="ban" style="padding-right:5px;"></span>
+                        <span>disapprove</span>
+                      </button>
+                      <button class="flex flex-center--x flex-center--y reportBtn" onclick="approveReport()">
+                        <span uk-icon="check" style="padding-right:5px;"></span>
+                        <span>approve</span>
+                      </button>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+                <article class="uk-flex-center userSelectNone">
+                  <ul class="uk-flex-center jSticky" uk-tab style="top:37px;height:35px;">
+                    <li><a href="#">monthly report</a></li>
+                    <li><a href="#">Unauthorised Letter</a></li>
+                    <li><a href="#">Unauthorised transaction</a></li>
+                    <li><a href="#">quarterly report</a></li>
+                    <li><a href="#">outstanding receipt</a></li>
+                    <li><a href="#">Local Variance</a></li>
+                    <!--<li><a href="#">Foreign Variance</a></li>-->
+                  </ul>
+                  <ul class="uk-switcher">
+                    <!--Custodian Monthly Report-->
+                    <li>
+                      <section class="uk-width-1-1" style="max-width: 940px; margin: 0 auto;">
+                        <%= if(npra_report_approved) {%>
+                        <div class="flex-100 flex flex-justifyContent--x1" style="height: 45px;margin-bottom: 5px"
+                             @click="exportNPRALetter">
+                          <button class="exportBtn uk-padding-remove flex flex-center--x flex-center--y">
+                            <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                            <span style="padding-left: 5px;">Export word</span>
+                          </button>
+                        </div>
+                        <% } %>
+                        <div class="uk-card uk-card-default userSelectNone uk-card-hover"
+                             style="padding: 40px 60px 70px 60px">
+                          <div class="h-100 flex flex-direction--column">
+                            <header class="uk-text-center" style="height:auto">
+                              <h5 class="uk-margin-remove text-fontWeight--medium text-color--primeDark">
+                                NATIONAL PENSIONS REGULATORY AUTHORITY
+                              </h5>
+                              <div class="flex flex-center--y flex-center--x"
+                                   style="position:relative">
+                                <img src="./media/logo/npra.png" alt="NPRA logo"
+                                     style="object-fit: contain;width:70px;height:70px;"/>
+                                <div class="text-fontSize--14 text-color--primeDark text-fontWeight--medium flex flex-center--y flex-center--x"
+                                     style="position:absolute;border:1px solid black;width: 220px;height: 35px;right: 10px;">
+                                  <span>S/N: NPRA/FC/12002/<span>{{monthlyReport.shortDate}}</span></span>
+                                </div>
+                              </div>
+                              <h6 class="uk-margin-remove text-fontSize--14 text-fontWeight--medium text-underline">
+                                PENSION FUND CUSTODIAN QUARTERLY REPORT
+                              </h6>
+                            </header>
+                            <!--NPRA QUARTERLY BODY-->
+                            <section class="uk-margin-small-top">
+                              <!--PARTICULARS-->
+                              <table class="uk-table uk-table-divider assetTableA previewMonthTable npra_table">
+                                <thead class="npra_header">
+                                <th colspan="4" role="heading">1.0 PARTICULARS</th>
+                                </thead>
+                                <tr>
+                                  <th>Name of Pension Fund Custodian</th>
+                                  <td>Standard Chartered Bank Ghana Ltd</td>
+                                  <th>Fund Custodian ID</th>
+                                  <td>NPRA/FC/12002</td>
+                                </tr>
+                                <tr>
+                                  <th>Location Address</th>
+                                  <td>No 87 Independence Avenue, Accra Ghana</td>
+                                  <th>Contact Person's No.</th>
+                                  <td>Beverly Frimpong</td>
+                                </tr>
+                              </table>
+                              <!--END PARTICULARS-->
+                              <!--SUMMARY-->
+                              <table class="uk-table uk-table-divider assetTableA previewMonthTable npra_table">
+                                <thead class="npra_header">
+                                <tr>
+                                  <th colspan="3" role="heading">2.0 SUMMARY</th>
+                                </tr>
+                                <tr>
+                                  <th>ITEM DESCRIPTION</th>
+                                  <th class="uk-text-center">OCCUPATIONAL (5%)</th>
+                                  <th class="uk-text-center">PROVIDENT FUND</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                  <th>Month/Year of Contribution</th>
+                                  <td></td>
+                                  <td></td>
+                                </tr>
+                                <tr>
+                                  <th>No. of schemes</th>
+                                  <td></td>
+                                  <td></td>
+                                </tr>
+                                <tr>
+                                  <th>Value of Assets in Custody</th>
+                                  <td>GH&#8373;</td>
+                                  <td>GH&#8373;</td>
+                                </tr>
+                                </tbody>
+                              </table>
+                              <!--END SUMMARY-->
+                              <!--MONTHLY STATISTICS-->
+                              <div class="uk-margin-small-top">
+                                <div class="uk-grid uk-child-width-1-1" uk-grid
+                                     style="padding:2px">
+                                  <div>
+                                    <div class="uk-margin-small-top">
+                                      <div class="userSelectNone uk-text-uppercase"
+                                           style="background-color:#999999;padding:5px;color:white;font-weight: 500">
+                                        3.0 monthly statistics
+                                      </div>
+                                      <div class="uk-grid uk-child-width-1-1"
+                                           uk-grid style="padding:2px">
+                                        <div>
+                                          <!--  -->
+                                          <div class="userSelectNone text-color--primeDark text-fontSize--14 text-fontWeight--medium text-italize">
+                                            A. Attach details of all Charges
+                                            on Custodial accounts in the
+                                            format below.
+                                            Rates negotiated with specific
+                                            schemes should be included in a
+                                            separate table in a similar
+                                            format.
+                                            (Electronic copy in PDF Format)
+                                          </div>
+                                          <table class="uk-table uk-table-small uk-table-divider previewMonthTable assetTableA">
+                                            <tbody class="assetTableRowWrapper">
+                                            <thead>
+                                            <tr>
+                                              <th class="uk-text-center text-fontWeight--medium"
+                                                  style="vertical-align: top">
+                                                Type of Charge
+                                              </th>
+                                              <th class="uk-text-center text-fontWeight--medium"
+                                                  style="vertical-align: top">
+                                                Description of Charge
+                                              </th>
+                                              <th class="uk-text-center text-fontWeight--medium"
+                                                  style="vertical-align: top">
+                                                Rate<br><span
+                                                        class="text-fontWeight--light text-italize">&percnt;</span>
+                                              </th>
+                                              <th class="uk-text-center text-fontWeight--medium"
+                                                  style="vertical-align: top">
+                                                Amount<br><span
+                                                        class="text-fontWeight--light text-italize">(Gh&#8373;)</span>
+                                              </th>
+                                            </tr>
+                                            </thead>
+                                            <tr>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                            </tr>
+                                            <tr>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                            </tr>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                      <div class="uk-grid uk-child-width-1-1"
+                                           uk-grid style="padding:2px">
+                                        <div>
+                                          <div class="userSelectNone text-color--primeDark text-fontSize--14 text-fontWeight--medium text-italize">
+                                            B. Include with this form
+                                            Custodial Report (as in the
+                                            format below) for each
+                                            Employer Sponsored Scheme for
+                                            which you are a Custodian for
+                                            the period under review.
+                                            (Electronic copy in
+                                            Excel Form)
+                                          </div>
+                                          <table class="uk-table uk-table-small uk-table-divider previewMonthTable assetTableA">
+                                            <tbody class="assetTableRowWrapper">
+                                            <thead>
+                                            <tr>
+                                              <th class="uk-text-center text-fontWeight--medium"
+                                                  style="vertical-align: top">
+                                                Name of Scheme
+                                              </th>
+                                              <th class="uk-text-center text-fontWeight--medium"
+                                                  style="vertical-align: top">
+                                                Date of Investment
+                                                <br><span
+                                                        class="text-fontWeight--light text-italize">(DD/MM/YY)</span>
+                                              </th>
+                                              <th class="uk-text-center text-fontWeight--medium"
+                                                  style="vertical-align: top">
+                                                Name of Issuer
+                                              </th>
+                                              <th class="uk-text-center text-fontWeight--medium"
+                                                  style="vertical-align: top">
+                                                Asset Class
+                                              </th>
+                                              <th class="uk-text-center text-fontWeight--medium"
+                                                  style="vertical-align: top">
+                                                Asset Tenor
+                                              </th>
+                                              <th class="uk-text-center text-fontWeight--medium"
+                                                  style="vertical-align: top">
+                                                Amount Invested
+                                                <br><span
+                                                        class="text-fontWeight--light text-italize">(GH&#8373;)</span>
+                                              </th>
+                                              <th class="uk-text-center text-fontWeight--medium"
+                                                  style="vertical-align: top">
+                                                Expected Return
+                                                <br><span
+                                                        class="text-fontWeight--light text-italize"
+                                                        style="text-transform: lowercase">(&percnt;p.a)</span>
+                                              </th>
+                                            </tr>
+                                            </thead>
+                                            <tr>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                            </tr>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- END QUESTION 3.0 -->
+                                  </div>
+                                </div>
+                              </div>
+                              <!--END MONTHLY STATISTICS-->
+                              <!--DECLARATION-->
+                              <div class="uk-margin-small-top"
+                                   style="border:1px solid #cccccc;font-size:15px;">
+                                <div style="background-color:#999999;padding:5px;color:white;font-weight: 500">
+                                  4.0 Declaration
+                                </div>
+                                <section
+                                        class="uk-margin-small-top flex flex-direction--column"
+                                        style="padding:5px 15px;">
+                                  <div class="flex">
+                                    <div style="flex:1;height:auto;">
+                                      <article class="text-color--primeDark">
+                                        <div class="flex">I,<span
+                                                  class="flex-100"
+                                                  style="border-bottom: 1px dashed #212121;"> {{declaration.nameOfOfficer}}</span>
+                                          <span class="text-fontSize--14"
+                                                style="width:115px;">(name of officer)</span>
+                                        </div>
+
+                                        <div class="text-fontWeight--medium">
+                                          <span>declare and certify that:-</span>
+                                          <ul class="uk-margin-remove">
+                                            <li>the information given above
+                                              is accurate and true;
+                                            </li>
+                                            <li>we fully understand our
+                                              obligations under the
+                                              Scheme;
+                                            </li>
+                                            <li>we shall comply with the
+                                              relevant provisions of Act
+                                              766.
+                                            </li>
+                                          </ul>
+                                        </div>
+                                        <!--A-->
+                                        <article
+                                                class="uk-margin-top text-fontWeight--medium">
+                                          <div class="flex">
+                                            <div class="flex-100 flex">
+                                              <span style="width:95px">Designation:</span>
+                                              <span class="flex-100"
+                                                    style="border-bottom: 1px dashed black"> {{declaration.designation}}</span>
+                                            </div>
+                                          </div>
+                                          <div class="flex uk-margin-small-top">
+                                            <div class="flex-100 flex">
+                                              <span style="width:85px">Signature:</span>
+                                              <span class="flex-100"
+                                                    style="border-bottom:1px dashed black"></span>
+                                            </div>
+                                            <div class="flex-100 flex">
+                                              <span style="width:50px;margin-left: 5px;">Date:</span>
+                                              <span class="flex-100"
+                                                    style="border-bottom:1px dashed black"> {{formatDate(declaration.date,"D-MM-YYYY")}}</span>
+                                            </div>
+                                          </div>
+                                        </article>
+                                        <!--END A-->
+                                        <!--B-->
+                                        <article
+                                                class="uk-margin-small-top text-fontWeight--medium">
+                                          <div class="flex uk-margin-top">
+                                            <div class="flex-100 flex">
+                                              <span style="width:200px">Head of Custody Services:</span>
+                                              <span class="flex-100"
+                                                    style="border-bottom: 1px dashed black"> {{declaration.headOfCustodyServices}}</span>
+                                            </div>
+                                          </div>
+                                          <div class="flex uk-margin-small-top">
+                                            <div class="flex-100 flex">
+                                              <span style="width:85px">Signature:</span>
+                                              <span class="flex-100"
+                                                    style="border-bottom:1px dashed black"></span>
+                                            </div>
+                                            <div class="flex-100 flex">
+                                              <span style="width:50px;margin-left: 5px;">Date:</span>
+                                              <span class="flex-100"
+                                                    style="border-bottom:1px dashed black"> {{formatDate(declaration.date,"D-MM-YYYY")}}</span>
+                                            </div>
+                                          </div>
+                                        </article>
+                                        <!--END B-->
+                                      </article>
+                                    </div>
+                                    <div style="width:250px;padding: 15px 10px 5px 10px">
+                                      <section class="flex-100 h-100"
+                                               style="border:1px solid indianred;">
+
+                                      </section>
+                                    </div>
+
+                                  </div>
+                                  <div class="uk-margin-small-top">
+                                    <p class="uk-margin-remove userSelectNone text-color--primeDark text-fontSize--14">
+                                      <span class="text-fontWeight--medium text-underline">NOTE</span>-
+                                      Two officers
+                                      should sign the declaration, one of whom
+                                      should be the Head of Custody Services.
+                                    </p>
+                                  </div>
+                                </section>
+                              </div>
+                              <!--DECLARATION-->
+
+                              <aside class="userSelectNone" style="margin-top:4em">
+                                <p class="uk-margin-remove text-fontSize--12-LS text-fontWeight--medium">
+                                  Form:
+                                  NPRA/ESS/FCR/01/13</p>
+                              </aside>
+                            </section>
+                            <!-- END NPRA QUARTERLY BODY-->
+                          </div>
+                        </div>
+                      </section>
+                    </li>
+                    <!--End Custodian Monthly Report-->
+
+                    <!--NPRA UNAUTHORISED QUARTER FORM LETTER-->
+                    <li>
+                      <section class="uk-width-1-1" style="max-width: 940px; margin: 0 auto;">
+                        <%= if(npra_report_approved) {%>
+                        <div class="flex-100 flex flex-justifyContent--x1" style="height: 45px;margin-bottom: 5px">
+                          <button class="exportBtn uk-padding-remove flex flex-center--x flex-center--y"
+                                  @click="exportUnAuthorizedLetter">
+                            <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                            <span style="padding-left: 5px;">Export word</span>
+                          </button>
+                        </div>
+                        <% } %>
+                        <div class="uk-card uk-card-default userSelectNone uk-card-hover"
+                             style="padding: 50px 70px 70px 70px">
+                          <div class="h-100 flex flex-direction--column">
+                            <section class="jTable">
+                              <div class="jTableRow">
+                                <div class="jTableCell">
+                                  <p>{{unauthorisedLetter.date}}</p>
+                                </div>
+                              </div>
+                            </section>
+                            <!--ADDRESS SECTION-->
+                            <section>
+                              <div class="jTable">
+                                <div class="jTableRow">
+                                  <div class="jTableCell">
+                                    <p class="uk-margin-remove">The Manager</p>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell">
+                                    <p class="uk-margin-remove">Monitoring and
+                                      Supervision</p>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell">
+                                    <p class="uk-margin-remove">National Pensions
+                                      Regulatory Authority</p>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell">
+                                    <p class="uk-margin-remove">SU Tower,NO. 18</p>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell">
+                                    <p class="uk-margin-remove">Castle Road, Ridge</p>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell">
+                                    <p class="uk-margin-remove">P. O. Box GP 22331</p>
+                                  </div>
+                                </div>
+                                <div class="jTableRow">
+                                  <div class="jTableCell">
+                                    <p class="uk-margin-remove">Accra,</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </section>
+                            <!-- END ADDRESS SECTION-->
+                            <section class="jTable">
+                              <div class="jTableRow">
+                                <div class="jTableCell">
+                                  <!--TODO:: CHANGE ADDRESSEE IN SYSTEM SETUP-->
+                                  <p class="uk-margin-small-top text-color--primeDark">
+                                    Dear Sir,</p>
+                                </div>
+                              </div>
+                            </section>
+
+                            <section class="jTable">
+                              <div class="jTableRow">
+                                <div class="jTableCell">
+                                  <p class="uk-margin-small-top text-fontWeight--medium text-color--primeDark text-underline uk-text-center"
+                                     style="text-indent:15px;">REPORTING
+                                    ON RECEIVED INSTRUCTIONS FOR UNAUTHORISED
+                                    SECURITIES SETTLEMENT COMPLIANCE WITH
+                                    THE NPRA INVESTMENT GUIDE </p>
+                                </div>
+                              </div>
+                            </section>
+                            <!-- LETTER -->
+                            <article class="uk-article">
+                              <p class="uk-margin-remove text-color--primeDark">
+                                In reference to the unauthorised transaction monitoring
+                                and reporting by custodians,
+                                please find enclosed the reports on incidents from
+                                <span>{{unauthorisedLetter.incidents.from}}</span> to
+                                <span>{{unauthorisedLetter.incidents.to}}</span>.
+                              </p>
+                              <p class="uk-margin-small-top text-color--primeDark">
+                                Yours faithfully,
+                              </p>
+                              <section class="jTable">
+                                <div class="jTableRow">
+                                  <div class="jTableCell">
+                                    <!--TODO:  ADD TO SYSTEM SETUP PAGE :: CHANGE SECURITES HEAD-->
+                                    <p class="uk-margin-remove text-color--primeDark">{{unauthorisedLetter.reporter.name}}</p>
+                                    <p class="uk-margin-remove text-color--primeDark">{{unauthorisedLetter.reporter.position}}</p>
+                                  </div>
+                                </div>
+                              </section>
+                            </article>
+                            <!-- END LETTER -->
+                          </div>
+                        </div>
+                      </section>
+                    </li>
+                    <!-- END NPRA QUARTER FORM LETTER-->
+                    <!--UNAUTHORISED transaction-->
+                    <li>
+                      <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid>
+
+                        <div class="uk-width-1-1">
+                          <%= if(npra_report_approved) {%>
+                          <div class="flex-100 flex flex-justifyContent--x1" style="height: 43px;margin-bottom: 5px">
+                            <button class="exportBtn uk-padding-remove flex flex-center--x flex-center--y" @click="exportUnauthorizedTransactions">
+                              <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                              <span style="padding-left: 5px;">Export Excel</span>
+                            </button>
+                          </div>
+                          <% } %>
+                          <article>
+                            <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                              <div class="flex flex-direction--column h-100 w-100">
+                                <section>
+                                  <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                    <thead>
+                                    <th class="uk-text-center">Client Name</th>
+                                    <th class="uk-text-center">Transaction Details
+                                    </th>
+                                    <th class="uk-text-center">Date of Occurrence
+                                    </th>
+                                    </thead>
+                                    <tbody>
+                                    <template v-if="unauthorizedTransactions.length > 0">
+                                      <tr v-for="(transaction,nKey) in unauthorizedTransactions" :key="nKey">
+                                        <td>{{transaction.clientName}}</td>
+                                        <td>{{transaction.txnDetails}}</td>
+                                        <td>{{transaction.date}}</td>
+                                      </tr>
+                                    </template>
+                                    <template v-else>
+                                      <tr>
+                                        <td class="uk-text-center">Nil</td>
+                                        <td class="uk-text-center">Nil</td>
+                                        <td class="uk-text-center">Nil</td>
+                                      </tr>
+                                    </template>
+                                    </tbody>
+                                  </table>
+                                </section>
+                              </div>
+                            </div>
+                          </article>
+                        </div>
+
+                      </section>
+                    </li>
+                    <!-- END UNAUTHORISED transaction-->
+
+                    <!-- QUARTERLY REPORT-->
+                    <li>
+                      <%= if(npra_report_approved) {%>
+                      <aside class="uk-grid ">
+                        <div class="flex-100 flex flex-justifyContent--x1" style="height: 45px;margin-bottom: 5px">
+                          <button class="exportBtn uk-padding-remove flex flex-center--x flex-center--y"
+                                  @click="exportQuarterlyReport">
+                            <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                            <span style="padding-left: 5px;">Export Excel</span>
+                          </button>
+                        </div>
+                      </aside>
+                      <% } %>
+                      <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid
+                               style="margin-top:15px;">
+                        <div class="uk-width-1-2">
+                          <article>
+                            <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                              <div class="flex flex-direction--column h-100 w-100">
+                                <header class="" style="flex:1;height: 40px;">
+                                  <div class="uk-grid" uk-grid>
+                                    <div class="uk-width-1-1">
+                                      <div class="flex flex-center--y flex-100 h-100">
+                                        <h4 class="userSelectNone uk-margin-remove flex"
+                                            style="font-size:18px;color:var(--hue-textPrime);font-weight:500">
+                                          Tier 2
+                                        </h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </header>
+                                <section class="uk-margin-small-top flex-100 h-100">
+                                  <div class="flex flex-direction--column h-100 w-100">
+                                    <section>
+                                      <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                        <thead>
+                                        <th>Clients</th>
+                                        <!-- TODO:END OF THE QUARTER -->
+                                        <th>AUA as at {{currentQuarterShortDate}}</th>
+
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(fund,fKey) in  quarterlyReport.pensions" :key="fKey">
+                                          <td v-if="fund.bpid"><a
+                                                    :href="'/audit-pv?bpid='+fund.bpid+'&quarter='+currentQuarterDate+'&type=npra'"
+                                                    target="_blank">{{fund.name}}</a>
+                                          </td>
+                                          <td v-else>{{fund.name}}</td>
+                                          <td style="text-align:right">{{formatMoney(fund.value)}}</td>
+                                        </tr>
+                                        </tbody>
+                                      </table>
+                                    </section>
+                                    <footer class="uk-margin-top">
+                                      <div class="jTable">
+                                        <div class="jTableRow">
+                                          <div class="jTableCell">Total Number
+                                            of Pension Fund Client:&nbsp;
+                                          </div>
+                                          <div class="jTableCell">{{quarterlyReport.pensions.length - 1}}</div>
+                                        </div>
+                                      </div>
+                                    </footer>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </article>
+                        </div>
+                        <div class="uk-width-1-2">
+                          <article>
+                            <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                              <div class="flex flex-direction--column h-100 w-100">
+                                <header class="" style="flex:1;height: 40px;">
+                                  <div class="uk-grid" uk-grid>
+                                    <div class="uk-width-1-1">
+                                      <div class="flex flex-center--y flex-100 h-100">
+                                        <h4 class="userSelectNone uk-margin-remove flex"
+                                            style="font-size:18px;color:var(--hue-textPrime);font-weight:500;letter-spacing: 0.25">
+                                          Tier 3</h4>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                </header>
+                                <section class="uk-margin-small-top flex-100 h-100">
+                                  <div class="flex flex-direction--column h-100 w-100">
+                                    <section>
+                                      <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                        <thead>
+                                        <th>Clients</th>
+                                        <!-- TODO:END OF THE QUARTER -->
+                                        <th>AUA as at {{currentQuarterShortDate}}</th>
+
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(fund,fKey) in  quarterlyReport.provident" :key="fKey">
+                                          <td v-if="fund.bpid"><a
+                                                    :href="'/audit-pv?bpid='+fund.bpid+'&quarter='+currentQuarterDate+'&type=npra'"
+                                                    target="_blank">{{fund.name}}</a>
+                                          </td>
+                                          <td v-else>{{fund.name}}</td>
+                                          <td style="text-align:right">{{formatMoney(fund.value)}}</td>
+                                        </tr>
+                                        </tbody>
+                                      </table>
+                                    </section>
+                                    <footer class="uk-margin-top">
+                                      <div class="jTable">
+                                        <div class="jTableRow">
+                                          <div class="jTableCell">Total Number
+                                            of Provident Fund Client:&nbsp;
+                                          </div>
+                                          <div class="jTableCell">{{quarterlyReport.provident.length - 1}}</div>
+                                        </div>
+                                      </div>
+                                    </footer>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </article>
+                        </div>
+                      </section>
+                      <!-- FUND MANAGERS -->
+                      <section class="uk-grid-small uk-grid-match uk-flex-left" uk-grid
+                               style="margin-top:15px;">
+                        <div class="uk-width-1-2" style="height: 300px">
+                          <article>
+                            <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                              <div class="flex flex-direction--column h-100 w-100">
+                                <header class="" style="flex:1;height: 40px;">
+                                  <div class="uk-grid" uk-grid>
+                                    <div class="uk-width-1-1">
+                                      <div class="flex flex-center--y flex-100 h-100">
+                                        <h4 class="userSelectNone uk-margin-remove flex"
+                                            style="font-size:18px;color:var(--hue-textPrime);font-weight:500">
+                                          Administrators
+                                        </h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </header>
+                                <section class="uk-margin-small-top flex-100 h-100">
+                                  <div class="flex flex-direction--column h-100 w-100">
+                                    <section>
+                                      <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                        <thead>
+                                        <th>Fund name</th>
+                                        <th>Administrator</th>
+
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(manager,mKey) in quarterlyReport.administrators" :key="mKey">
+                                          <td>{{manager.name}}</td>
+                                          <td style="text-align:right">{{manager.administrator}}</td>
+                                        </tr>
+                                        </tbody>
+                                      </table>
+                                    </section>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </article>
+                        </div>
+                      </section>
+                      <!-- END FUND MANAGERS -->
+
+                    </li>
+                    <!--END QUARTERLY REPORT-->
+
+                    <!-- OUTSTANDING FD-->
+                    <li>
+                      <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid>
+
+                        <div class="uk-width-1-1" style="height: auto">
+                          <%= if(npra_report_approved) {%>
+                          <div class="flex-100 flex flex-justifyContent--x1" style="height: 45px;margin-bottom: 5px">
+                            <button class="exportBtn uk-padding-remove flex flex-center--x flex-center--y"
+                                    @click="exportOutstandingFD">
+                              <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                              <span style="padding-left: 5px;">Export Excel</span>
+                            </button>
+                          </div>
+                          <% } %>
+                          <article>
+                            <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                              <div class="flex flex-direction--column h-100 w-100">
+                                <%= if(!npra_report_approved && !is_npra_checker()) {%>
+                                <button @click="saveOutstandingFDChanges">
+                                  Save
+                                </button>
+                                <% } %>
+                                <section>
+                                  <template v-if="outstandingFDCertificates.length > 0">
+                                    <table v-for="(certificates,jKey) in outstandingFDCertificates"
+                                           class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                      <thead>
+                                      <!-- TODO: NPRA Report Monthly, FD will highlight each month in quarter -->
+                                      <tr>
+                                        <th colspan="11"
+                                            style="background-color:white">{{certificates.month}}
+                                        </th>
+                                      </tr>
+                                      <th style="width:16%">Fund Manager</th>
+                                      <th style="width:20%">Client Name</th>
+                                      <th>Amount(GHS)</th>
+                                      <th>Issuer</th>
+                                      <th>Rate &percnt;</th>
+                                      <th>TENOR</th>
+                                      <th>Term</th>
+                                      <th>Effective Date</th>
+                                      <th>Maturity</th>
+                                      <th>Status</th>
+                                      </thead>
+                                      <tbody>
+                                      <tr v-for="(certificate,yKey) in certificates.certificates">
+                                        <td>{{certificate.fundManager}}</td>
+                                        <td>{{certificate.clientName}}</td>
+                                        <td>{{formatMoney(certificate.amount)}}</td>
+                                        <td>{{certificate.issuer}}</td>
+                                        <td>{{certificate.rate}}</td>
+                                        <td>{{certificate.tenor}}</td>
+                                        <td>{{certificate.term}}</td>
+                                        <td>{{certificate.effectiveDate}}</td>
+                                        <td>{{certificate.maturity}}</td>
+                                        <td :style='fdIsMatured(certificate.maturity) ? "color:red":""'>{{fdIsMatured(certificate.maturity) ? "Matured":"Running"}}</td>
+                                      </tr>
+                                      </tbody>
+                                    </table>
+                                  </template>
+                                  <table class="uk-table uk-table-divider assetTableA  previewMonthTable" v-else>
+                                    <thead>
+                                    <!-- TODO: NPRA Report Monthly, FD will highlight each month in quarter -->
+                                    <tr>
+                                      <th colspan="11"
+                                          style="background-color:white">N/A
+                                      </th>
+                                    </tr>
+                                    <th>Fund Manager</th>
+                                    <th>Client Name</th>
+                                    <th>Amount(GHS)</th>
+                                    <th>Issuer</th>
+                                    <th>Rate &percnt;</th>
+                                    <th>TENOR</th>
+                                    <th>Term</th>
+                                    <th>Effective Date</th>
+                                    <th>Maturity</th>
+                                    <th colspan="2">Receipt Received</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                </section>
+                              </div>
+                            </div>
+                          </article>
+                        </div>
+
+                      </section>
+                    </li>
+                    <!-- OUTSTANDING FD-->
+                    <!-- LOCAL VARIANCE TAB -->
+                    <li>
+                      <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid>
+                        <%= if(npra_report_approved) {%>
+                        <div class="flex-100 flex flex-justifyContent--x1" style="height: 43px;margin-bottom: 5px">
+                          <button class="exportBtn uk-padding-remove flex flex-center--x flex-center--y"
+                                  @click="exportLocalVariance">
+                            <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                            <span style="padding-left: 5px;">Export Excel</span>
+                          </button>
+                        </div>
+                        <% } %>
+                        <div class="uk-width-1-1" style="height: auto">
+                          <article>
+                            <div
+                                    class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                              <div class="flex flex-direction--column h-100 w-100">
+                                <section>
+                                  <%= if(!npra_report_approved) {%>
+                                  <form method="post" action="/upload-npra-variance-remarks"
+                                        onsubmit="return showAlertBeforeUploading('local-variance-form')"
+                                        id="local-variance-form">
+                                    <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+                                    <div class="flex flex-justifyContent--x1" style="height:50px;">
+                                      <button class="exportBtn uk-padding-remove flex flex-center--x flex-center--y"
+                                              type="submit" style="box-shadow:0 8px 28px rgba(0,0,0,0.08)">
+                                        <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                                        <span style="padding-left: 5px;">Save Remarks</span>
+                                      </button>
+                                    </div>
+                                    <% } %>
+                                    <table class="uk-table uk-table-divider previewMonthTable assetTableA">
+                                      <thead>
+                                      <th class="uk-text-left" style="width:29%">Client</th>
+                                      <th class="uk-text-center">Home Country</th>
+                                      <th class="uk-text-center">AUA as at <%= previous_quarter_ordinal_date %></th>
+                                      <th class="uk-text-center">AUA as at <%= current_quarter_ordinal_date %></th>
+                                      <th class="uk-text-center">Amount</th>
+                                      <th class="uk-text-center">Variance &percnt;</th>
+                                      <th class="uk-text-right">Remarks</th>
+                                      </thead>
+                                      <tbody>
+                                      <%= for(variance) in local_variance { %>
+                                      <tr>
+                                        <td><%= variance.Name %></td>
+                                        <td><%= variance.Country %></td>
+                                        <td class="uk-text-right"><%= format_with_comma(variance.LastAUA,2) %></td>
+                                        <td class="uk-text-right"><%= format_with_comma(variance.CurrentAUA,2) %></td>
+                                        <%= if(is_alarming_variance(variance.Variance)){ %>
+                                        <td class="uk-text-right" style="color:red"><%=
+                                          format_with_comma(variance.Amount,2) %>
+                                        </td>
+                                        <td class="uk-text-right" style="color:red"><%=
+                                          handle_variance(variance.Variance) %>
+                                        </td>
+                                        <% }else{ %>
+                                        <td class="uk-text-right"><%= format_with_comma(variance.Amount,2) %></td>
+                                        <td class="uk-text-right"><%= handle_variance(variance.Variance) %></td>
+                                        <% } %>
+                                        <%= if(npra_report_approved) {%>
+                                        <td><%= variance.Remarks %></td>
+                                        <% }else{ %>
+                                        <td><input name="remarks" type="text" value="<%= variance.Remarks %>"/><input
+                                                  type="hidden" name="client" value="<%= variance.Name %>"/></td>
+                                        <% } %>
+                                      </tr>
+                                      <% } %>
+                                      </tbody>
+                                    </table>
+                                    <%= if(!npra_report_approved) {%>
+                                  </form>
+                                  <% } %>
+                                </section>
+                              </div>
+                            </div>
+                          </article>
+                        </div>
+
+                      </section>
+                    </li>
+                    <!-- END LOCAL VARIANCE TAB -->
+                  </ul>
+                </article>
+              </article>
+            </article>
+          </article>
+        </div>
+      </div>
+    </main>
+  </article>
+</div>
+<!-- CHECKER COMMENT MODAL -->
+<div id="reviewComment" class="uploadPreview" uk-modal>
+  <div class="uk-modal-dialog">
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <div class="uk-modal-header">
+      <h4 class="uk-modal-title" style="font-size:24px;font-weight: 500;color: #0b2135;">
+        Add Comment</h4>
+    </div>
+    <form action="/disapprove-npra-current-quarter-report" method="POST">
+      <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+      <div class="uk-modal-body" uk-overflow-auto style="padding: 10px 10px;">
+        <div class="uk-container uk-container-expand" style="padding: 5px;">
+          <div style="width: 95%;margin:0 auto;">
+            <div class="uk-grid" uk-grid>
+              <div class="uk-width-1-1">
+                <div class="uk-margin">
+                  <textarea class="uk-textarea" rows="4" placeholder="Enter comment..." name="comment"
+                            required></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="uk-modal-footer uk-text-right">
+        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+        <button class="uk-button uk-button-primary" type="submit">Notify Makers</button>
+      </div>
+    </form>
+  </div>
+</div>
+<%= if(is_npra_checker() && !npra_report_approved) { %>
+<form method="post" action="/approve-npra-current-report" id="approveNPRAReport">
+  <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+</form>
+<% } %>
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<%= javascriptTag("npra_report.js") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script src="scripts/customscrollbar.js"></script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+    function approveReport() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Approve'
+        }).then((result) => {
+            if (result.value) {
+                document.getElementById('approveNPRAReport').submit();
+            }
+        })
+    }
+
+    function showAlertBeforeUploading(formID) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This will update the remarks.",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Submit'
+        }).then((result) => {
+            if (result.value) {
+                document.getElementById(formID).submit();
+            }
+        });
+        return false;
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,332 @@
+.crs-authedPage {
+  padding-top: 2px;
+}
+.crs-authedPage .uk-navbar-right,
+.crs-authedPage .uk-navbar-nav,
+.crs-authedPage .uk-navbar-nav .dropli {
+  height: 100%;
+}
+.crs-authedPage .uk-navbar-nav .dropli .dropliA {
+  min-height: 60px;
+}
+.crs-authedPage .crs-authedPageLogoWrapper {
+  align-items: center;
+  border: 1px solid transparent;
+  width: 350px;
+  max-width: 400px;
+  box-shadow: 1px 0px 12px 0px rgba(125, 125, 125, 0.01);
+}
+.crs-authedPageLogoWrapper .crs-logo {
+  vertical-align: middle;
+}
+.crs-authedPageLogoWrapper .crs-logo img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+.crs-authedPage .uk-navbar-dropdown {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 28px 1px !important;
+  border-width: 4px;
+  border-color: var(--hue-lght);
+  padding-left: 15px;
+  padding-right: 15px;
+  transform: translate3d(0px, 0px, 0px);
+  border-radius: calc((var(--baseValue) * 3) * var(--baseUnitPX));
+  transition: transform 0.3s cubic-bezier(0.694, 0, 0.335, 1) 0s,
+    opacity 0.3s cubic-bezier(0.694, 0, 0.335, 1) 0s;
+}
+.crs-authedPage .crs-userAvatar {
+  width: 28px;
+  padding: 3px;
+  height: 28px;
+  margin-right: 8px;
+  background-color: var(--metalCyan);
+  border-radius: 50%;
+  box-shadow: 0 2px 12px 0 rgba(231, 147, 147, 0.05);
+}
+.crs-authedPage .crs--content {
+  /* background-color: #ffffff; */
+  background-color: var(--depthGray);
+  /* background-color: #f2f5f9; */
+  min-height: 100%;
+}
+.crs-authedPage .crs-authedPage--content {
+  min-height: 100%;
+}
+.statCardQ {
+  cursor: pointer;
+  padding: 5px;
+}
+.statCardQ .statCardQInner {
+  flex-direction: column;
+}
+
+.crs-authPage--innerContent .uk-card-body.uk-card-bodyPaddingLesser {
+  --dX: 4px;
+  padding: calc(var(--baseFontSize) + var(--dX)) !important;
+  transition: box-shadow 0.15s cubic-bezier(0.7, 0, 0.5, 1) !important;
+}
+.crs-authPage--innerContent .crs-quarterIndicator {
+  color: #465454;
+  font-size: calc(var(--baseFontSize) - 3px);
+  font-family: var(--textFont);
+}
+.crs-authPage--innerContent .crs-quarterMonthRange {
+  font-family: var(--titleFont);
+  color: #0b2135;
+  /* letter-spacing: 0.2px; */
+  font-size: calc(var(--baseFontSize) + 4px);
+  margin: 0 !important;
+}
+
+.crs-authPage--innerContent .crs-quarterStatus {
+  width: 100px;
+  justify-content: flex-end;
+  flex: 1;
+  align-items: center;
+}
+.crs-authPage--innerContent .crs-quarterCta {
+  margin-left: calc((var(--baseFontSize) + var(--dX)) * -1);
+  margin-right: calc((var(--baseFontSize) + var(--dX)) * -1);
+  margin-bottom: calc((var(--baseFontSize) + var(--dX)) * -1);
+  margin-top: calc(var(--baseFontSize) - 4px);
+  height: calc((var(--baseFontSize) + var(--dX) + 15px) * 1);
+  padding: 15px;
+  background-color: #f6f6f6;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: calc(var(--baseUnitPX) * 1px);
+  border-bottom-right-radius: calc(var(--baseUnitPX) * 1px);
+}
+.crs-authPage--innerContent .crs-quarterCta .crs-quarterCtaText,
+.crs-authPage--innerContent .crs-quarterCta .crs-quarterCtaText a {
+  font-weight: bold;
+  letter-spacing: 0.35px;
+  font-size: 15px;
+  color: #16404f;
+  flex: 1;
+  text-decoration: none;
+}
+
+.crs-quarterStatus .crs-statusLabel {
+  border: 1px solid transparent;
+  width: 85%;
+  height: 24px;
+  border-radius: 4px;
+  text-align: center;
+  display: grid;
+  place-content: center;
+  font-family: var(--textFont);
+  font-weight: 600;
+  font-size: calc(var(--baseFontSize) - 2px);
+  letter-spacing: 0.25px;
+  user-select: none;
+}
+
+/* PendingPV /User Activity */
+.activityContentWrapper {
+  display: flex;
+  flex-direction: row;
+}
+.activityContentWrapper .userAvatar {
+  margin-bottom: 2px;
+  position: relative;
+  vertical-align: middle;
+  display: flex;
+  width: 45px;
+  height: 45px;
+  margin-right: 5px;
+}
+.activityContentWrapper .userAvatar img {
+  width: 100%;
+  height: 100%;
+  border: 2px solid white;
+  box-shadow: 0 5px 10px 0 rgba(43, 43, 43, 0.2);
+  border-radius: 50%;
+  object-fit: contain;
+}
+.activityContentWrapper .activityContentInner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-left: 5px;
+}
+.activityContentInner .topBlockWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+.activityContentInner .userName .userNameText {
+  font-size: 16px;
+  font-weight: bold;
+  color: #0b2135;
+}
+.activityContentInner .userTime {
+  width: 100px;
+}
+.activityContentInner .userBlockContent {
+  width: 95%;
+  text-align: left;
+  letter-spacing: 0.1px;
+}
+
+/* USER SEARCH */
+form.userSearch .uk-input {
+  border: 2px solid #eee;
+  transition: all 0.25s ease;
+  color: #0b2135;
+}
+form.userSearch .uk-input:active,
+form.userSearch .uk-input:focus {
+  border: 2px solid #1e87f0;
+}
+
+.genDash .usersTbl,
+.genDash .usersTbl tr td {
+  padding: 3px;
+  border: 1px solid #d8d9db;
+  font-size: 15px;
+  letter-spacing: 0.25px;
+  cursor: pointer;
+  font-family: "Calibri";
+  color: var(--hue-textPrime, #0b2135);
+}
+
+
+.usersTbl tbody tr td:first-child {
+  width: 19.75%;
+}
+.usersTbl tbody tr td:nth-child(2) {
+  width: 14.75%;
+}
+.usersTbl tbody tr td:nth-child(4) {
+  width: 9.75%;
+}
+.usersTbl tbody tr td:nth-child(3),
+.usersTbl tbody tr td:nth-child(5),
+.usersTbl tbody tr td:nth-child(6),
+.usersTbl tbody tr td:last-child {
+  width: 14.614%;
+}
+
+.tblFooter {
+  box-shadow: 0 -2px 20px 2px rgba(125, 125, 125, 0.11);
+  height: 11%;
+  margin-left: -8px;
+  margin-right: -8px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+/* USER SEARCH */
+/* QUICK LOADED FILE _FROM_FILE_MANAGER */
+.quick_file_select {
+  padding: 8px;
+  background: var(--hue-lght);
+}
+.quick_view_acc_content {
+  padding: 5px;
+  max-height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#quick_select .quick_view_acc_content .jTable .jTableCell {
+  width: 35%;
+}
+#quick_select .uk-accordion-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #0b2135;
+  position: relative;
+  border-bottom: 1px solid #eee;
+  padding-left: 1.8em;
+  padding-top: 2px;
+  padding-bottom: 6px;
+  display: flex;
+  align-items: center;
+  margin: 0 -8px;
+}
+#quick_select .uk-accordion-title::before {
+  content: " ";
+  width: 1.4em;
+  height: 1.4em;
+  position: absolute;
+  margin-left: 0;
+  margin-left: unset;
+  top: 0;
+  left: 3px;
+  background-image: url("../../media/FileManger/chevRight.png");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: contain;
+}
+#quick_select .uk-open > .uk-accordion-title::before {
+  background-image: url("../../media/FileManger/ChevDown.png");
+}
+.quick_view_file_name_wrapper {
+  min-width: 0;
+  width: 205px;
+}
+.quick_view_file_name {
+  font-size: calc(var(--baseFontSize) - 1px);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  user-select: none;
+  color: #313135;
+  transition: 0.25s cubic-bezier(0.4, 0, 0.2);
+}
+.quick_file_select .jTableCell:hover .quick_view_file_name {
+  color: #313896;
+}
+.quick_file_select .quick_view_file_name_wrapper span {
+  color: hsl(240, 4%, 20%);
+  padding-right: 2px;
+}
+/* QUICK LOADED FILE _FROM_FILE_MANAGER */
+
+
+/* SETUP PAGES SEARCH */
+#myInput {
+  background-color: #f2f2f2;
+  border-radius: 25px;
+  color: rgb(101,119,134);
+}
+#myInput:focus, #myInput:active{
+  background-color: #ffffff;
+  border: 2px solid rgb(121,75,196);
+}
+.myInputWrapper .uk-form-icon{
+  color: rgb(101,119,132);
+}
+.myInputWrapper:focus-within .uk-form-icon {
+  color: rgb(121,76,196);
+}
+
+table.usersTbl thead tr th, table.usersTbl thead th{
+  position: sticky;
+  background-color: var(--hue-lght);
+  border: 1px solid #d8dbd9;
+  top: -1px;
+  z-index: 2;
+  color:var(--hue-textPrime);
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+table.usersTbl thead tr th::before,table.usersTbl thead tr th::after{
+  content: '';
+  position: absolute;
+  left:0;
+  width:100%;
+}
+table.usersTbl thead tr th::before{
+  top: 0;
+  border-top: 1px solid #d8dbd9;
+}
+table.usersTbl thead tr th::after{
+  bottom: 0;
+  border-top: 1px solid #d8dbd9;
+}
+
+
+
+/* SETUP PAGES SEARCH */

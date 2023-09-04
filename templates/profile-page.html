@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — Account & Security</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    .profile .jTable {
+      border-spacing: 0 12px;
+    }
+
+    .profile .jTable .field_description {
+      width: 180px;
+    }
+
+    .profile .jTable input[disabled] {
+      background-color: #f1f1f1;
+      color: #0b2135;
+      border: 1px solid #eeee;
+    }
+
+    .profile .jTable input {
+      border-radius: 2px;
+      width: 272px;
+      border: 2px solid #eee;
+      transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .profile .jTable input:focus {
+      border: 2px solid #1e87f0;
+    }
+
+    .profile form ul.helper-text {
+      display: block;
+      font-size: 13px;
+      line-height: 1.5em;
+      font-weight: 500;
+      color: #241c15;
+      padding: 0 4px;
+    }
+
+    .profile form ul li {
+      list-style: none;
+      position: relative;
+      padding: 0 0 0 22px;
+      margin: 4px 0;
+      letter-spacing: 0.2px;
+    }
+
+    .profile form ul.helper-text li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      border: solid 8px #d8dbd9;
+      border-radius: 8px;
+      transition: border 0.25s cubic-bezier(.4, 0, 0.2, 1);
+    }
+
+    .profile form ul.helper-text li::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      width: 3px;
+      height: 6px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .profile form ul.helper-text li.valid {
+      color: #bdbbb9;
+      -webkit-text-decoration-line: line-through;
+      text-decoration-line: line-through;
+    }
+
+    .profile form ul.helper-text li.valid::before {
+      border: solid 8px #1e87f0;
+    }
+
+    .profile form .jTable .jTableRow:last-child {
+      border-spacing: 15px;
+    }
+  </style>
+</head>
+
+<body style="overflow-y:auto">
+<div class="root">
+  <div class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content genDash" id="genDashMain" style="height: auto;">
+      <div class="uk-container uk-container-expand" style="padding:5px 50px;">
+        <div class="crs-authPage--content w-100">
+          <div class="crs-authPage--header" style="padding: 20px 5px;">
+            <div class="uk-grid" uk-grid>
+              <div class="uk-width-expand">
+                <h2 style="font-size:20px;letter-spacing:0.3px">
+                  <span style="color:#656d78">Change Password</span>
+                </h2>
+              </div>
+              <div class=" uk-width-auto crs-breadCrumb flex flex-center--y">
+                <div class="uk-breadcrumb">
+                  <li><a class="uk-icon-link" href="#0">Overview</a></li>
+                  <li><a href="#0">Account and Security</a></li>
+                  <li><a href="#0">Change Password</a></li>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="crs-authPage--innerContent" style="height: auto">
+            <div class="h-100 uk-grid uk-child-width-1-1@l uk-grid-match uk-child-width-1-1@m uk-child-width-1-1@s"
+                 uk-grid>
+              <div>
+                <div class="uk-card uk-card-body uk-card-hover uk-card-default uk-card-bodyPaddingLesser card-radius--all "
+                     style="height: auto">
+                  <section class="userSelectNone profile">
+                    <form class="jTable passwordResetForm" autocomplete="off" method="POST">
+                      <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+                      <div class="jTableRow">
+                        <div class="jTableCell field_description">
+                          <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Username</span>
+                        </div>
+                        <div class="jTableCell">
+                          <input class="uk-input" type="text" disabled="disabled" value="<%= user.Fullname %>"/>
+                        </div>
+                      </div>
+                      <div class="jTableRow">
+                        <div class="jTableCell field_description">
+                          <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Email</span>
+                        </div>
+                        <div class="jTableCell">
+                          <input class="uk-input" type="text" disabled="disabled" value="<%= user.Email %>"/>
+                        </div>
+                      </div>
+                      <div class="jTableRow">
+                        <div class="jTableCell field_description">
+                          <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Staff Id</span>
+                        </div>
+                        <div class="jTableCell">
+                          <input class="uk-input" type="text" disabled="disabled" value="<%= user.StaffID %>"/>
+                        </div>
+                      </div>
+                      <div class="jTableRow">
+                        <div class="jTableCell field_description">
+                          <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Password</span>
+                        </div>
+                        <div class="jTableCell">
+                          <input class="uk-input password" type="password" auto-complete="newname" name="password" required/>
+                        </div>
+                      </div>
+                      <div class="jTableRow">
+                        <div class="jTableCell field_description" style="visibility: hidden">
+                          Password Policy
+                        </div>
+                        <div class="jTableCell">
+                          <ul class="helper-text">
+                            <li class="length">Must be at least 9 characters long.</li>
+                            <li class="lowercase">Must contain a lowercase letter.</li>
+                            <li class="uppercase">Must contain an uppercase letter.</li>
+                            <li class="special">Must special character.</li>
+                            <li class="hasNumber">Must contain a number.</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="jTableRow">
+                        <div class="jTableCell field_description">
+                          <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Confirm Password</span>
+                        </div>
+                        <div class="jTableCell">
+                          <input class="uk-input password_confirm" type="password" required="required"
+                                 auto-complete="confirm new password"/>
+                        </div>
+                      </div>
+                      <div class="jTableRow">
+                        <div class="jTableCell field_description" style="visibility: hidden">
+                          Password Policy
+                        </div>
+                        <div>
+                          <ul class="helper-text">
+                            <li class="match">Must match password.</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="jTableRow">
+                        <div class="jTableCell field_description" style="visibility: hidden">
+                          <span>Password change</span>
+                        </div>
+                        <div class="jTableCell">
+                          <button class="genCTA rawBtn" type="button" onclick="goBack()">Cancel</button>
+                          <button class="genCTA brandGreen rawBtn" type="submit">Save Password</button>
+                        </div>
+                      </div>
+                    </form>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<!-- Modals -->
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script>
+    (function () {
+        var password = document.querySelector('.password');
+        var passwordConfirmation = document.querySelector('.password_confirm');
+        var helperText = {
+            special: document.querySelector('.helper-text .special'),
+            lowercase: document.querySelector('.helper-text .lowercase'),
+            uppercase: document.querySelector('.helper-text .uppercase'),
+            hasNumber: document.querySelector('.helper-text .hasNumber'),
+            charLength: document.querySelector('.helper-text .length'),
+            match: document.querySelector('.helper-text .match'),
+        };
+
+        var pattern = {
+            charLength: function () {
+                var characterCount = /^.{9,}/;
+                if (characterCount.test(password.value)) {
+                    return true;
+                }
+            },
+            lowercase: function () {
+                var regex = /^(?=.*[a-z]).+$/; // Lowercase character pattern
+                if (regex.test(password.value)) {
+                    return true;
+                }
+            },
+            uppercase: function () {
+                var regex = /^(?=.*[A-Z]).+$/; // Uppercase character pattern
+                if (regex.test(password.value)) {
+                    return true;
+                }
+            },
+            number: function () {
+                var hasNumber = /^(?=.*[\d]).+$/;
+                if (hasNumber.test(password.value)) {
+                    return true;
+                }
+            },
+            special: function () {
+                var regex = /([-+=_!@#$%^&*.,;:'\"<>/?`~\[\]\(\)\{\}\\\|\s])/; // Special character or number pattern
+                if (regex.test(password.value)) {
+                    return true;
+                }
+            }
+        };
+        // Listen for keyup action on password field
+        password.addEventListener('keyup', function () {
+            // Check that password is a minimum of 8 characters
+            patternTest(pattern.charLength(), helperText.charLength);
+            // Check that password contains a lowercase letter
+            patternTest(pattern.lowercase(), helperText.lowercase);
+            // Check that password contains an uppercase letter
+            patternTest(pattern.uppercase(), helperText.uppercase);
+            // Check that password contains has a least a number
+            patternTest(pattern.number(), helperText.hasNumber);
+            // Check that password contains a number or special character
+            patternTest(pattern.special(), helperText.special);
+
+            if (password.value === passwordConfirmation.value) {
+                addClass(helperText.match, 'valid');
+            } else {
+                removeClass(helperText.match, 'valid');
+            }
+
+            // Check that all requirements are valid
+            if (
+                hasClass(helperText.charLength, 'valid') &&
+                hasClass(helperText.lowercase, 'valid') &&
+                hasClass(helperText.uppercase, 'valid') &&
+                hasClass(helperText.special, 'valid') &&
+                hasClass(helperText.hasNumber, 'valid')
+            ) {
+                addClass(password.parentElement, 'valid');
+            } else {
+                removeClass(password.parentElement, 'valid');
+            }
+        });
+        passwordConfirmation.addEventListener('keyup', function () {
+            if (password.value === passwordConfirmation.value) {
+                addClass(helperText.match, 'valid');
+            } else {
+                removeClass(helperText.match, 'valid');
+            }
+            // Check that all requirements are valid
+            if (
+                hasClass(helperText.match, 'valid')
+            ) {
+                addClass(passwordConfirmation.parentElement, 'valid');
+            } else {
+                removeClass(passwordConfirmation.parentElement, 'valid');
+            }
+        });
+
+        function patternTest(pattern, response) {
+            if (pattern) {
+                addClass(response, 'valid');
+            } else {
+                removeClass(response, 'valid');
+            }
+        }
+
+        function addClass(el, className) {
+            if (el.classList) {
+                el.classList.add(className);
+            } else {
+                el.className += ' ' + className;
+            }
+        }
+
+        function removeClass(el, className) {
+            if (el.classList)
+                el.classList.remove(className);
+            else
+                el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+        }
+
+        function hasClass(el, className) {
+            if (el.classList) {
+                return el.classList.contains(className);
+            } else {
+                new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
+            }
+        }
+    })();
+
+    function goBack() {
+        window.history.back();
+    }
+
+    const form = document.querySelector('.passwordResetForm');
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const isValid = function (className) {
+            return document.querySelector(`.helper-text .${className}`).classList.contains('valid')
+        };
+        if (['special', 'lowercase', 'uppercase', 'hasNumber', 'length', 'match'].every(isValid)) {
+            form.submit();
+        }
+    })
+</script>
+</body>
+
+</html>

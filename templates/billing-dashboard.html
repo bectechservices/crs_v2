@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — Billing Dashboard</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="/media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <meta name="csrf-token" content="<%= authenticity_token %>"/>
+  <meta name="worker_script" content='<%= assetPath("worker_script.js") %>'/>
+  <style>
+    html .uk-modal-page body.makerCheckBody {
+      overflow: hidden !important;
+    }
+    body.makerCheckBody {
+      overflow: hidden !important;
+    }
+  </style>
+</head>
+
+<body>
+<div class="root billingDashboard">
+  <div class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content" style="height:100vh">
+      <div class="uk-container uk-container-expand" style="padding: 10px;">
+        <div class="crs-authPage--content w-100 uk-margin-small-top">
+          <div class="crs-authPage--innerContent uk-margin">
+            <div class="uk-width-expand">
+              <h2 class="uk-margin-remove" style="font-size:20px;letter-spacing:0.3px">
+                <span style="color:#656d78">Billing Dashboard</span>
+              </h2>
+            </div>
+            <!-- FILTER -->
+            <div class="flex flex-direction--row flex-justifyContent--x1" style="
+                        margin-bottom:6px;padding:2px 30px;">
+              <form method="GET" @submit.prevent="loadClientDetails">
+                <div class="uk-inline h-100" style="width:300px">
+                        <span class="uk-form-icon uk-icon" uk-icon="icon:search; ratio:1.1" style="color:#000000"><svg
+                                  width="22" height="22" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                  data-svg="search"><circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9"
+                                                            r="7"></circle><path fill="none" stroke="#000"
+                                                                                 stroke-width="1.1"
+                                                                                 d="M14,14 L18,18 L14,14 Z"></path></svg></span>
+                  <input class="uk-input w-100 h-100" type="text" placeholder="Search"
+                         v-model="bpid" required>
+                </div>
+                <div class="uk-inline h-100" style="width:300px">
+                  <input class="uk-input w-100 h-100" type="month" v-model="reportMonth">
+                </div>
+                <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                        style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 2px;padding: 7px 20px!important;line-height: initial;font-weight: 501">
+                  Load
+                </button>
+              </form>
+            </div>
+            <!-- END FILTER -->
+            <section>
+              <!-- main content  -->
+              <div class="uk-grid uk-grid-small" uk-grid style="margin: 0;background: white;padding:15px 0">
+
+                <div class="uk-width-1-1" style="background: white;">
+                  <div class="uk-margin-remove"
+                       style="display:flex;flex:1;width:100%;background: white;position: relative">
+                    <div class="mainHeaderTrustee"
+                         style="font-size:17px;font-weight: 500;height:55px;display: flex;justify-content: space-between;width: 100%;">
+                      <div style="margin-left:10px;padding-bottom: 10px">
+                        <div class="">
+                          Client Name: {{client.name}}<span
+                                  class="clientAccNo" style="font-weight: 500"></span>
+                        </div>
+                        <!-- <div class="">
+                          SafeKeeping Accounting: {{client.safekeeping}}<span
+                                  class="clientAccNo" style="font-weight: 500"></span>
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display: flex;padding-bottom: 12px;">
+                    <%= if(!is_nav_checker()) {%>
+                    <div class="flex" style="margin-right:7px;" v-if="!clientReport.approved">
+                      <div v-if="client.name">
+                        <a href="javascript:void(0);"
+                           class="uk-button uk-button-primary"
+                           style="border-radius:4px " @click="calculateClientNAV">Calculate NAV</a>
+                      </div>
+                    </div>
+                    <div style="margin-right: 7px;margin-left:7px;" v-if="!clientReport.approved">
+                      <div uk-form-custom v-if="client.name && !hasUploadedFile">
+                        <input type="file" name="file" @change="parseUploadedTransactionDetails" accept=".xlsx"/>
+                        <a href="javascript:void(0);"
+                           class="uk-button uk-button-primary uk-link"
+                           style="border-radius:4px ">Upload Transaction Details</a>
+                      </div>
+                    </div>
+                    <div style="margin-right: 7px" v-if="!clientReport.approved">
+                      <a href="javascript:void(0);"
+                         class="uk-button uk-button-primary uk-link"
+                         style="border-radius:4px" v-if="client.name" @click="inputCurrencyDetails">Input Currency
+                        Details</a>
+                    </div>
+                    <% } %>
+                    <div>
+                      <a href="javascript:void(0);"
+                         class="uk-button uk-button-primary"
+                         style="border-radius:4px " @click="generateInvoice">Preview Invoice</a>
+                    </div>
+                    <%= if(!is_nav_checker()){ %>
+                    <div style="margin-left: 10px;margin-right: 10px">
+                      <a class="uk-button uk-button-primary" href="javascript:void(0)"
+                         uk-toggle="target: #uploadandPreviewModal">Upload PV</a>
+                    </div>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+              <div class="uk-width-1-1" style="height: 300px; margin-top: 25px" v-if="hasUploadedFile">
+                <article>
+                  <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                    <div class="flex flex-direction--column h-100 w-100">
+                      <div style="display: flex;justify-content: space-between">
+                        <h4>{{client.name}} Transaction Details</h4>
+                        <a href="javascript:void(0);"
+                           class="uk-button uk-button-primary"
+                           style="border-radius:8px;height: 40px" @click="uploadTransactionDetails">Upload</a>
+                      </div>
+                      <section>
+                        <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                          <thead>
+                          <th class="uk-text-center">Date</th>
+                          <th class="uk-text-center">Our Reference/<br>Your Reference</th>
+                          <th class="uk-text-center">Security Name</th>
+                          <th class="uk-text-center">Security Category</th>
+                          <th class="uk-text-center">Charge Type</th>
+                          <th class="uk-text-center">Charge Item</th>
+                          <th class="uk-text-center">Number of Units/<br>Nominal</th>
+                          <th class="uk-text-center">Market Value</th>
+                          <th class="uk-text-center">Charge Amount with Tax</th>
+                          <th class="uk-text-center">Invoice Amount with Tax</th>
+                          </thead>
+                          <tbody>
+                          <tr v-for="(transaction, key) in transactionDetails" :key="key">
+                            <td>{{transaction[0]}}</td>
+                            <td>{{transaction[1]}}</td>
+                            <td>{{transaction[2]}}</td>
+                            <td>{{transaction[3]}}</td>
+                            <td>{{transaction[4]}}</td>
+                            <td>{{transaction[5]}}</td>
+                            <td>{{transaction[6]}}</td>
+                            <td>{{transaction[7]}}</td>
+                            <td>{{transaction[8]}}</td>
+                            <td>{{transaction[9]}}</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </section>
+                    </div>
+                  </div>
+                </article>
+              </div>
+              <div class="uk-width-1-1" style="height: 300px; margin-top: 25px" v-if="wantsToInputCurrency">
+                <article>
+                  <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                    <div class="flex flex-direction--column h-100 w-100">
+                      <div>
+                        <h4>{{client.name}} Currency Details</h4>
+                      </div>
+                      <form @submit.prevent="uploadCurrencyDetails">
+                        <section>
+                          <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                            <thead>
+                            <th class="uk-text-center">Currency</th>
+                            <th class="uk-text-center">Exchange Rate</th>
+                            <th class="uk-text-center">As on Date</th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                              <td class="uk-text-center"><input type="text" v-model="currencyDetails.currency"
+                                                                required/></td>
+                              <td class="uk-text-center"><input type="number" step="0.1" min="0"
+                                                                v-model="currencyDetails.rate" required/></td>
+                              <td class="uk-text-center"><input type="date" v-model="currencyDetails.date" required/>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                          <div style="display: flex;justify-content: flex-end;">
+                            <button type="submit"
+                                    class="uk-button uk-button-primary"
+                                    style="border-radius:8px ">Save
+                            </button>
+                          </div>
+                        </section>
+                      </form>
+                    </div>
+                  </div>
+                </article>
+              </div>
+              <div class="uk-width-1-1" style="height: 300px; margin-top: 25px" v-if="wantsToCalculateNAV">
+                <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                  <div class="flex flex-direction--column h-100 w-100">
+                    <div>
+                      <h4>{{client.name}} NAV</h4>
+                    </div>
+                  </div>
+                  <section class="userSelectNone profile">
+                    <div class="jTable" autocomplete="off">
+                      <div class="jTableRow">
+                        <div class="jTableCell field_description">
+                          <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Input Mode</span>
+                        </div>
+                        <div>
+                          <div>
+                            <label for="">Generate</label>
+                            <input type="radio" value="Generated" v-model="navInputMode">
+                          </div>
+                          <div>
+                            <label for="">Manual</label>
+                            <input type="radio" value="Manual" v-model="navInputMode">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="jTableRow" v-if="navInputMode == 'Manual'">
+                        <div class="jTableCell field_description">
+                          <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">NAV</span>
+                        </div>
+                        <div class="jTableCell">
+                          <input class="uk-input" type="number" auto-complete="newname"
+                                 required v-model="navValue"/>
+                        </div>
+                      </div>
+                      <section v-if="navInputMode == 'Generated'">
+                        <table class="uk-table uk-table-divider assetTableA">
+                          <thead>
+                          <tr>
+                            <th>Position(AUC)</th>
+                            <th v-if="!client.isNPRAClient">Cash Balance</th>
+                            <th v-else>Liabilities</th>
+                            <th colspan="2">NAV</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr>
+                            <td style="width: 30%">
+                                {{formatMoney(navGenerated.position)}}
+                            </td>
+                            <td v-if="!client.isNPRAClient">
+                              <input type="number" min="0" step="0.01" class="assetFormInput h-100 w-100 uk-input"
+                                     required v-model="navGenerated.cash_balance"/>
+                            </td>
+                            <td v-else>
+                              <input type="number" min="0" step="0.01" class="assetFormInput h-100 w-100 uk-input"
+                                     required v-model="navGenerated.liabilities"/>
+                            </td>
+                            <td style="width: 30%;">
+                                {{navStr}}
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </section>
+                    </div>
+                    <div v-if="clientPositionChanged">
+                      <p style="color: red">Client's position has been updated. Kindly update the NAV value</p>
+                    </div>
+                  </section>
+                  <div class="flex flex-justifyContent--x1 uk-margin-top">
+                    <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                            style="font-size: 14px; text-transform: none; width: 170px; border-radius: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 12px 0px; padding: 7px 20px !important; line-height: initial;"
+                            @click="saveClientNAV">
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- WORKSTATION TASK & ACTIVITIES -->
+              <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid style="margin-top:25px;">
+                <div class="uk-width-1-1">
+                  <article>
+                    <div
+                            class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                      <div class="flex flex-direction--column h-100 w-100">
+                        <header class="flex" style="flex:1;height: 40px;justify-content: space-between">
+                          <div class="flex flex-center--y flex-100 h-100">
+                            <h4 class="userSelectNone uk-margin-remove flex"
+                                style="font-size:calc(var(--baseFontSize)-1px);color:var(--hue-textPrime);font-weight:500;letter-spacing: 0.25">
+                              Review Activity and Documents</h4>
+                          </div>
+                          <div style="padding:4px;width:17rem">
+                            <form class=" userSearch jTableCell h-100" method="GET" action="javascript:void(0)"
+                                  style="width: 40%;">
+                              <div class="uk-inline w-100 h-100 myInputWrapper">
+                                <span class="uk-form-icon" uk-icon="icon:search; ratio:1"></span>
+                                <input id="myInput" onkeyup="myFunction()" class="uk-input w-100 h-100" type="text"
+                                       placeholder="Search activities" style="padding:4px;">
+                              </div>
+                            </form>
+                          </div>
+                        </header>
+                        <section class="uk-margin-small-top flex-100 h-100 scrollbar" style="max-height: 50vh;overflow-y:auto">
+                          <%= if(len(recent_activities) == 0 ) {%>
+                          <!-- EMPTY STATE -->
+                          <div style="display:grid; place-content:center">
+                            <h4 style="color:var(--hue-textPrime)">No Activity</h4>
+                          </div>
+                          <!-- END EMPTY STATE -->
+                          <% }else{ %>
+                          <div class="userSelectNone">
+                            <table
+                                    class="uk-table-stripped assetTableA uk-table uk-table-small uk-divider unsetValue usersTbl" id="myTable">
+                              <thead class="dblHead">
+                              <th class="uk-text-left" style="width: 30%">Client</th>
+                              <th class="uk-text-left">Date</th>
+                              <th class="uk-text-left">Quarter</th>
+                              <th class="uk-text-left">User</th>
+                              <th class="uk-text-left">Activity</th>
+                              <th class="uk-text-left" style="width:5%">Actions</th>
+                              </thead>
+                              <tbody>
+                              <%= for(activity) in recent_activities {%>
+                              <tr class="isClickable" data-href='url://'>
+                                <td><%= activity.Client.Name %></td>
+                                <td><%= activity.Date.Format("02 January 2006, 15:04 PM") %></td>
+                                <td><%= activities_quater(activity.QuarterDate) %></td>
+                                <td><%= activity.User.Fullname %></td>
+                                <td style="width:10%"><%= activity.Activity %></td>
+                                <td style="width:5%">
+                                  <a href='/audit-pv?bpid=<%= activity.BPID %>&quarter=<%= activity.QuarterDate.Format("2006-01-02") %>&type=billing'>View</a>
+                                </td>
+                              </tr>
+                              <% } %>
+                              </tbody>
+                            </table>
+                          </div>
+                          <% } %>
+                        </section>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </section>
+              <!-- WORKSTATION TASK & ACTIVITIES -->
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<div id="uploadandPreviewModal" class="uploadPreview uk-modal-full uploadablePVPage" uk-modal>
+  <div class="uk-modal-dialog">
+    <button class="uk-modal-close-default" type="button" uk-close @click="clearFileUploadContent"></button>
+    <div class="uk-modal-header">
+      <h4 class="uk-modal-title" style="font-size:24px;font-weight: 500;color: #0b2135;">
+        Preview and Upload PV Report</h4>
+    </div>
+    <form method="POST" enctype="multipart/form-data" v-on:submit.prevent="uploadDocument">
+      <div class="uk-modal-body" uk-overflow-auto style="padding: 10px 10px;">
+        <div class="uk-container uk-container-expand" style="padding: 5px;">
+          <div style="width: 95%;margin:0 auto;">
+            <div class="uk-grid" uk-grid>
+              <div class="uk-width-1-1">
+                <input type="hidden" ref="pvTypeInput" value="billing"/>
+                <div>
+                  <section v-show="!hasLoadedExcelFile">
+                    <div style="display: grid;place-content: center;" v-if="loadingFiles">
+                      <p>Loading ...</p>
+                    </div>
+                    <div class="js-upload uk-placeholder uk-text-center userSelectNone" v-else>
+                      <span uk-icon="icon: cloud-upload"></span>
+                      <span class="uk-text-middle">Attach files by </span>
+                      <div uk-form-custom>
+                        <input type="file" name="document" @change="onFileChange" multiple accept=".xlsx,.xls" />
+                        <span class="uk-link">selecting one</span>
+                      </div>
+                    </div>
+                  </section>
+                  <section class="previewWindow">
+                    <aside style="width: 400px;display: none;">
+                      <div class="form_group" style="visibility: hidden">
+                        <label class="jLabel">Enter Cash Balance for Summary</label>
+                        <input type="number" class="uk-input" v-model="cashBalance" step="0.01"/>
+                      </div>
+                    </aside>
+                    <template v-if="hasLoadedExcelFile">
+                      <template v-if="hasLoadedExcelAsList">
+                        <excel-data-list :reports="excelFileList"/>
+                      </template>
+                      <template v-else>
+                        <excel-data-preview :reports="excelFileData"/>
+                      </template>
+                    </template>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="uk-modal-footer uk-text-right flex" style="justify-content:flex-end" v-if="!loadingFiles">
+        <button class="uk-button uk-button-default uk-modal-close" type="button"
+                @click="clearFileUploadContent" style="margin-right:10px;" :disabled="loading">Cancel</button>
+        <button class="has-loader" type="submit" :disabled="loading" v-if="excelFileData.length">
+          <span class="submit">Upload</span>
+          <span class="loading">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path fill="#ffffff" d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>
+              <path d="M0 0h24v24H0z" fill="none"/></svg>
+          </span>
+          <span class="check">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path fill="none" d="M0 0h24v24H0z"/>
+              <path fill="#ffffff" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<%= javascriptTag("billing_dashboard.js") %>
+<%= javascriptTag("portal.js") %>
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<!-- Modal For Extensive Information End -->
+
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script src="scripts/chart.js"></script>
+<script src="scripts/chartoptions.js"></script>
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<script src="scripts/sweet-alert.js"></script>
+<script>
+    if (document.querySelector('#logoutForm')) {
+        var inactive__ = 0;
+        var timerXX = setInterval(() => {
+            //900000
+            if (inactive__ > 900000) {
+                clearInterval(timerXX);
+                logout();
+            } else {
+                inactive__ += 1000;
+            }
+        }, 1000);
+        document.addEventListener("mousemove", function () {
+            inactive__ = 0;
+        });
+    }
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 5000
+    });
+
+    const flashMessages = <%= json(flash) %>;
+    if (flashMessages.error !== undefined) {
+        flashMessages.error.forEach((message) => {
+            Toast.fire({
+                type: 'error',
+                title: message
+            });
+        })
+    }
+    if (flashMessages.success !== undefined) {
+        flashMessages.success.forEach((message) => {
+            Toast.fire({
+                type: 'success',
+                title: message
+            });
+        })
+    }
+</script>

@@ -1,0 +1,7 @@
+<%= for (i) in between(0,5) { %>
+    <%= if (i == current_quarter_constant) { %>
+        <option value="<%= i %>" selected>Quarter <%= i %></option>
+    <%  } else { %>
+        <option value="<%= i %>">Quarter <%= i %></option>
+    <% } %>
+<% } %>

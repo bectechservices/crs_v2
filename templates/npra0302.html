@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — NPRA 0302</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="/media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    table.auditExcelDataTable,
+    td {
+      border: 1px solid black;
+      border: 1px solid #DBDBDB;
+      border-collapse: collapse;
+      padding: .5rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /*.auditExcelDataTable .securityColsData:hover {*/
+    /*  background-color: #eeeeee;*/
+    /*}*/
+
+    .auditExcelDataTable input {
+      font: inherit;
+      display: block;
+      outline: none;
+      position: relative;
+      line-height: 1;
+      background: none;
+      border-radius: inherit;
+      border: 1px solid #eee;
+      width: 100%;
+      margin: 0;
+      padding: 2px;
+      /*transition: all .15s ease;*/
+    }
+
+    .auditExcelDataTable .securityColsData td:first-child {
+      width: 29%
+    }
+
+    /*.auditExcelDataTable input.numeric {*/
+    /*  text-align: right;*/
+    /*}*/
+
+    .auditExcelDataTable .securityColsData td:nth-child(n+2) input {
+      text-align: right;
+    }
+
+    /*.auditExcelDataTable .securityColsData > td input {*/
+    /*  opacity: 1;*/
+    /*  !*transition: all .15s ease;*!*/
+    /*}*/
+
+    /*.auditExcelDataTable .securityColsData > td:hover input {*/
+    /*  opacity: 1.0;*/
+    /*}*/
+
+    /*.auditExcelDataTable .securityColsData:hover > td:not(:hover) input {*/
+    /*  opacity: 0.5;*/
+    /*}*/
+
+    .auditExcelDataTable input:hover,
+    input:focus {
+      border-color: #008888;
+      background: #fff;
+      box-shadow: 0 1px 0.75em rgba(0, 136, 136, 0.2);
+      z-index: 1;
+    }
+
+    .auditExcelDataTable input:focus {
+      box-shadow: 0 2px 1.2em rgba(0, 0, 0, 0.1), 0 2px 0.8em rgba(0, 136, 136, 0.2), 0 0 0 1px #008888, inset 0 0 0 1px #008888;
+      z-index: 2;
+    }
+
+    .mkrtValError {
+      border: 2px solid red;
+    }
+  </style>
+</head>
+
+<body style="overflow: hidden">
+<div class="root">
+  <article class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content data0302ReportPage">
+      <div class="uk-container uk-container-expand" style="padding:4px;">
+        <div class="crs-authPage--content w-100 uk-margin-small-top">
+          <article class="crs-authPage--innerContent uk-margin">
+            <article style="height:85vh;padding:2px;overflow: auto;scroll-behavior: auto;">
+              <article class="uk-container" style="max-width:2260px;">
+                <div class="flex uk-margin-small-bottom jSticky" style="top:-3px;height:40px;">
+                  <button class="backBtn uk-padding-remove flex flex-center--y" onclick="goBack()">
+                    <span uk-icon="icon:  chevron-left; ratio: 1.3" style="color:#223CA9"></span>
+                    <span style="padding-left: 5px;">Back</span>
+                  </button>
+                </div>
+                <div class="flex flex-direction--row flex-justifyContent--x1" style="
+                    margin-bottom:6px;padding:2px 30px;">
+                  <form method="get" @submit.prevent="load0302Data">
+                    <div class="uk-inline h-100" style="width:300px">
+                              <span class="uk-form-icon uk-icon" uk-icon="icon:search; ratio:1.1"
+                                    style="color:#000000"><svg width="22" height="22" viewBox="0 0 20 20"
+                                                               xmlns="http://www.w3.org/2000/svg" data-svg="search">
+                                  <circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7"></circle>
+                                  <path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"></path>
+                                </svg></span>
+                      <input class="uk-input w-100 h-100" type="text" placeholder="BP or SCA" v-model="bpOrSca" require>
+                    </div>
+                    <select class="uk-select" style="width:200px;" v-model="month">
+                      <option value="1">January</option>
+                      <option value="2">February</option>
+                      <option value="3">March</option>
+                      <option value="4">April</option>
+                      <option value="5">May</option>
+                      <option value="6">June</option>
+                      <option value="7">July</option>
+                      <option value="8">August</option>
+                      <option value="9">September</option>
+                      <option value="10">October</option>
+                      <option value="11">November</option>
+                      <option value="12">December</option>
+                    </select>
+                    <select class="uk-select" style="width:200px;" v-model="year">
+                      <%= partial("./partials/years.html") %>
+                    </select>
+                    <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                            style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 2px;padding: 7px 20px!important;line-height: initial;font-weight: 501">
+                      Load
+                    </button>
+                  </form>
+                </div>
+                <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid>
+                  <div class="uk-width-1-1" style="height: auto">
+                    <article>
+                      <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                        
+                        <template v-if="report0302.length > 0">
+                          <div >
+                            <section class="previewWindow">
+                              <!-- EXCEL -->
+                              <table class="uk-table excelData auditExcelDataTable" v-if="report.report0302.length > 0">
+                                <thead>
+                                </thead>
+                                
+                              </table>
+                              <table class="uk-table excelData auditExcelDataTable">
+                                <tr class="securityCols">
+                                  <th>Report Code</th>
+                                  <th>Entity ID</th>
+                                  <th>Entity Name</th>
+                                  <th>Reference Period Year</th>
+                                  <th>Reference Period</th>
+                                  <th>Investment ID</th>
+                                  <th>Instrument</th>
+                                  <th>Issue Name</th>
+                                  <th>Asset Tenure</th>
+                                  <th>Date of Investment</th>
+                                  <th>Reporting Date</th>
+                                  <th>Amount Invested[ghs]</th>
+                                  <th>Accrued Interest/Coupon for the Month</th>
+                                  <th>Coupon Paid</th>
+                                  <th>Accrued Interest Since Purchase/Coupon since payment Date</th>
+                                  <th>Outstanding Interest to Maturity</th>
+                                  <th>Amount Impaired[ghs]</th>
+                                  <th>Asset Allocation Actual Percent</th>
+                                  <th>Maturity Date</th>
+                                  <th>Type of Investment Charge</th>
+                                  <th>Investment Charge Rate Percent</th>
+                                  <th>Invrstment Charge Amount[ghs]</th>
+                                  <th>Face Value[ghs]</th>
+                                  <th>Interest Rate Percent</th>
+                                  <th>Discount Rate Percent</th>
+                                  <th>Disposal Proceeds[ghs]</th>
+                                  <th>Disposal Instructions</th>
+                                  <th>Yield on Disposal[GHS]</th>
+                                  <th>Issue Date</th>
+                                  <th>Price Per Unit/Share at Value Price</th>
+                                  <th>Capital Gains</th>
+                                  <th>Dividend Received</th>
+                                  <th>Number of Units/Shares</th>
+                                  <th>Holding Period Return per an investment(Percent)</th>
+                                  <th>Day Run</th>
+                                  <th>Currency Conversion Rate</th>
+                                  <th>Currency</th>
+                                  <th>Amount Investment in Foreign Currency(Eurobond/External Investment)</th>
+                                  <th>Asset Class</th>
+                                  <th>Price Per unit/Share at Last value Date</th>
+                                  <th>Market Value[ghs]</th>
+                                  <th>Remaining Days to Maturity</th>
+                                  <th>Holding Period Return Per an Investment Weighted percent</th>
+                                </tr>
+                                <tbody>
+                                <tr :class="row.is_matured ? 'securityColsData mkrtValError':'securityColsData'"
+                                    v-for="(row,nKey) in report0302.data.client" :key="nKey">
+                                  <td><input class="" type="text" :value="row.report_code" readonly/></td>
+                                  <td><input class="" type="text" :value="row.entity_id" readonly/></td>
+                                  <td><input class="" type="text" :value="row.entity_name" readonly/></td>
+                                  <td><input class="" type="text" :value="row.reference_period_year" readonly/></td>
+                                  <td><input class="" type="text" :value="row.reference_period" readonly/></td>
+                                  <td><input class="" type="text" :value="row.investment_id" readonly/></td>
+                                  <td><input class="" type="text" :value="row.instrument" readonly/></td>
+                                  <td><input class="" type="text" :value="row.issue_name" readonly/></td>
+                                  <td><input class="" type="text" :value="row.asset_tenure" readonly/></td>
+                                  <td><input class="" type="text" :value="row.date_investment" readonly/></td>
+                                  <td><input class="" type="text" :value="row.reporting_date" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" :value="row.maturity_date" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" :value="formatMoney(row.face_value)" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" :value="row.currency" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" :value="row.asset_class" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" :value="formatMoney(row.market_value)" readonly/>
+                                  </td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                  <td><input class="" type="text" value="" readonly/></td>
+                                </tr>
+                                </tbody>
+                              </table>
+                              <div class="userSelectNone"
+                                   style="font-size: 13px;letter-spacing: 0.25px;font-weight: 401;">THE
+                                PRICES QUOTED ARE INTENDED FOR INTERNAL FOR ADMINISTRATIVE AND VALUATION PROCESS. SCB
+                                ACCEPTS NO
+                                LIABILITY FOR ITS ACCURACY AND COMPLETENESS
+                              </div>
+                              <!-- EXCEL -->
+                            </section>
+                          </div>
+                        </template>
+                        <template v-else>
+                          <div style="display: grid;place-content: center;margin-top:10px">
+                            <p style="font-size:20px;;font-weight: 500;">NO NPRA 0302 Report LOADED</p>
+                          </div>
+                        </template>
+                      </div>
+                    </article>
+                  </div>
+                </section>
+              </article>
+            </article>
+          </article>
+        </div>
+      </div>
+    </main>
+  </article>
+</div>
+<%= javascriptTag("data0302.js") %>
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script src="scripts/customscrollbar.js"></script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+
+</html>

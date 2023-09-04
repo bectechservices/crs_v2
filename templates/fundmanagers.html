@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Standard Chartered — Fund Manager</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="media/fav/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="media/fav/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="media/fav/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" href="media/fav/favicon.ico">
+    <link rel="stylesheet" href="styles/uikit.min.css"/>
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .addUser .uk-modal-dialog {
+            width: 500px !important;
+        }
+
+        form ul.helper-text {
+            display: block;
+            font-size: 14px;
+            color: hsl(201, 28%, 34%);
+            color: #0b2135;
+        }
+
+        form ul.helper-text li.valid {
+            color: blue;
+        }
+
+        form.valid input {
+            border: 2px solid blue;
+        }
+    </style>
+</head>
+
+<body style="overflow:hidden">
+<div class="root">
+    <div class="crs-authedPage">
+        <%= partial("./partials/navbar.html") %>
+        <main class="crs--content genDash" id="genDashMain" style="height: auto;">
+            <div class="uk-container uk-container-expand" style="padding:5px 50px;">
+                <div class="crs-authPage--content w-100">
+                    <div class="crs-authPage--header" style="padding: 5px;">
+                        <div class="uk-grid" uk-grid>
+                            <div class="uk-width-expand">
+                                <h2 style="font-size:20px;letter-spacing:0.3px">
+                                    <span style="color:#656d78">Fund Manager</span>
+                                </h2>
+                            </div>
+                            <div class=" uk-width-auto crs-breadCrumb flex flex-center--y">
+                                <div class="uk-breadcrumb">
+                                    <li><a class="uk-icon-link" href="#0">Overview</a></li>
+                                    <li><a href="#0">Fund Managers</a></li>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="crs-authPage--innerContent" style="height: 83vh">
+                        <div class="h-100 uk-grid uk-child-width-1-1@l uk-grid-match uk-child-width-1-1@m uk-child-width-1-1@s"
+                             uk-grid>
+                            <div>
+                                <div class="uk-card uk-card-body uk-card-hover uk-card-default uk-card-bodyPaddingLesser card-radius--all "
+                                     style="height: 82vh">
+                                    <div class="userToolbar" style="height: 9%;padding:5px">
+                                        <div class="row">
+                                            <div class="col-5 uk-margin-remove">
+                                                <div class="jTable" style="height:40px;width: 40%;">
+                            <span class="jTableRow">
+                              <span class="jTableCell" style="width:15%;color:var(--hue-textPrime)">Show</span>
+                              <form class="jTableCell" style="width:58%;" action="#0">
+                                <select class="uk-select w-100">
+                                  <option>10</option>
+                                </select>
+                              </form>
+                              <span class="jTableCell" style="width:20%;color:var(--hue-textPrime)">entries</span>
+                            </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-7 uk-margin-remove">
+                                                <div class="jTable"
+                                                     style="height: 40px;width:94%;float:right;clear: both;">
+                            <span class="jTableRow">
+                              <form class=" userSearch jTableCell h-100" method="GET" action="javascript:void(0)"
+                                    style="width: 30%;">
+                                <div class="uk-inline w-100 h-100">
+                                  <span class="uk-form-icon" uk-icon="icon:search; ratio:1.1"
+                                        style="color:#000000"></span>
+                                  <input class="uk-input w-100 h-100" type="text" placeholder="Search">
+                                </div>
+                              </form>
+                             <!-- <div class="jTableCell" style="width: 13%;">
+                                <button class="w-100 uk-button uk-padding-remove flex flex-center--x flex-center--y"
+                                        style="font-size: 13px;background-color:#F2F4FB;color:#223CA9;text-transform:initial">
+                                  <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                                  <span style="padding-left: 5px;">Export</span>
+                                </button>
+                              </div>-->
+                              <div class="jTableCell" style="width: 13%;">
+                                <a href="/fundmanager-add" class="w-100 h-100 uk-button uk-padding-remove"
+                                   style="background-color:var(--brandColorGreenAccent);font-size:13px;box-shadow: 0 8px 20px 0 rgba(34, 169,34, 0.25);color:var(--hue-lght);border-radius:6px;text-transform: none;font-weight: 500;">
+                                  <span uk-icon="icon: plus; ratio: 0.9" style="color:#ffffff"></span>
+                                  <span>Add fund manager</span>
+                                </a>
+                              </div>
+                            </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="userTblWrapper" style="height: 92%;margin-top: 12px;">
+                                        <section class="w-100"
+                                                 style="border:2px solid #eee;margin-top:4px;z-index: 2;position:relative;">
+                                            <div class="row">
+                                                <div class="col-12 uk-margin-remove" style="height: 38px;">
+                                                    <div class="userSelectNone"
+                                                         style="width: 100%;display: table;height: 100%;">
+                                                        <div class="valignMiddle cursorPointer"
+                                                             style="width: 45.6%;margin:2px;display:table-cell;margin:0 4px;color:var(--hue-textPrime);font-weight: 500;padding: 0 4px">
+                                                            Fund Manager
+                                                        </div>
+                                                        <div class="valignMiddle cursorPointer"
+                                                             style="width:36.8%;margin:2px;display:table-cell;border-left:1px solid #eee;margin:0 4px;color:var(--hue-textPrime);font-weight: 500;padding: 0 4px">
+                                                            Collection A/C Number
+                                                        </div>
+                                                        <div class="valignMiddle cursorPointer"
+                                                             style="width: 0%;margin:2px;display:table-cell;border-left:1px solid #eee;margin:0 4px;color:var(--hue-textPrime);font-weight: 500;padding: 0 4px">
+                                                            Action
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </section>
+                                        <section
+                                                style="height: 81%;max-height: 81%;overflow-y:auto;width:100%;margin-top: 2px;">
+                                            <table class="uk-table-middle usersTbl uk-table uk-table-small uk-table-responsive"
+                                                   style="width: 100%;">
+                                                <tbody>
+                                                <%= for(manager) in fund_managers { %>
+                                                <tr>
+                                                    <td style="width:25%!important"><%= manager.Name %></td>
+                                                    <td style="width:20%!important"><%= manager.AccountNumber %></td>
+                                                    <td style="width:10%">
+                                                        <div class="flex">
+                                                            <a class="actionBtn uk-button uk-button-default h-100 w-100 uk-padding-remove"
+                                                               href="/fundmanager-edit?id=<%= manager.ID %>"
+                                                               style="margin-right:2px;background-color:var(--brandColorBlue-a10);color:white">Edit</a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                                </tbody>
+                                            </table>
+                                        </section>
+                                        <!--<section class="tblFooter">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="userSelectNone"
+                                                         style="padding-left: 5px;padding-right: 5px;">
+                              <span style="color:hsl(201,28%,34%);font-size: 13px;">
+                                Showing 1 to <span>6</span> of <span>6</span> entries
+                              </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 uk-margin-remove" style="height: 44px;">
+                                                    <div class="flex flex-center--y float-r" style="height: 44px;">
+                                                        <div class="pagination flex">
+                                                            <a href="#0"
+                                                               class="flex-center--y flex-center--x w-100 paginationControl paginationControlDisabled uk-icon-link">
+                                                                <span uk-icon="icon: chevron-left; ratio: 1.2"
+                                                                      style="color:#212121"></span>
+                                                                <span>Previous</span>
+                                                            </a>
+                                                            <div class="pagination__pages">
+                                                                <a class="pagination__pages-item pagination__pages-item_selected"
+                                                                   href="javascript:void(0)"> 1 </a>
+                                                                <a class="pagination__pages-item"
+                                                                   href="javascript:void(0)"> 2 </a>
+                                                                <a class="pagination__pages-item"
+                                                                   href="javascript:void(0)"> 3 </a>
+                                                                <a class="pagination__pages-item"
+                                                                   href="javascript:void(0)"> 4 </a>
+                                                            </div>
+                                                            <a href="#0"
+                                                               class="flex-center--y flex-center--x w-100 paginationControl uk-icon-link">
+                                                                <span style="color:var(--hue-textPrime);">Next</span>
+                                                                <span uk-icon="icon: chevron-right; ratio: 1.2"
+                                                                      style="color:#212121"></span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </main>
+    </div>
+</div>
+<!-- Modals -->
+<%= partial("./partials/system.html") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+</body>
+
+</html>

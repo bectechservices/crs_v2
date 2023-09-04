@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — Trustee Reports</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="/media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    .hello .uk-card-body.uk-card-bodyPaddingLesser {
+      --dX: -4px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="root trusteePage">
+  <div class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content" style="height:auto">
+      <div class="uk-container uk-container-expand">
+        <div class="crs-authPage--content w-100 uk-margin-small-top">
+          <div class="crs-authPage--innerContent uk-margin">
+            <div class="uk-width-expand">
+              <h2 class="uk-margin-remove" style="font-size:20px;letter-spacing:0.3px">
+                <span style="color:#656d78">Trustee Dashboard</span>
+              </h2>
+            </div>
+            <!-- FILTER -->
+            <div class="flex flex-direction--row flex-justifyContent--x1" style="
+                        margin-bottom:6px;padding:2px 30px;">
+              <form method="GET" @submit.prevent="loadPageData">
+                <div class="uk-inline h-100" style="width:300px">
+                        <span class="uk-form-icon uk-icon" uk-icon="icon:search; ratio:1.1" style="color:#000000"><svg
+                                  width="22" height="22" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                  data-svg="search"><circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9"
+                                                            r="7"></circle><path fill="none" stroke="#000"
+                                                                                 stroke-width="1.1"
+                                                                                 d="M14,14 L18,18 L14,14 Z"></path></svg></span>
+                  <input class="uk-input w-100 h-100" type="text" placeholder="Search"
+                         v-model="pv.bpid" required>
+                </div>
+                <select class="uk-select" style="width:200px;" v-model="pv.quarter">
+                  <%= partial("./partials/quarters.html") %>
+                </select>
+                <select class="uk-select" style="width:200px;" name="year"
+                        v-model="pv.year">
+                  <%= partial("./partials/years.html") %>
+                </select>
+                <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                        style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 2px;padding: 7px 20px!important;line-height: initial;font-weight: 501">
+                  Load
+                </button>
+              </form>
+            </div>
+            <div class="flex" style="justify-content: flex-end; padding: 4px 35px;margin-bottom:8px;">
+              <a href="javascript:void(0);" @click="showPPTOptions()"
+                 class="uk-button uk-button-primary uk-text-capitalize"
+                 style="border-radius:4px ">Generate report</a>
+              <a href="javascript:void(0);" class="uk-button uk-button-primary uk-text-capitalize genCTA brandGreen"
+                 uk-toggle="target: #multiReport"
+                 style="border-radius:4px;padding:0 30px;font-weight: 500;box-shadow:0 4px 16px 0 rgba(0, 0, 0, 0.15);letter-spacing: 0.25px;">Generate
+                tiered report</a>
+            </div>
+            <!-- END FILTER -->
+            <section>
+              <ul class="uk-flex-center" uk-tab>
+                <li class="uk-active"><a href="#">PV</a></li>
+                <li><a href="#quarterlyReport">Monthly Contributions</a></li>
+                <li><a href="#quarterlyReport">Unidentified Payments</a></li>
+                <li><a href="#quarterlyReport">GOG Maturities</a></li>
+                <li><a href="#quarterlyReport">Transaction Volumes</a></li>
+              </ul>
+              <ul class="uk-switcher">
+                <!-- PV -->
+                <li>
+                  <!-- main content  -->
+                  <div class="uk-grid uk-grid-small" uk-grid style="margin: 0;background: white;">
+                    <div class="uk-width-1-1">
+                      <div class="uk-margin-remove"
+                           style="display:flex;flex:1;width:100%;background: white;position: relative">
+                        <div class="mainHeaderTrustee"
+                             style="font-size:17px;font-weight: 500;margin-bottom:6px;height:40px;">
+                          <div class="">
+                                                <span class="clientName" style="text-transform: uppercase">
+
+                                                </span>
+                          </div>
+                          <div class="">
+                            Client Name: {{pvResponse.clientName}}<span
+                                    class="clientAccNo" style="font-weight: 500"></span>
+                          </div>
+                          <!--<div class="">
+                            SafeKeeping Accounting: {{pvResponse.safekeepingAccount}}<span
+                                    class="clientAccNo" style="font-weight: 500"></span>
+                          </div> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="uk-grid uk-grid-small" uk-grid style="margin-top:5px;">
+                    <div class="uk-width-1-2 hello">
+
+                      <div class="uk-card uk-card-default uk-card-body card-radius--all uk-card-bodyPaddingLesser uk-card-hover">
+                        <div class="flex flex-direction--column crsActivity-card">
+                          <div class="" style="text-align: center;justify-content: center;">
+                            <header class="crs-ActivityCardHeader uk-text-center"
+                                    style="text-align: center;font-weight: normal;">
+                              <h4 style="font-weight: 500;text-transform: uppercase;font-size: 16px;">
+                                Portfolio
+                                Valuation Reports as at - {{pvResponse.pvAsAt}}<span
+                                        class="date"></span></h4>
+                            </header>
+                          </div>
+                        </div>
+                        <table class="uk-table uk-table-small uk-table-divider governanceTbl assetTableA previewMonthTable">
+                          <thead>
+                          <tr>
+                            <th>Description</th>
+                            <th style="text-align:right">Nominal Value</th>
+                            <th style="text-align:right">Cumulative</th>
+                            <th style="text-align:right">Value(LCY GHS)</th>
+                            <th style="text-align:right">Percentage %</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr v-for="(data,key) in pvResponse.pvData" :key="key">
+                            <td><a href="javascript:void(0);">{{data.security_type}}</a>
+                            </td>
+                            <td style="text-align:right">{{formatMoney(data.nominal_value.toFixed(2))}}</td>
+                            <td style="text-align:right">{{formatMoney(data.cumlative_cost.toFixed(2))}}</td>
+                            <td style="text-align:right">{{formatMoney(data.lcy_amount.toFixed(2))}}</td>
+                            <td style="text-align:right">{{formatMoney(data.percentage_of_total.toFixed(2))}}</td>
+                          </tr>
+                          <tr v-if="pvResponse.pvData.length > 0">
+                            <td>TOTAL</td>
+                            <td style="text-align:right">{{formatMoney(sumOf(pvResponse.pvData,"nominal_value").toFixed(2))}}</td>
+                            <td style="text-align:right">{{formatMoney(sumOf(pvResponse.pvData,"cumlative_cost").toFixed(2))}}</td>
+                            <td style="text-align:right">{{formatMoney(sumOf(pvResponse.pvData,"lcy_amount").toFixed(2))}}</td>
+                            <td style="text-align:right">{{formatMoney(sumOf(pvResponse.pvData,"percentage_of_total").toFixed(2))}}</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="uk-width-1-2" style="height: 300px">
+                      <article>
+                        <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                          <div class="flex flex-direction--column h-100 w-100">
+                            <header class="" style="flex:1;height: 40px;">
+                              <div class="uk-grid" uk-grid>
+                                <div class="uk-width-1-2">
+                                  <div class="flex flex-center--y flex-100 h-100">
+                                    <h4 class="userSelectNone uk-margin-remove flex"
+                                        style="font-size:18px;color:var(--hue-textPrime);font-weight:500">
+                                      Quarterly Analysis</h4>
+                                  </div>
+                                </div>
+                              </div>
+                            </header>
+                            <section class="uk-margin-small-top flex-100 h-100">
+                              <div class="userSelectNone flex flex-direction--column w-100 h-100"
+                                   style="flex:1;height: 315px;padding-bottom: 1rem;">
+                                <canvas id="quarterlyPerformance"></canvas>
+                                <div class="flex flex-center--x flex-center--y"
+                                     style="height: 25px;padding-left:10px;margin-top:13px;padding-top:5px;">
+                                                                    <span class="flex-100 center"
+                                                                          style="font-size:13px;font-weight:501;color:#0b2135"
+                                                                          v-for="(data,key) in pvResponse.quarterlyPerformance"
+                                                                          :key="key">{{data.bond}}</span>
+                                </div>
+                              </div>
+                            </section>
+                            <footer class="uk-margin-top"></footer>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                  <!-- end main content  -->
+                </li>
+                <!-- End PV -->
+
+                <!--Monthly Contributions -->
+                <li>
+                  <div class="uk-grid uk-grid-small" uk-grid style="margin-top:5px;">
+                    <div class="uk-width-1-1" style="height: 300px">
+                      <article>
+                        <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                          <div class="flex flex-direction--column h-100 w-100">
+                            <header class="" style="flex:1;height: 40px;">
+                              <div class="uk-grid" uk-grid>
+                                <div class="uk-width-1-1">
+                                  <div class="flex flex-center--y flex-100 h-100">
+                                    <h4 class="userSelectNone uk-margin-remove flex"
+                                        style="font-size:18px;color:var(--hue-textPrime);font-weight:500">
+                                        {{pvResponse.clientName}}
+                                      Contributions</h4>
+                                  </div>
+                                </div>
+                              </div>
+                            </header>
+                            <section class="uk-margin-small-top flex-100 h-100">
+                              <table class="uk-table uk-table-small uk-table-divider governanceTbl assetTableA previewMonthTable">
+                                <thead>
+                                <tr>
+                                  <th style="text-align:left">Transaction Date</th>
+                                  <th style="text-align:right">Month</th>
+                                  <th>SCA</th>
+                                  <th style="text-align:right">Contributions</th>
+                                  <!-- <th>Actions</th> -->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(contribution,key) in pvResponse.monthlyContributions"
+                                    :key="key">
+                                  <td style="text-align:left">{{formatDate(contribution.created_at,"DD MMMM YYYY")}}</td>
+                                  <td style="text-align:right">{{formatDate(contribution.date,"MMMM YYYY")}}</td>
+                                  <td style="color: black;">{{contribution.sca}}</td>
+                                  <td style="text-align:right">{{formatMoney(contribution.amount)}}</td>
+                                  <!-- <td><a>Edit</a> <a style="color: red" @click="deleteMonthlyContribution">Delete</a></td> -->
+                                </tr>
+                                </tbody>
+                              </table>
+                            </section>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                </li>
+                <!-- End Monthly Contributions -->
+
+                <!--Unidentified Payments -->
+                <li>
+                  <div class="uk-width-1-2" style="height:auto">
+                    <article>
+                      <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                        <div class="flex flex-direction--column h-100 w-100">
+                          <header class="" style="flex:1;height: 40px;">
+                            <div class="uk-grid" uk-grid>
+                              <div class="uk-width-1-1">
+                                <div class="flex flex-center--y flex-100 h-100">
+                                  <h4 class="userSelectNone uk-margin-remove flex"
+                                      style="font-size:16px;color:var(--hue-textPrime);font-weight:500">
+                                      {{pvResponse.clientName}}
+                                    Unidentified Payments Summary</h4>
+                                </div>
+                              </div>
+                            </div>
+                          </header>
+                          <section class="uk-margin-small-top flex-100 h-100">
+                            <!-- EMPTY STATE -->
+                            <!-- <h3 class="uk-text-center">No Contributions Added For Client</h3> -->
+                            <!-- EMPTY STATE -->
+                            <table class="uk-table uk-table-small uk-table-divider governanceTbl assetTableA previewMonthTable">
+                              <thead>
+                              <tr>
+                                <th style="text-align:center">Category</th>
+                                <th style="text-align:center">Total</th>
+                                <th style="text-align:center">Done</th>
+                                <th style="text-align:center">Pending</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr v-for="(summary,key) in pvResponse.unidentifiedPaymentsSummary"
+                                  :key="key">
+                                <td style="text-align:center">{{summary.txn_type}}</td>
+                                <td style="text-align:center">{{summary.total}}</td>
+                                <td style="text-align:center">{{summary.done}}</td>
+                                <td style="text-align:center">{{summary.pending}}</td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </section>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                  <div class="uk-width-1-1 uk-margin-small-top">
+                    <article>
+                      <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                        <div class="flex flex-direction--column h-100 w-100">
+                          <header class="" style="flex:1;height: 40px;">
+                            <div class="uk-grid" uk-grid>
+                              <div class="uk-width-1-2">
+                                <div class="flex flex-center--y flex-100 h-100">
+                                  <h4 class="userSelectNone uk-margin-remove flex"
+                                      style="font-size:16px;color:var(--hue-textPrime);font-weight:500">
+                                      {{pv.year}} {{pvResponse.clientName}}
+                                    Unidentified Payments</h4>
+                                </div>
+                              </div>
+                            </div>
+                          </header>
+                          <section class="uk-margin-small-top flex-100 h-100">
+                            <!-- EMPTY STATE -->
+                            <!-- <h3 class="uk-text-center">No Contributions Added For Client</h3> -->
+                            <!-- EMPTY STATE -->
+                            <table class="uk-table uk-table-divider assetTableA previewMonthTable">
+                              <thead>
+                              <th>Transaction Date</th>
+                              <th>Value Date</th>
+                              <th>Name of Company</th>
+                              <th>Amount</th>
+                              <th>Fund Manager</th>
+                              <th>Collection A/C Number</th>
+                              <th>Status</th>
+                              </thead>
+                              <tbody>
+                              <tr v-for="(payment,key) in pvResponse.unidentifiedPayments"
+                                  :key="key">
+                                <td>{{formatDate(payment.txn_date,"DD-MM-YYYY")}}</td>
+                                <td>{{formatDate(payment.value_date,"DD-MM-YYYY")}}</td>
+                                <td>{{payment.name_of_company}}</td>
+                                <td>{{formatMoney(payment.amount)}}</td>
+                                <td>ACC
+                                  NO. {{payment.collection_acc_num.substring(payment.collection_acc_num.length - 3,payment.collection_acc_num.length)}} ({{payment.fundManager.name}}
+                                  )
+                                </td>
+                                <td>{{payment.collection_acc_num}}</td>
+                                <td :style="payment.status=='pending' ? {color:'red'}: ''">{{payment.status.toUpperCase()}}</td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </section>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                </li>
+                <!-- End Unidentified Payments -->
+                <li>
+                  <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid>
+                    <div class="uk-width-1-1" style="height: 300px">
+                      <article>
+                        <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                          <div class="flex flex-direction--column h-100 w-100">
+                            <section class="previewWindow">
+                              <!-- EXCEL -->
+                              <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                <tr class="securityCols">
+                                  <th>Depot ID</th>
+                                  <th>Entry Date</th>
+                                  <th>Event Type</th>
+                                  <th>Base Security ID</th>
+                                  <th>Gross Amount</th>
+                                  <th>Status</th>
+                                </tr>
+                                <tbody>
+                                <tr v-for="(maturity,key) in gogMaturities" :key="key">
+                                  <td>{{maturity[0]}}</td>
+                                  <td>{{formatDate(maturity[1],"MMM D, YYYY")}}</td>
+                                  <td>{{maturity[2]}}</td>
+                                  <td>{{maturity[3]}}</td>
+                                  <td>{{formatMoney(maturity[4])}}</td>
+                                  <td>{{maturity[5]}}</td>
+                                </tr>
+                                </tbody>
+                              </table>
+                            </section>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  </section>
+                </li>
+                <li>
+                  <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid>
+                    <div class="uk-width-1-1" style="height: 300px">
+                      <article>
+                        <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                          <div class="flex flex-direction--column h-100 w-100">
+                            <section class="previewWindow">
+                              <!-- EXCEL -->
+                              <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                <tr class="securityCols">
+                                  <th>Stock Settled Date</th>
+                                  <th>Security Type</th>
+                                </tr>
+                                <tbody>
+                                <tr v-for="(txn,key) in transactionVolumes" :key="key">
+                                  <td>{{formatDate(txn[0],"MMM D, YYYY")}}</td>
+                                  <td>{{txn[1]}}</td>
+                                </tr>
+                                </tbody>
+                              </table>
+                            </section>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  </section>
+                </li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div id="multiReport" class="uploadPreview" uk-modal>
+    <div class="uk-modal-dialog">
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <div class="uk-modal-header">
+        <h4 class="uk-modal-title" style="font-size:24px;font-weight: 500;color: #0b2135;">
+          Generate Tiered Report</h4>
+      </div>
+      <div class="uk-card uk-card-body uk-card-hover uk-card-default uk-card-bodyPaddingLesser card-radius--all "
+           style="height: auto">
+        <form method="GET" @submit.prevent="generateMultipleReport">
+          <section class="userSelectNone profile">
+            <article class="jTable" autocomplete="off">
+              <div class="row">
+                <div class="col-12" style="margin-right:30px">
+                  <div class="jTableRow" style="padding-bottom: 20px">
+                    <div class="jTableCell field_description" style="width: 10%">
+                      <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Tier 2</span>
+                    </div>
+                    <div class="jTableCell" style="width: 90%">
+                      <select class="uk-select" v-model="multipleReport.tier2" style="width: 100%;" required>
+                        <option value="">Select Tier 2 Client</option>
+                        <%= for(client) in t2_clients {%>
+                          <%= if(client.HasMultipleSCA) { %>
+                            <option value="<%= client.BPID %>"><%= client.Client %></option>
+                          <% }else{ %>
+                            <option value="<%= client.SCA[0] %>"><%= client.Client %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="jTableRow">
+                    <div class="jTableCell field_description" style="width: 10%">
+                      <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Tier 3</span>
+                    </div>
+                    <div class="jTableCell" style="width: 90%">
+                      <select class="uk-select" v-model="multipleReport.tier3" style="width: 100%; margin-top:7px;"
+                              required>
+                        <option value="">Select Tier 3 Client</option>
+                        <%= for(client) in t3_clients {%>
+                          <%= if(client.HasMultipleSCA) { %>
+                            <option value="<%= client.BPID %>"><%= client.Client %></option>
+                          <% }else{ %>
+                            <option value="<%= client.SCA[0] %>"><%= client.Client %></option>
+                          <% } %>
+                        <% } %>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-center--x flex-justifyContent--x1" style="margin:6px 0 0 0;width:97.5%">
+                <button class="uk-button uk-button-primary uk-text-capitalize" type="submit"
+                        style="font-weight:500;box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 16px 0px;;letter-spacing: 0.25px;border-radius:2px;">
+                  Generate
+                  Report
+                </button>
+              </div>
+            </article>
+          </section>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%= javascriptTag("trustee.js") %>
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script src="scripts/chart.js"></script>
+<script src="scripts/chartoptions.js"></script>
+</body>
+</html>

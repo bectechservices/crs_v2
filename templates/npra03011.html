@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — NPRA PV Summary (0301)</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="/media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    table.auditExcelDataTable,
+    td {
+      border: 1px solid black;
+      border: 1px solid #DBDBDB;
+      border-collapse: collapse;
+      padding: .5rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /*.auditExcelDataTable .securityColsData:hover {*/
+    /*  background-color: #eeeeee;*/
+    /*}*/
+
+    .auditExcelDataTable input {
+      font: inherit;
+      display: block;
+      outline: none;
+      position: relative;
+      line-height: 1;
+      background: none;
+      border-radius: inherit;
+      border: 1px solid #eee;
+      width: 100%;
+      margin: 0;
+      padding: 2px;
+      /*transition: all .15s ease;*/
+    }
+
+    .auditExcelDataTable .securityColsData td:first-child {
+      width: 29%
+    }
+
+    /*.auditExcelDataTable input.numeric {*/
+    /*  text-align: right;*/
+    /*}*/
+
+    .auditExcelDataTable .securityColsData td:nth-child(n+2) input {
+      text-align: right;
+    }
+
+    /*.auditExcelDataTable .securityColsData > td input {*/
+    /*  opacity: 1;*/
+    /*  !*transition: all .15s ease;*!*/
+    /*}*/
+
+    /*.auditExcelDataTable .securityColsData > td:hover input {*/
+    /*  opacity: 1.0;*/
+    /*}*/
+
+    /*.auditExcelDataTable .securityColsData:hover > td:not(:hover) input {*/
+    /*  opacity: 0.5;*/
+    /*}*/
+
+    .auditExcelDataTable input:hover,
+    input:focus {
+      border-color: #008888;
+      background: #fff;
+      box-shadow: 0 1px 0.75em rgba(0, 136, 136, 0.2);
+      z-index: 1;
+    }
+
+    .auditExcelDataTable input:focus {
+      box-shadow: 0 2px 1.2em rgba(0, 0, 0, 0.1), 0 2px 0.8em rgba(0, 136, 136, 0.2), 0 0 0 1px #008888, inset 0 0 0 1px #008888;
+      z-index: 2;
+    }
+
+    .mkrtValError {
+      border: 2px solid red;
+    }
+  </style>
+</head>
+
+<body style="overflow: hidden">
+<div class="root">
+  <article class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content npra030Reports" >
+      <div class="uk-container uk-container-expand" style="padding:4px;">
+        <div class="crs-authPage--content w-100 uk-margin-small-top">
+          <article class="crs-authPage--innerContent uk-margin">
+            <article style="height:85vh;padding:2px;overflow: auto;scroll-behavior: auto;">
+              <article class="uk-container" style="max-width:2260px;">
+                <div class="flex uk-margin-small-bottom jSticky" style="top:-3px;height:40px;">
+                  <button class="backBtn uk-padding-remove flex flex-center--y" onclick="goBack()">
+                    <span uk-icon="icon:  chevron-left; ratio: 1.3" style="color:#223CA9"></span>
+                    <span style="padding-left: 5px;">Back</span>
+                  </button>
+                </div>
+                
+                <div class="flex flex-direction--row flex-justifyContent--x1" style="
+                    margin-bottom:6px;padding:2px 30px;">
+                  <form class="formfield" >
+                    <form class="formfield" >
+                      <select id="month" name="month" class="uk-select" style="width:200px;" v-model="month">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                      </select>
+                      <select id="year" name="year" class="uk-select" style="width:200px;" v-model="year">
+                        <%= partial("./partials/years.html") %>
+                      </select>
+                      <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                            style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 2px;padding: 7px 20px!important;line-height: initial;font-weight: 501">
+                      Load
+                    </button>
+                  </form>
+                </div>
+                <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid>
+                  <div class="uk-width-1-1" style="height: auto">
+                    <article>
+                      <div class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                        
+                          <div class="flex flex-direction--column h-100 w-100" >
+                            <section class="previewWindow">
+                              
+                              <!-- EXCEL -->
+                              <%= if(len(npra301s)>0) {%> 
+                                <div class="flex-100 flex flex-justifyContent--x1" style="height: 45px;margin-bottom: 5px">
+                                  <button class="uk-button uk-padding-remove flex flex-center--x flex-center--y"
+                                          style="font-size: 13px;background-color:#d2F4FB;color:#223CA9;text-transform:initial;width:120px;" @click="export301MonthlyReport">
+                                    <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                                    <span style="padding-left: 5px;">Export Excel</span>
+                                  </button>
+                                </div>
+                                <% } %>
+                                <!--- --->                              
+                              
+                                <%= if(len(npra301s)>0) {%>  
+                              <table class="uk-table uk-table-divider assetTableA  previewMonthTable" >
+                                <tr class="securityCols">
+                                  <th class="uk-text-center">Total Portfolio Returns (Net Returns)</th>
+                                  <th class="uk-text-center">Total Portfolio Returns (Gross Returns)</th>
+                                  <th class="uk-text-center">Report Code</th>
+                                  <th class="uk-text-center">Entity ID</th>
+                                  <th class="uk-text-center">Entity Name</th>
+                                  <th class="uk-text-center">Reference Period Year</th>
+                                  <th class="uk-text-center">Reference Period</th>
+                                  <th class="uk-text-center">Investment Receivables [ghs]</th>
+                                  <th class="uk-text-center">Total Asset Under Management [ghs]</th>
+                                  <th class="uk-text-center">Government Securities [ghs]</th>
+                                  <th class="uk-text-center">Local Government/Satutory Agency Securities [ghs]</th>
+                                  <th class="uk-text-center">Corporate Debt Securities [ghs]</th>
+                                  <th class="uk-text-center">Bank Securities [ghs]</th>
+                                  <th class="uk-text-center">Ordinary/Preference Shares [ghs]</th>
+                                  <th class="uk-text-center">Collective Investment Scheme [ghs]</th>
+                                  <th class="uk-text-center">Alternative Investment Scheme [ghs]</th>
+                                  <th class="uk-text-center">Bank Balances [ghs]</th>
+                                </tr>
+                                <tbody>
+                                <%= for(npraClient) in npra301s { %>
+                                <tr>
+                                  <td class="uk-text-center"></td>
+                                  <td class="uk-text-center"></td>
+                                  <td class="uk-text-center"><%= npraClient.ReportCode %></td>
+                                  <td class="uk-text-center"><%= npraClient.EntityID %></td>
+                                  <td class="uk-text-center"><%= npraClient.EntityName %></td>
+                                  <td class="uk-text-center"><%= npraClient.ReferencePeriodYear %></td>
+                                  <td class="uk-text-center"><%= npraClient.ReferencePeriod %></td>
+                                  <td class="uk-text-center"><%= format_with_comma(npraClient.InvestmentReceivables,2) %></td>
+                                  <td class="uk-text-center"><%= format_with_comma(npraClient.TotalAssetUnderManagement,2) %></td>
+                                  <td class="uk-text-center"><%= format_with_comma(npraClient.GovernmentSecurities,2) %></td>
+                                  <td class="uk-text-center"><%= format_with_comma(npraClient.LocalGovernmentSecurities,2) %></td>
+                                  <td class="uk-text-center"><%= format_with_comma(npraClient.CorporateDebtSecurities,2) %></td>
+                                  <td class="uk-text-center"><%= format_with_comma(npraClient.BankSecurities,2) %></td>
+                                  <td class="uk-text-center"><%= format_with_comma(npraClient.OrdinaryPreferenceShares,2) %></td>
+                                  <td class="uk-text-center"><%= format_with_comma(npraClient.CollectiveInvestmentScheme,2) %></td>
+                                  <td class="uk-text-center"><%= format_with_comma(npraClient.AlternativeInvestments,2) %></td>
+                                  <td class="uk-text-center"><%= format_with_comma(npraClient.BankBalances,2) %></td>
+                                </tr>
+                                <% } %>
+                                </tbody>
+                               
+                              </table>
+                              <div class="userSelectNone"
+                                   style="font-size: 13px;letter-spacing: 0.25px;font-weight: 401;">THE
+                                PRICES QUOTED ARE INTENDED FOR INTERNAL FOR ADMINISTRATIVE AND VALUATION PROCESS. SCB
+                                ACCEPTS NO
+                                LIABILITY FOR ITS ACCURACY AND COMPLETENESS
+                              </div>
+                              <!-- EXCEL -->
+                            </section>
+                          </div>
+                        
+                          <%}else{ %>
+                          <div style="display: grid;place-content: center;margin-top:10px">
+                            <p style="font-size:20px;;font-weight: 500;">NO NPRA 0301 Data LOADED</p>
+                          </div>
+                          <% } %>
+                      </div>
+                    </article>
+                  </div>
+                </section>
+              </article>
+            </article>
+          </article>
+        </div>
+      </div>
+    </main>
+  </article>
+</div>
+<%= javascriptTag("npra030_export.js") %>
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script src="scripts/customscrollbar.js"></script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+</body>
+
+</html>

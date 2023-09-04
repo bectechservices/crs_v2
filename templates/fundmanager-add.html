@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — Add Fund Manager</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    .profile .jTable {
+      border-spacing: 0 12px;
+    }
+
+    .profile .jTable .field_description {
+      width: 220px;
+    }
+
+    .profile .jTable input[disabled] {
+      background-color: #f1f1f1;
+      color: #0b2135;
+      border: 1px solid #eeee;
+    }
+
+    .profile .jTable input {
+      border-radius: 2px;
+      width: 272px;
+      border: 2px solid #eee;
+      transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .profile .jTable input:focus {
+      border: 2px solid #1e87f0;
+    }
+
+    .profile form ul.helper-text {
+      display: block;
+      font-size: 13px;
+      line-height: 1.5em;
+      font-weight: 500;
+      color: #241c15;
+      padding: 0 4px;
+    }
+
+    .profile form ul li {
+      list-style: none;
+      position: relative;
+      padding: 0 0 0 22px;
+      margin: 4px 0;
+      letter-spacing: 0.2px;
+    }
+
+    .profile form ul.helper-text li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      border: solid 8px #d8dbd9;
+      border-radius: 8px;
+      transition: border 0.25s cubic-bezier(.4, 0, 0.2, 1);
+    }
+
+    .profile form ul.helper-text li::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      width: 3px;
+      height: 6px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .profile form ul.helper-text li.valid {
+      color: #bdbbb9;
+      -webkit-text-decoration-line: line-through;
+      text-decoration-line: line-through;
+    }
+
+    .profile form ul.helper-text li.valid::before {
+      border: solid 8px #1e87f0;
+    }
+
+    .profile form .jTable .jTableRow:last-child {
+      border-spacing: 15px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="root">
+  <div class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content genDash" id="genDashMain" style="height: auto;">
+      <div class="uk-container uk-container-expand" style="padding:5px 50px;">
+        <div class="crs-authPage--content w-100">
+          <div class="crs-authPage--header" style="padding: 20px 5px;">
+            <div class="uk-grid" uk-grid>
+              <div class="uk-width-expand">
+                <h2 style="font-size:20px;letter-spacing:0.3px">
+                  <span style="color:#656d78">Add Fund Manager</span>
+                </h2>
+              </div>
+              <div class=" uk-width-auto crs-breadCrumb flex flex-center--y">
+                <div class="uk-breadcrumb">
+                  <li><a class="uk-icon-link" href="/fundmanager">Overview</a></li>
+                  <li><a href="#0">Add Fund Manager</a></li>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="crs-authPage--innerContent" style="height: auto">
+            <div class="h-100 uk-grid uk-child-width-1-1@l uk-grid-match uk-child-width-1-1@m uk-child-width-1-1@s"
+                 uk-grid>
+              <div>
+                <div class="uk-card uk-card-body uk-card-hover uk-card-default uk-card-bodyPaddingLesser card-radius--all "
+                     style="height: auto">
+                  <form method="POST">
+                    <input name="authenticity_token" type="hidden"
+                           value="<%= authenticity_token %>">
+                    <section class="userSelectNone profile">
+                      <div class="jTable" autocomplete="off">
+                        <div class="jTableRow">
+                          <div class="jTableCell field_description">
+                            <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Fund Manager</span>
+                          </div>
+                          <div class="jTableCell">
+                            <input class="uk-input password" type="text"
+                                   auto-complete="newname" name="name"/>
+                          </div>
+                        </div>
+                        <div class="jTableRow">
+                          <div class="jTableCell field_description">
+                            <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Account Number</span>
+                          </div>
+                          <div class="jTableCell">
+                            <input class="uk-input password" type="number"
+                                   auto-complete="newname" name="accountNumber"/>
+                          </div>
+                        </div>
+                        <div class="jTableRow">
+                          <div class="jTableCell field_description">
+                            <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Administrator</span>
+                          </div>
+                          <div class="jTableCell">
+                            <input class="uk-input password" type="text"
+                                   auto-complete="newname" name="administrator"/>
+                          </div>
+                        </div>
+                        <div style="margin-top:6px;"></div>
+                        <!-- EDIT BUTTONS-->
+                        <div class="jTableRow">
+                          <div class="jTableCell field_description"
+                               style="visibility: hidden">
+                            <span>Password change</span>
+                          </div>
+                          <div class="jTableCell">
+                            <button class="genCTA rawBtn" type="button" onclick="goBack()">
+                              Cancel
+                            </button>
+                            <button class="genCTA brandGreen rawBtn" type="submit">Save
+                              Changes
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<!-- Modals -->
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+
+</html>

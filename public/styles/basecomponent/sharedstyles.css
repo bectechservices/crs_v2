@@ -1,0 +1,98 @@
+:root {
+  /* Radius */
+  --radius: 0.25em;
+
+  /* BOX-SHADOW depth */
+  --box-shadowSm: 0 3px 6px 15px 3px rgba(0, 0, 0, 0.12);
+  --box-shadowMd: 0 1px 8px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.15);
+  --box-shadowLg: 0 15px 35px 0 rgba(60, 66, 87, 0.1),
+    0 5px 15px 0 rgba(0, 0, 0, 0.07);
+  --box-shadowXl: 0 1px 8px rgba(0, 0, 0, 0.1), 0 16px 48px rgba(0, 0, 0, 0.1),
+    0 24px 60px rgba(0, 0, 0, 0.1);
+
+  /* ANIMATIONS */
+  --transition-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --transition-ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --transition-ease-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --transition-ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.triangle--top {
+ display: block;
+ height: 0px;
+ width: 0px;
+ border: 10px solid transparent;
+ border-bottom-color: var(--hue-lght);
+ position: absolute;
+ top: -20px;
+ left: calc(50% - 10px);
+}
+.triangle--bottom{
+ display: block;
+ height: 0px;
+ width: 0px;
+ border: 10px solid transparent;
+ border-top-color: var(--hue-lght);
+ position: absolute;
+ bottom: -20px;
+ left: calc(50% - 10px);
+}
+/* Translate Cards on the Y plane. (-2) */
+
+/*CUSTOM POPUP*/
+.swal2-popup:not(.swal2-toast) {
+    width: 22em!important;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 16px 0px,
+    rgba(0, 0, 0, 0.24) 0px 24px 96px 0px!important;
+    color: #0b2135!important;
+}
+
+  .exKUrx {
+      display: -webkit-inline-box;
+      display: -webkit-inline-flex;
+      display: -ms-inline-flexbox;
+      display: inline-flex;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      background-color: rgba(0,0,0,.08)!important;
+      color: #262627;
+      font-family: inherit;
+      border: 0;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+      cursor: pointer;
+      white-space: nowrap;
+      border-radius: 4px!important;
+      padding: 6px 12px!important;
+      min-height: 32px!important;
+      font-size: 14px!important;
+      line-height: 20px!important;
+  }
+.swal2-popup:not(.swal2-toast) .swal2-title{
+      font-size:1.35em!important;
+      color:#0b2135!important;
+  }
+  .swal2-content{
+      font-size: 16px!important;
+      color:#080227!important;
+  }
+
+.exKUrx:hover {
+    background-color: rgba(212,212,212,0.2095);
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+}
+.swal2-actions .swal2-confirm.swal2-styled{
+    order:2
+}
+
+.swal2-actions .swal2-styled.swal2-cancel{
+    background-color:#aaa!important;
+}

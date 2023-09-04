@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — Overview</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css" />
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body style="overflow:hidden">
+  <div class="root">
+    <div class="crs-authedPage">
+      <%= partial("./partials/navbar.html") %>
+      <main class="crs--content genDash" id="genDashMain">
+        <div class="uk-container uk-container-expand" style="padding:2px;">
+          <div class="crs-authPage--content w-100">
+            <div class="crs-authPage--innerContent uk-margin-remove">
+              <div class="homeLayoutWrapper">
+                <div class="HLlayout fileManagerContent">
+
+                  <!-- Content -->
+                  <main class="HLlayout__content">
+                    <div class="HLlayout__contentHeader" style="height:40px;display: flex;align-items:center;">
+                      <div class="crs-authPage--content w-100 uk-margin-remove">
+                        <div class="crs-authPage--header" style="padding: 10px 70px;">
+                          <div class="uk-grid" uk-grid>
+                            <div class="uk-width-expand">
+                              <h2 style="font-size:20px;letter-spacing:0.3px">
+                                <span style="color:#656d78">Overview</span>
+                              </h2>
+                            </div>
+                            <div class=" uk-width-auto crs-breadCrumb flex flex-center--y">
+                              <div class="uk-breadcrumb">
+                                <li><a class="uk-icon-link" href="#0">Home</a></li>
+                                <li><a href="#0">Overview</a></li>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="directoryWrapper" style="padding: 10px 70px 10px 70px;height:100%">
+                      <div class="directoryWrapperInner">
+                        <!-- QUARTERLY REPORTS SECTION -->
+                        <section
+                          class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-4@l uk-child-width-1-4@m uk-child-width uk-flex-center uk-text-center"
+                          uk-grid>
+                          <%= for(key,overview) in overview_data {%>
+                          <div>
+                            <a href="/quarter-overview?date=<%= overview.QuarterDate %>" style="text-decoration: none">
+                              <div
+                                class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                                <div class="h-100 w-100 statCardQInner">
+                                  <div class="flex flex-center--x statCardQInnerMob">
+                                    <div class="flex w-100" style="flex:1;text-align:left;">
+                                      <h5 class="crs-quarterMonthRange uk-card-title"><%= overview.PrettyDate %></h5>
+                                    </div>
+                                    <div class="flex crs-quarterStatus uk-margin-remove">
+                                      <%= if(overview.Status) {%>
+                                      <span class="crs-statusLabel" data-statusColor="completeFlipped">Completed</span>
+                                      <%} else { %>
+                                        <span class="crs-statusLabel" data-statusColor="warningFlipped">Due</span>
+                                      <% } %>
+                                    </div>
+                                  </div>
+                                  <div class="flex w-100" style="flex:1;height: 50px;">
+                                    <canvas id="myChart<%= key %>"></canvas>
+                                  </div>
+                                  <div class="flex w-100"
+                                    style="margin-top:10px;height: 20px;font-size: 13px;letter-spacing: 0.2px;font-weight: 500;align-items:center">
+                                      <%= if(overview.IsMoreThanLastQuarter) {%>
+                                        <span style="color:#12adaf;"><%= overview.Percentage %>&percnt; &nbsp;</span>
+                                    <span uk-icon="icon: arrow-up; ratio: 1.1" style="color:#12adaf;  transform: rotate(45deg);margin-left: -12px; margin-top: 2px;"></span>
+                                        <span style="color: hsl(201,24%,36%);">more than last quarter</span>
+                                      <%} else { %>
+                                        <span style="color:#12adaf;"><%= overview.Percentage %>&percnt; &nbsp;</span>
+                                    <span uk-icon="icon: arrow-down; ratio: 1.1" style="color:#12adaf;  transform: rotate(45deg);margin-left: -12px; margin-top: 2px;"></span>
+                                        <span style="color: hsl(201,24%,36%);">less than last quarter</span>
+                                      <% } %>
+                                  </div>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                          <% } %>
+                        </section>
+                        <!-- QUARTERLY REPORTS SECTION END -->
+                        <!-- QUARTERLY PERFORMANCE GRAPH -->
+                        <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid style="margin-top:25px;">
+                          <div class="uk-width-2-3" style="height: 300px">
+                            <article>
+                              <div
+                                class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                                <div class="flex flex-direction--column h-100 w-100">
+                                  <header class="" style="flex:1;height: 40px;">
+                                    <div class="uk-grid" uk-grid>
+                                      <div class="uk-width-1-2">
+                                        <div class="flex flex-center--y flex-100 h-100">
+                                          <h4 class="userSelectNone uk-margin-remove flex"
+                                            style="font-size:18px;color:var(--hue-textPrime);font-weight:500">Securities
+                                            Quarterly Performance</h4>
+                                        </div>
+                                      </div>
+                                      <div class="uk-width-1-2">
+                                        <form style="padding:2px">
+                                          <select class="uk-select" id="overall_summary_select"
+                                            onchange="overallSummarySelectChanged(this.value)">
+
+                                          </select>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </header>
+                                  <section class="uk-margin-small-top flex-100 h-100">
+                                    <div class="userSelectNone flex flex-direction--column w-100 h-100"
+                                      style="flex:1;height:300px">
+                                      <canvas id="quarterlyPerformance"></canvas>
+                                      <div class="flex flex-center--x flex-center--y" style="height: 25px;">
+                                        <span class="flex-100 center"
+                                          style="font-size:13px;font-weight:501;color:#0b2135" id="sec_quar_perf_prev"></span>
+                                        <span class="flex-100 center"
+                                          style="font-size:13px;font-weight:501;color:#0b2135" id="sec_quar_perf_next"></span>
+                                      </div>
+                                    </div>
+                                  </section>
+                                  <footer class="uk-margin-top"></footer>
+                                </div>
+                              </div>
+                            </article>
+                          </div>
+                          <div class="uk-width-1-3">
+                            <article>
+                              <div
+                                class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                                <div class="flex flex-direction--column h-100 w-100">
+                                  <header class="" style="flex:1;height: 40px;">
+                                    <div class="uk-grid" uk-grid>
+                                      <div class="uk-width-1-1">
+                                        <div class="flex flex-center--y flex-100 h-100">
+                                          <h4 class="userSelectNone uk-margin-remove flex"
+                                            style="font-size:15px;color:var(--hue-textPrime);font-weight:500;letter-spacing: 0.25">
+                                            Current Submitted PVs</h4>
+                                        </div>
+                                      </div>
+                                  </header>
+                                  <section class="uk-margin-small-top flex-100 h-100">
+                                    <div class="userSelectNone flex flex-direction--column w-100 h-100"
+                                      style="flex:1;height:278px">
+                                      <canvas id="pendingFiles"></canvas>
+                                    </div>
+                                  </section>
+                                </div>
+                              </div>
+                            </article>
+                          </div>
+                        </section>
+                        <!-- QUARTERLY PERFORMANCE GRAPH -->
+                      </div>
+                    </div>
+                  </main>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <style>
+    canvas {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center center;
+    }
+  </style>
+  <%= partial("./partials/footer.html") %>
+  <%= partial("./partials/system.html") %>
+  <script src="scripts/uikit.min.js"></script>
+  <script src="scripts/uikit-icons.min.js"></script>
+  <script src="scripts/chart.js"></script>
+
+  <script>
+    document.getElementById("sec_quar_perf_prev").innerText = (new Date()).getFullYear() - 1
+    document.getElementById("sec_quar_perf_next").innerText =  (new Date()).getFullYear()
+
+    const summaryData = <%= json(overall_summary) %> ;
+    let bonds = [];
+    summaryData.forEach((summary) => {
+      summary.forEach((item) => {
+        bonds.push(item.security)
+      })
+    });
+    bonds = [...new Set(bonds)];
+    html = '';
+    bonds.forEach((bond) => {
+      html += `<option>${bond}</option>`
+    })
+    document.getElementById('overall_summary_select').innerHTML = html;
+    // CANVAS SETUP
+    let setup = canvas => {
+      let context, dpr;
+      context = canvas.getContext("2d");
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.style.marginTop = '5px';
+      dpr = window.devicePixelRatio || 1.4;
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      context.scale(dpr, dpr);
+      return context;
+    };
+
+    // CHARTS
+    let ct = setup(document.querySelector('#myChart0'));
+    let ct1 = setup(document.querySelector('#myChart1'));
+    let ct2 = setup(document.querySelector('#myChart2'));
+    let ct3 = setup(document.querySelector('#myChart3'));
+    let quarterlyPerformance = setup(document.querySelector('#quarterlyPerformance'));
+    let pendingFiles = setup(document.querySelector('#pendingFiles'));
+
+    // GRADIENT FILL
+    var gradientStroke = ct.createLinearGradient(500, 0, 100, 0);
+    gradientStroke.addColorStop(0, '#fc8f5a');
+    gradientStroke.addColorStop(1, '#f58854');
+    var gradientFill = ct.createLinearGradient(0, 0, 0, 200);
+    gradientFill.addColorStop(0, 'rgba(251, 158,29, 0.10)');
+    gradientFill.addColorStop(0.2, 'rgba(255, 158, 29, 0.05)');
+    gradientFill.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    Chart.defaults.global.legend.display = false;
+    Chart.defaults.global.tooltips.enabled = false;
+
+    // CHARTS
+    const quarterOverviewOptions =  {
+        animation: {
+          easing: "easeInOutBack"
+        },
+        legend: {
+          position: "bottom",
+          display: false
+        },
+        layout: {
+          padding: {
+            top: 5
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              fontColor: "rgba(0,0,0,0.5)",
+              fontStyle: "bold",
+              beginAtZero: true,
+              maxTicksLimit: 5,
+              padding: 15,
+              display: false,
+            },
+            gridLines: {
+              drawTicks: false,
+              display: false,
+              zeroLineColor: "transparent",
+            }
+
+          }],
+          xAxes: [{
+            gridLines: {
+              zeroLineColor: "transparent",
+              display: false,
+              drawTicks: false,
+            },
+            ticks: {
+              display: false,
+              padding: 10,
+              fontColor: "rgba(0,0,0,0.5)",
+              fontStyle: "bold"
+            }
+          }]
+        },
+        centertext: ""
+      }
+
+    new Chart(ct, {
+      type: 'line',
+      data: {
+        labels: <%= json(overview_data[0]) %>.Data,
+        datasets: [{
+          label: "",
+          borderColor: gradientStroke,
+          pointBorderColor: '#eeeeee',
+          pointBackgroundColor: '#fff',
+          pointHoverBorderColor: "#fff",
+          pointRadius: 2,
+          pointHoverRadius: 2,
+          pointBorderWidth: 0,
+          fill: true,
+          backgroundColor: gradientFill,
+          borderWidth: 2,
+          data: <%= json(overview_data[0]) %>.Data
+        }]
+      },
+      options: quarterOverviewOptions
+    });
+    new Chart(ct1, {
+      type: 'line',
+      data: {
+        labels: <%= json(overview_data[1]) %>.Data,
+        datasets: [{
+          label: "",
+          borderColor: gradientStroke,
+          pointBorderColor: '#eeeeee',
+          pointBackgroundColor: '#fff',
+          pointHoverBorderColor: "#fff",
+          pointRadius: 2,
+          pointHoverRadius: 2,
+          pointBorderWidth: 0,
+          fill: true,
+          backgroundColor: gradientFill,
+          borderWidth: 2,
+          data: <%= json(overview_data[1]) %>.Data
+        }]
+      },
+      options: quarterOverviewOptions
+    });
+    new Chart(ct2, {
+      type: 'line',
+      data: {
+        labels: <%= json(overview_data[2]) %>.Data,
+        datasets: [{
+          label: "",
+          borderColor: gradientStroke,
+          pointBorderColor: '#eeeeee',
+          pointBackgroundColor: '#fff',
+          pointHoverBorderColor: "#fff",
+          pointRadius: 2,
+          pointHoverRadius: 2,
+          pointBorderWidth: 0,
+          fill: true,
+          backgroundColor: gradientFill,
+          borderWidth: 2,
+          data: <%= json(overview_data[2]) %>.Data
+        }]
+      },
+      options: quarterOverviewOptions
+    });
+    new Chart(ct3, {
+      type: 'line',
+      data: {
+        labels: <%= json(overview_data[3]) %>.Data,
+        datasets: [{
+          label: "",
+          borderColor: gradientStroke,
+          pointBorderColor: '#eeeeee',
+          pointBackgroundColor: '#fff',
+          pointHoverBorderColor: "#fff",
+          pointRadius: 2,
+          pointHoverRadius: 2,
+          pointBorderWidth: 0,
+          fill: true,
+          backgroundColor: gradientFill,
+          borderWidth: 2,
+          data: <%= json(overview_data[3]) %>.Data
+        }]
+      },
+      options: quarterOverviewOptions
+    });
+    const quarterlyPerfChart = new Chart(quarterlyPerformance, {
+      type: 'bar',
+      data: {
+        labels: ["Q1", "Q2", "Q3", "Q4", "Q1", "Q2", "Q3", "Q4"],
+        datasets: [{
+          label: "Europe",
+          type: "line",
+          lineTension: 0,
+          borderColor: "#8e5ea2",
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+          fill: false
+        }, {
+          label: "Europe",
+          type: "bar",
+          backgroundColor: ["#81d4fa", "#4fc3f7", "#29b6f6", "#03a9fa", "#039be5", "#0288d1", "#0277bd",
+            "#01579b"
+          ],
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: '',
+        },
+        legend: {
+          display: false
+        },
+        centertext: "",
+        scales:{
+          yAxes:[{
+            ticks:{
+              callback: function(value){
+                if(value >= 1000 && value < 1000000){
+                  return `${value/1000}K`
+                }else if(value >= 1000000 && value < 1000000000){
+                  return `${value/1000000 }M`
+                }else if(value >=1000000000  ){
+                  return `${value/1000000000}B`
+                }else if(value < 2){
+                 return parseFloat(value).toFixed(2);
+                }
+              }
+            }
+          }]
+        }
+      }
+    });
+    overallSummarySelectChanged(bonds[0])
+
+    function overallSummarySelectChanged(security) {
+      let results = summaryData.map((data) => data.filter((summary) => {
+        return summary.security == security;
+      }));
+      let data = [];
+      results.forEach((result) => {
+        if (result.length > 0) {
+          data.push(result[0].value)
+        } else {
+          data.push(0)
+        }
+      });
+      quarterlyPerfChart.data.datasets[0].data = data;
+      quarterlyPerfChart.data.datasets[1].data = data;
+      quarterlyPerfChart.options.title.text = security;
+      quarterlyPerfChart.update();
+    }
+    var pendingFilesChart = new Chart(pendingFiles, {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          label: "Pending Files",
+          backgroundColor: ["#9cdbff", "#57bbfd"],
+          data: [<%= submitted_data.Uploaded %>,<%= submitted_data.Pending %>]
+        }]
+      },
+      options: {
+        title: {
+          display: false,
+        },
+        centertext: "<%= submitted_data.PrettyPercentage() %>"
+      }
+    });
+    Chart.pluginService.register({
+      beforeDraw: function (chart) {
+        var width = chart.chart.width,
+          height = chart.chart.height,
+          Chart = chart.chart.ctx;
+
+        Chart.restore();
+        var fontSize = (height / 114).toFixed(2);
+        Chart.font = fontSize + "em sans-serif";
+        Chart.textBaseline = "middle";
+        var text = chart.options.centertext,
+          textX = Math.round((width - Chart.measureText(text).width) / 2),
+          textY = height / 2;
+        Chart.fillText(text, textX, textY);
+        Chart.save();
+      }
+    });
+  </script>
+</body>
+
+</html>

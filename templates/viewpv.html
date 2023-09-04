@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — Mail</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="/media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    .uk-tab > * {
+      padding-left: 10px;
+    }
+
+    .uk-tab > li a {
+      color: #0b2135;
+      font-weight: 500;
+    }
+
+    .uk-switcher {
+      padding: 10px;
+    }
+
+    .assetTableA,
+    .assetTableA td,
+    .assetTableA th {
+      padding: 2px;
+      border-collapse: collapse;
+      font-weight: 500;
+      text-transform: capitalize;
+      font-size: 14px;
+      color: #0b2135;
+      letter-spacing: 0.2px;
+    }
+
+    .assetTableA tbody.bodyTbl td {
+      font-weight: 400;
+      text-transform: none;
+    }
+
+    .assetTableA .dblHead th {
+      border: 1px solid #d8dbd9;
+      text-align: center;
+    }
+
+    .assetTableA .dblHead th:nth-last-child(-2n+2) {
+      border-right: none;
+    }
+
+    .assetTableA .dblHead th:last-child:empty {
+      border-left: none;
+    }
+
+    .assetTableA tr td {
+      border: 1px solid #d8dbd9;
+      vertical-align: middle
+    }
+
+    .assetTableA tr td input:not(.uk-radio) {
+      width: 100%;
+      border: none
+    }
+
+    .screena {
+      list-style-type: lower-alpha;
+    }
+  </style>
+</head>
+
+<body style="overflow: hidden">
+<div class="root">
+  <div class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content custodianPage">
+      <div class="uk-container uk-container-expand" style="padding:4px;">
+        <div class="crs-authPage--content w-100 uk-margin-small-top">
+          <div class="crs-authPage--innerContent uk-margin">
+            <div class="uk-grid" uk-grid>
+              <div class="uk-width-1-1">
+                <div class="flex">
+                  <div class="uk-text-center"
+                       style="flex:1;display:flex;flex-direction:column;margin-bottom: 5px;align-items:center">
+                    <h4 class="uk-margin-remove"
+                        style="font-weight: 500;font-size:1.2em;font-family:var( --titleFont);">
+                      CUSTODIAN/TRUSTEE QUARTERLY/ANNUAL
+                      REPORT</h4>
+                    <h5 class="uk-margin-remove" style="font-weight: 500;font-size:0.85em">(<span
+                              style="font-style:italic">{{currentQuarter}}</span>)</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="uk-card uk-card-default uk-card-body card-radius--all uk-card-bodyPaddingLesser"
+                 style="position:relative;height:81vh;padding-top: 2px!important;padding:0px!important;">
+              <div class="uk-grid uk-grid-small uk-grid-match" uk-grid>
+                <!-- SIDE A -->
+                <div class="uk-width-1-2@l uk-width-1-2@m uk-grid-match uk-width-1-1@s uk-margin-remove">
+                  <div class="userSelectNone" style="height:79.5vh;padding:2px;margin-top:5px;position:relative;">
+                    <div class="scrollbar" style="height:97%;overflow: auto;padding:0px;">
+                      <!-- TODO: Only the scheme details tab will show -->
+                      <ul class="uk-margin-remove" uk-tab
+                          style="position:sticky;top:0;background:white;z-index:3;margin-top:-10px!important;margin-left:-10px!important;box-shadow: 0 2px 18px rgba(125,125,125,0.25)">
+                        <li><a href="#">1. Scheme Details</a></li>
+                      </ul>
+                      <ul class="uk-switcher uk-margin">
+
+                        <!-- QUESTION 2 SECTION -->
+                        <li>
+                          <section>
+                            <!-- TODO: Rem the search here since file has been loaded directly -->
+                            <!-- <div class="flex flex-justifyContent--x1">
+                            <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                          autocomplete="new-field" v-model="schemeSearch" v-bind:style="{border: schemeSearchError ? '1px solid red' : ''}"/>
+                              <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                                style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 8px;padding: 7px 20px!important;line-height: initial;font-weight: 501" @click="loadSchemeByBPID">Load</button>
+                            </div> -->
+                            <article style="border:1px solid #EEE;padding:5px;margin-top:5px;">
+
+                              <form>
+                                <table class="assetTableA uk-table uk-table-small" style="width:100%">
+                                  <tr>
+                                    <th>BP ID</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" disabled value="<%= scheme.BPID %>"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Name of Scheme</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" disabled value="<%= scheme.NameOfScheme %>"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Number of shares outstanding</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" disabled
+                                               value="<%= format_with_comma(scheme.NumberOfSharesOutstanding,2) %>"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Number of shareholders</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input" disabled
+                                               value="<%= format_with_comma(scheme.NumberOfShareholders,2) %>"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Number of redemptions</th>
+                                    <td>
+                                      <div class="flex">
+                                        <label>Volume</label>
+                                        <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" disabled
+                                               value="<%= format_with_comma(scheme.NumberOfSharesRedeemed,2) %>"/>
+                                        <label>Value</label>
+                                        <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" disabled
+                                               value="<%= format_with_comma(scheme.ValueOfSharesRedeemed,2) %>"/>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Name of manager</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" disabled value="<%= scheme.NameOfManager %>"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Total value of scheme assets</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" disabled
+                                               value="<%= format_with_comma(scheme.TotalValueOfSchemeAssets,2) %>"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Net asset value of scheme</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input" disabled
+                                               value="<%= format_with_comma(scheme.NetAssetValueOfScheme,5) %>"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Net asset value per share/unit</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input" disabled
+                                               value="<%= format_with_comma(scheme.NetAssetValueOfSchemePerUnit,5) %>"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Total(Value) equity investments</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" disabled
+                                               value="<%= format_with_comma(scheme.TotalEquityInvestment,2) %>"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Total (value) fixed income investments</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" disabled
+                                               value="<%= format_with_comma(scheme.TotalFixedIncomeInvestment,2) %>"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Net of medium term assets held by fund</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" disabled
+                                               value="<%= format_with_comma(scheme.NetMediumAssetHeldByFund,2) %>"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th style="font-weight:bold" colspan="2">others:</th>
+
+                                  </tr>
+                                  <tr>
+                                    <th>Capital markets investments</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" disabled
+                                               value="<%= format_with_comma(scheme.CapitalMarkerInvestments,2) %>"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>&percnt; of Capital Market investment to total investments</th>
+                                    <td><input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                               autocomplete="new-field" disabled
+                                               value="<%= scheme.PercentageCapitalMarketInvestment %>"/></td>
+                                  </tr>
+                                  <tr>
+                                    <th>Are all certificates of investment with custodian/trustee? Yes/No</th>
+                                    <td>
+                                      <div class="uk-grid-small uk-child-width-auto uk-grid">
+                                        <%= if(scheme.CertificatesOfInvestmentWithCustodian == "yes") {%>
+                                        <label><input class="uk-radio" type="radio" disabled checked>&nbsp;Yes</label>
+                                        <label><input class="uk-radio" type="radio" disabled>&nbsp;No</label>
+                                        <% } else {%>
+                                        <label><input class="uk-radio" type="radio" disabled>&nbsp;Yes</label>
+                                        <label><input class="uk-radio" type="radio" disabled checked>&nbsp;No</label>
+                                        <% } %>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Total value of unutilized funds</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" placeholder="Enter Amount here..." disabled
+                                             value="<%= format_with_comma(scheme.TotalValueOfUnutilizedFunds,2) %>"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Value of borrowed funds</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" disabled
+                                             value="<%= format_with_comma(scheme.ValueOfBorrowedFunds,2) %>"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Reasons for borrowing</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" disabled
+                                             value="<%= scheme.ReasonsForBorrowing %>"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Were all duly prepared accounts distributed to appropriate authorities?</th>
+                                    <td>
+                                      <div class="uk-grid-small uk-child-width-auto uk-grid">
+                                        <%= if(scheme.AuditedAccountsDistributedToAuthorities == "yes") {%>
+                                        <label><input class="uk-radio" type="radio" disabled checked>&nbsp;Yes</label>
+                                        <label><input class="uk-radio" type="radio" disabled>&nbsp;No</label>
+                                        <% } else {%>
+                                        <label><input class="uk-radio" type="radio" disabled>&nbsp;Yes</label>
+                                        <label><input class="uk-radio" type="radio" disabled checked>&nbsp;No</label>
+                                        <% } %>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th colspan="2" style="font-weight:bold">Outstanding</th>
+
+                                  </tr>
+                                  <tr>
+                                    <th>Redemptions</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" disabled value="<%= format_with_comma(scheme.Redemptions,2) %>"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Dividends/interests/capital gains</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" disabled value="<%= format_with_comma(scheme.Dividends,2) %>"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Rights/bonus issues/stock splits</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" disabled value="<%= format_with_comma(scheme.Rights,2) %>"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Fees owed custodian/trustee</th>
+                                    <td>
+                                      <input type="text" class="assetFormInput h-100 w-100 uk-input"
+                                             autocomplete="new-field" disabled value="<%= format_with_comma(scheme.FeesOwedCustodian,2) %>"/>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </form>
+                            </article>
+                          </section>
+                        </li>
+                        <!-- END QUESTION 2 SECTION -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!-- END SIDE A -->
+                <!-- Side B -->
+                <div class="uk-width-1-2 uk-width-1-2@m uk-grid-match uk-width-1-1@s uk-margin-remove"
+                     style="padding:0px 5px 0!important">
+                  <!-- TODO:: Load Client PV file directly here since it is a recent activity -->
+                  <div class="w-100 h-100" v-if="activeFile.data">
+                    <object type="application/pdf" :data="activeFile.data" width="100%" height="100%">
+                    </object>
+                  </div>
+                </div>
+              </div>
+              <!-- Side B end -->
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </main>
+</div>
+</div>
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<%= javascriptTag("custodian.js") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+
+</body>
+
+</html>

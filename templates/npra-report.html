@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — NPRA Reports</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="/media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+
+</head>
+
+<body style="overflow:hidden;">
+<div class="root">
+  <div class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content npraGeneralReports">
+      <div class="uk-container uk-container-expand" style="padding:4px;">
+        <div class="crs-authPage--content w-100 uk-margin">
+          <div class="crs-authPage--innerContent uk-margin">
+            <article style="height: 86vh;padding:2px;overflow:auto;scroll-behavior:auto;">
+              <section class="uk-container" style="max-width:1240px;">
+
+                <div class="flex uk-margin-small-bottom jSticky" style="top:-3px;height:50px;">
+                  <div class="flex-100 flex flex-center--y">
+                    <button class="backBtn uk-padding-remove flex flex-center--y" onclick="goBack()">
+                      <span uk-icon="icon:  chevron-left; ratio: 1.3" style="color:#223CA9"></span>
+                      <span style="padding-left: 5px;">Back</span>
+                    </button>
+                    <h2 class="uk-margin-remove" style="font-size:20px;letter-spacing:0.3px">
+                      <span style="color:#656d78">NPRA Report</span>
+                    </h2>
+                  </div>
+                  <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid style="margin-top: 10px">
+                    <div class="uk-width-1-1">
+                      <article>
+                        <div class="flex flex-direction--row flex-justifyContent--x1" style="
+                    margin-bottom:6px;padding:2px 30px;">
+                          <select class="uk-select" style="width:200px;" v-model="quarter">
+                            <%= partial("./partials/quarters.html") %>
+                          </select>
+                          <select class="uk-select" style="width:200px;" v-model="year">
+                            <%= partial("./partials/years.html") %>
+                          </select>
+                          <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
+                                  style="font-size: 14px;text-transform:none;width:120px;margin-right: 10px;border-radius: 2px;padding: 7px 20px!important;line-height: initial;font-weight: 501"
+                                  @click="loadDataForQuarter">
+                            Load
+                          </button>
+                        </div>
+                      </article>
+                    </div>
+                  </section>
+                </div>
+                <article class="uk-flex-center userSelectNone">
+                  <ul class="uk-flex-center jSticky" uk-tab style="top:45px;height:35px;">
+                    <!-- <li class="uk-active"><a href="#">General</a></li>-->
+                    <li><a href="#">Quarterly Report</a></li>
+                    <li><a href="#">Outstanding Receipt</a></li>
+                    <li><a href="#">Local Variance</a></li>
+                    <!--<li><a href="#">Foreign Variance</a></li> -->
+                  </ul>
+                  <ul class="uk-switcher">
+
+                    <!-- QUARTERLY REPORT TAB -->
+                    <li>
+                      <div class="uk-width-1-1" style="height: auto">
+                        <div class="flex-100 flex flex-justifyContent--x1" style="height: 45px;margin-bottom: 5px">
+                          <button class="uk-button uk-padding-remove flex flex-center--x flex-center--y"
+                                  style="font-size: 13px;background-color:#d2F4FB;color:#223CA9;text-transform:initial;width:120px;" @click="exportQuarterlyReport">
+                            <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                            <span style="padding-left: 5px;">Export Excel</span>
+                          </button>
+                        </div>
+                      </div>
+                      <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid style="margin-top:25px;">
+                        <div class="uk-width-1-2">
+                          <article>
+                            <div
+                                    class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                              <div class="flex flex-direction--column h-100 w-100">
+                                <header class="" style="flex:1;height: 40px;">
+                                  <div class="uk-grid" uk-grid>
+                                    <div class="uk-width-1-1">
+                                      <div class="flex flex-center--y flex-100 h-100">
+                                        <h4 class="userSelectNone uk-margin-remove flex"
+                                            style="font-size:18px;color:var(--hue-textPrime);font-weight:500">Pension
+                                          Fund
+                                        </h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </header>
+                                <section class="uk-margin-small-top flex-100 h-100">
+                                  
+                                  <div class="flex flex-direction--column h-100 w-100">
+                                    <section>
+                                      <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                        <thead>
+                                        <th>Pension Fund(Tier 2 Client)</th>
+                                        <!-- TODO:END OF THE QUARTER -->
+                                        <th>AUA as at {{selectedQuarterShortDate}}</th>
+
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(fund,fKey) in  quarterlyReport.pensions" :key="fKey">
+                                          <td>{{fund.name}}</td>
+                                          <td style="text-align:right">{{formatMoney(fund.value)}}</td>
+                                        </tr>
+                                        </tbody>
+                                      </table>
+                                    </section>
+                                    <footer class="uk-margin-top">
+                                      <div class="jTable">
+                                        <div class="jTableRow">
+                                          <div class="jTableCell">Total Number of Pension Fund Client:&nbsp;</div>
+                                          <div class="jTableCell">{{quarterlyReport.pensions.length - 1}}</div>
+                                        </div>
+                                      </div>
+                                    </footer>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </article>
+                        </div>
+                        <div class="uk-width-1-2">
+                          <article>
+                            <div
+                                    class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                              <div class="flex flex-direction--column h-100 w-100">
+                                <header class="" style="flex:1;height: 40px;">
+                                  <div class="uk-grid" uk-grid>
+                                    <div class="uk-width-1-1">
+                                      <div class="flex flex-center--y flex-100 h-100">
+                                        <h4 class="userSelectNone uk-margin-remove flex"
+                                            style="font-size:18px;color:var(--hue-textPrime);font-weight:500;letter-spacing: 0.25">
+                                          Provident Fund</h4>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                </header>
+                                <section class="uk-margin-small-top flex-100 h-100">
+                                  <div class="flex flex-direction--column h-100 w-100">
+                                    <section>
+                                      <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                        <thead>
+                                        <th>Provident Fund(Tier 3 Client)</th>
+                                        <!-- TODO:END OF THE QUARTER -->
+                                        <th>AUA as at {{selectedQuarterShortDate}}</th>
+
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(fund,fKey) in  quarterlyReport.provident" :key="fKey">
+                                          <td>{{fund.name}}</td>
+                                          <td style="text-align:right">{{formatMoney(fund.value)}}</td>
+                                        </tr>
+                                        </tbody>
+                                      </table>
+                                    </section>
+                                    <footer class="uk-margin-top">
+                                      <div class="jTable">
+                                        <div class="jTableRow">
+                                          <div class="jTableCell">Total Number of Provident Fund Client:&nbsp;</div>
+                                          <div class="jTableCell">{{quarterlyReport.provident.length - 1}}</div>
+                                        </div>
+                                      </div>
+                                    </footer>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </article>
+                        </div>
+                      </section>
+                      <!-- FUND MANAGERS -->
+                      <section class="uk-grid-small uk-grid-match uk-flex-left" uk-grid style="margin-top:25px;">
+                        <div class="uk-width-1-2" style="height: 300px">
+                          <article>
+                            <div
+                                    class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                              <div class="flex flex-direction--column h-100 w-100">
+                                <header class="" style="flex:1;height: 40px;">
+                                  <div class="uk-grid" uk-grid>
+                                    <div class="uk-width-1-1">
+                                      <div class="flex flex-center--y flex-100 h-100">
+                                        <h4 class="userSelectNone uk-margin-remove flex"
+                                            style="font-size:18px;color:var(--hue-textPrime);font-weight:500">
+                                          Administrators
+                                        </h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </header>
+                                <section class="uk-margin-small-top flex-100 h-100">
+                                  <div class="flex flex-direction--column h-100 w-100">
+                                    <section>
+                                      <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                        <thead>
+                                        <th>Fund name</th>
+                                        <th>Administrator</th>
+
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(manager,mKey) in quarterlyReport.administrators" :key="mKey">
+                                          <td>{{manager.name}}</td>
+                                          <td style="text-align:right">{{manager.administrator}}</td>
+                                        </tr>
+                                        </tbody>
+                                      </table>
+                                    </section>
+                                  </div>
+                                </section>
+                              </div>
+                            </div>
+                          </article>
+                        </div>
+                      </section>
+                      <!-- END FUND MANAGERS -->
+
+                    </li>
+                    <!-- END QUARTERLY REPORT TAB -->
+                    <!-- OUTSTANDING FD CERTIFICATES -->
+                    <li>
+                      <div class="uk-width-1-1" style="height: auto">
+                        <div class="flex-100 flex flex-justifyContent--x1" style="height: 45px;margin-bottom: 5px">
+                          <button class="uk-button uk-padding-remove flex flex-center--x flex-center--y"
+                                  style="font-size: 13px;background-color:#d2F4FB;color:#223CA9;text-transform:initial;width:120px;"
+                                  @click="exportOutstandingFD">
+                            <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                            <span style="padding-left: 5px;">Export Excel</span>
+                          </button>
+                        </div>
+                      </div>
+                      <section class="uk-grid-small uk-grid-match uk-flex-center" uk-grid>
+                        <div class="uk-width-1-1" style="height:auto">
+                          <article>
+                            <div
+                                    class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                              <div class="flex flex-direction--column h-100 w-100">
+                                <section>
+                                  <template v-if="outstandingFDCertificates.length > 0">
+                                    <table v-for="(certificates,jKey) in outstandingFDCertificates"
+                                           class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                                      <thead>
+                                      <tr>
+                                        <th colspan="10" style="background-color:white">{{certificates.month}}</th>
+                                      </tr>
+                                      <th style="width:16%">Fund Manager</th>
+                                      <th style="width:20%">Client Name</th>
+                                      <th>Amount(GHS)</th>
+                                      <th>Issuer</th>
+                                      <th>Rate &percnt;</th>
+                                      <th>TENOR</th>
+                                      <th>Term</th>
+                                      <th>Effective Date</th>
+                                      <th>Maturity</th>
+                                      <th>Status</th>
+                                      </thead>
+                                      <tbody>
+                                      <tr v-for="(certificate,yKey) in certificates.certificates">
+                                        <td>{{certificate.fundManager}}</td>
+                                        <td>{{certificate.clientName}}</td>
+                                        <td>{{formatMoney(certificate.amount)}}</td>
+                                        <td>{{certificate.issuer}}</td>
+                                        <td>{{certificate.rate}}</td>
+                                        <td>{{certificate.tenor}}</td>
+                                        <td>{{certificate.term}}</td>
+                                        <td>{{certificate.effectiveDate}}</td>
+                                        <td>{{certificate.maturity}}</td>
+                                        <td :style='fdIsMatured(certificate.maturity) ? "color:red":""'>{{fdIsMatured(certificate.maturity) ? "Matured":"Running"}}</td>
+                                      </tr>
+                                      </tbody>
+                                    </table>
+                                  </template>
+                                  <table class="uk-table uk-table-divider assetTableA  previewMonthTable" v-else>
+                                    <thead>
+                                    <!-- TODO: NPRA Report Monthly, FD will highlight each month in quarter -->
+                                    <tr>
+                                      <th colspan="11"
+                                          style="background-color:white">N/A
+                                      </th>
+                                    </tr>
+                                    <th>Fund Manager</th>
+                                    <th>Client Name</th>
+                                    <th>Amount(GHS)</th>
+                                    <th>Issuer</th>
+                                    <th>Rate &percnt;</th>
+                                    <th>TENOR</th>
+                                    <th>Term</th>
+                                    <th>Effective Date</th>
+                                    <th>Maturity</th>
+                                    <th>Status</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                      <td>N/A</td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                </section>
+                              </div>
+                            </div>
+                          </article>
+                        </div>
+
+                      </section>
+                    </li>
+                    <!-- END OUTSTANDING FD CERTIFICATES -->
+                    <li>
+                      <div class="uk-width-1-1" style="height: auto">
+                        <div class="flex-100 flex flex-justifyContent--x1" style="height: 45px;margin-bottom: 5px">
+                          <button class="uk-button uk-padding-remove flex flex-center--x flex-center--y"
+                                  style="font-size: 13px;background-color:#d2F4FB;color:#223CA9;text-transform:initial;width:120px;"
+                                  @click="exportLocalVariance">
+                            <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                            <span style="padding-left: 5px;">Export Excel</span>
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                              class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                        <div class="flex flex-direction--column h-100 w-100">
+                          <section>
+                            <table class="uk-table uk-table-divider previewMonthTable assetTableA">
+                              <thead>
+                              <th>Client</th>
+                              <th>Home Country</th>
+                              <th>AUA as at {{lastAUADate}}</th>
+                              <th>AUA as at {{selectedQuarterShortDate}}</th>
+                              <th>Amount</th>
+                              <th>Variance &percnt;</th>
+                              <th>Remarks</th>
+                              </thead>
+                              <tbody>
+                              <tr v-for="(variance,key) in localVariance" :key="'aA'+key">
+                                <td>{{variance.name}}</td>
+                                <td class="uk-text-center">{{variance.country}}</td>
+                                <td class="uk-text-right">{{formatMoney(variance.last_aua)}}</td>
+                                <td class="uk-text-right">{{formatMoney(variance.current_aua)}}</td>
+                                <td class="uk-text-right"
+                                    :style="{color: (variance.variance <= -5 || variance.variance >= 5) ? 'red' : 'black'}">{{variance.amount >= 0 ? formatMoney(variance.amount) : '('+formatMoney(Math.abs(variance.amount))+')' }}</td>
+                                <td class="uk-text-right"
+                                    :style="{color: (variance.variance <= -5 || variance.variance >= 5) ? 'red' : 'black'}">{{variance.variance >= 0 ? formatMoney(variance.variance) : '('+formatMoney(Math.abs(variance.variance))+')'}}
+                                </td>
+                                <td>{{variance.remarks }}</td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </section>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- <li>
+                      <div
+                              class="uk-card uk-card-body uk-card-hover uk-card-default card-radius--all uk-card-bodyPaddingLesser userSelectNone statCardQ base-bg--white">
+                        <div class="flex flex-direction--column h-100 w-100">
+                          <section>
+                            <table class="uk-table uk-table-divider assetTableA  previewMonthTable">
+                              <thead>
+                              <th>Client</th>
+                              <th>Home Country</th>
+                              <th>AUA as at {{lastAUADate}}</th>
+                              <th>AUA as at {{selectedQuarterShortDate}}</th>
+                              <th>Amount</th>
+                              <th>Variance &percnt;</th>
+                              <th>Remarks</th>
+                              </thead>
+                              <tbody>
+                              <tr v-for="(variance,key) in foreignVariance" :key="'aB'+key">
+                                <td>{{variance.name}}</td>
+                                <td class="uk-text-center">{{variance.country}}</td>
+                                <td class="uk-text-right">{{formatMoney(variance.last_aua)}}</td>
+                                <td class="uk-text-right">{{formatMoney(variance.current_aua)}}</td>
+                                <td class="uk-text-right">{{variance.amount >= 0 ? formatMoney(variance.amount) : '('+formatMoney(Math.abs(variance.amount))+')' }}</td>
+                                <td class="uk-text-right">{{variance.variance > 0 ? formatMoney(variance.variance) : variance.variance == 0 ? 0 :'('+formatMoney(Math.abs(variance.variance))+')'}}
+                                </td>
+                                <td>{{variance.remarks }}</td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </section>
+                        </div>
+                      </div>
+                    </li> -->
+                  </ul>
+                </article>
+              </section>
+              <article>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<style>
+  canvas {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+  }
+</style>
+<%= javascriptTag("npra_general_reports.js") %>
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<script src="scripts/main.js"></script>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+
+</html>

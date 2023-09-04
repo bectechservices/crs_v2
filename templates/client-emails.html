@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Standard Chartered — Manage Emails</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="media/fav/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="media/fav/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="media/fav/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" href="media/fav/favicon.ico">
+    <link rel="stylesheet" href="styles/uikit.min.css"/>
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .addUser .uk-modal-dialog {
+            width: 500px !important;
+        }
+
+        form ul.helper-text {
+            display: block;
+            font-size: 14px;
+            color: hsl(201, 28%, 34%);
+            color: #0b2135;
+        }
+
+        form ul.helper-text li.valid {
+            color: blue;
+        }
+
+        form.valid input {
+            border: 2px solid blue;
+        }
+    </style>
+</head>
+
+<body style="overflow:hidden">
+<div class="root">
+    <div class="crs-authedPage">
+        <%= partial("./partials/navbar.html") %>
+        <main class="crs--content genDash" id="genDashMain" style="height: auto;">
+            <div class="uk-container uk-container-expand" style="padding:5px 50px;">
+                <div class="crs-authPage--content w-100">
+                    <div class="crs-authPage--header" style="padding: 5px;">
+                        <div class="flex uk-margin-small-bottom jSticky" style="top:-3px;height:40px;">
+                            <div class="flex-100 flex flex-center--y">
+                                <button class="backBtn uk-padding-remove flex flex-center--y" onclick="goBack()">
+                                    <span uk-icon="icon:  chevron-left; ratio: 1.3" style="color:#223CA9"></span>
+                                    <span style="padding-left: 5px;">Back</span>
+                                </button>
+                                <h2 class="uk-margin-remove" style="font-size:20px;letter-spacing:0.3px">
+                                    <span style="color:#656d78">SCAs</span>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="crs-authPage--innerContent" style="height: 83vh">
+                        <div class="h-100 uk-grid uk-child-width-1-1@l uk-grid-match uk-child-width-1-1@m uk-child-width-1-1@s"
+                             uk-grid>
+                            <div>
+                                <div
+                                        class="uk-card uk-card-body uk-card-hover uk-card-default uk-card-bodyPaddingLesser card-radius--all "
+                                        style="height: 82vh">
+                                    <div class="userToolbar" style="height: 9%;padding:5px">
+                                        <div class="row">
+                                            <div class="col-5 uk-margin-remove" style="visibility: hidden">
+                                                <div class="jTable" style="height:40px;width: 40%;">
+                            <span class="jTableRow">
+                              <span class="jTableCell" style="width:15%;color:var(--hue-textPrime)">Show</span>
+                              <form class="jTableCell" style="width:58%;" action="#0">
+                                <select class="uk-select w-100">
+                                  <option>10</option>
+                                </select>
+                              </form>
+                              <span class="jTableCell" style="width:20%;color:var(--hue-textPrime)">entries</span>
+                            </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-7 uk-margin-remove">
+                                                <div class="jTable"
+                                                     style="height: 40px;width:90%;float:right;clear: both;">
+                            <span class="jTableRow">
+                              <form class=" userSearch jTableCell h-100" method="GET" action="javascript:void(0)"
+                                    style="width: 40%;">
+                                <div class="uk-inline w-100 h-100 myInputWrapper">
+                                  <span class="uk-form-icon" uk-icon="icon:search; ratio:1"></span>
+                                  <input class="uk-input w-100 h-100" type="text" placeholder="Search" id="myInput">
+                                </div>
+                              </form>
+                                <!--<div class="jTableCell" style="width: 13%;">
+                                  <button class="w-100 uk-button uk-padding-remove flex flex-center--x flex-center--y"
+                                          style="font-size: 13px;background-color:#F2F4FB;color:#223CA9;text-transform:initial">
+                                    <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
+                                    <span style="padding-left: 5px;">Export</span>
+                                  </button>
+                                </div>-->
+                              <div class="jTableCell" style="width: 13%;">
+                                <button class="w-100 h-100 uk-button uk-padding-remove"
+                                        style="background-color:var(--brandColorGreenAccent);font-size:13px;box-shadow: 0 8px 20px 0 rgba(34, 169,34, 0.25);color:var(--hue-lght);border-radius:6px;text-transform: none;font-weight: 500;"
+                                        uk-toggle="target: #addSCA">
+                                  <span uk-icon="icon: plus; ratio: 0.9" style="color:#ffffff"></span>
+                                  <span>Add Email</span>
+                                </button>
+                              </div>
+                            </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="userTblWrapper" style="height: 92%;margin-top: 12px;">
+                                        <section
+                                                style="height:94%;max-height:94%;overflow-y:auto;width:100%;margin-top: 2px;">
+                                            <table class="uk-table-middle usersTbl uk-table uk-table-small uk-table-responsive"
+                                                   style="width: 100%;">
+                                                <thead>
+                                                <tr>
+                                                    <th>Email</th>
+                                                    <th class="uk-text-center">Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <%= for (email) in emails { %>
+                                                <tr>
+                                                    <td style="width:70%!important"><%= email.Email %></td>
+                                                    <td style="width:50%">
+                                                        <div class="flex">
+                                                            <button class="actionBtn uk-button uk-button-default h-100 w-100 uk-padding-remove"
+                                                                    uk-toggle="target: #editSCA"
+                                                                    style="margin-right:2px;background-color:var(--brandColorBlue-a10);color:white"
+                                                                    onclick='editEmail(<%= json(email) %>)'>Edit
+                                                            </button>
+                                                            <button class="actionBtn uk-button uk-button-default h-100 w-100 uk-padding-remove"
+                                                                    style="margin-right:2px;background-color:#e0245e;color:white"
+                                                                    onclick='deleteEmail(<%= email.ID %>)'>Delete
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                                </tbody>
+                                            </table>
+                                        </section>
+                                        <!--<section class="tblFooter">
+                                          <div class="row">
+                                            <div class="col-6">
+                                              <div class="userSelectNone"
+                                                   style="padding-left: 5px;padding-right: 5px;">
+                                                  <span style="color:hsl(201,28%,34%);font-size: 13px;margin-left:5px;">
+                                                    Showing 1 to <span>6</span> of <span>6</span> entries
+                                                  </span>
+                                              </div>
+                                            </div>
+                                            <div class="col-6 uk-margin-remove" style="height: 44px;">
+                                              <div class="flex flex-center--y float-r" style="height: 50px;">
+                                                <div class="pagination flex">
+                                                  <a href="#0"
+                                                     class="flex-center--y flex-center--x w-100 paginationControl paginationControlDisabled uk-icon-link">
+                                                                                    <span uk-icon="icon: chevron-left; ratio: 1.2"
+                                                                                          style="color:#212121"></span>
+                                                    <span>Previous</span>
+                                                  </a>
+                                                  <div class="pagination__pages">
+                                                    <a class="pagination__pages-item pagination__pages-item_selected"
+                                                       href="javascript:void(0)"> 1 </a>
+                                                    <a class="pagination__pages-item"
+                                                       href="javascript:void(0)"> 2 </a>
+                                                    <a class="pagination__pages-item"
+                                                       href="javascript:void(0)"> 3 </a>
+                                                    <a class="pagination__pages-item"
+                                                       href="javascript:void(0)"> 4 </a>
+                                                  </div>
+                                                  <a href="#0"
+                                                     class="flex-center--y flex-center--x w-100 paginationControl uk-icon-link">
+                                                    <span style="color:var(--hue-textPrime);">Next</span>
+                                                    <span uk-icon="icon: chevron-right; ratio: 1.2"
+                                                          style="color:#212121"></span>
+                                                  </a>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </section>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </main>
+    </div>
+</div>
+<div id="addSCA" class="uploadPreview" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h4 class="uk-modal-title" style="font-size:24px;font-weight: 500;color: #0b2135;">
+                Add Email</h4>
+        </div>
+        <div>
+            <div class="uk-card uk-card-body uk-card-hover uk-card-default uk-card-bodyPaddingLesser card-radius--all "
+                 style="height: auto">
+                <form method="POST">
+                    <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+                    <section class="userSelectNone profile">
+                        <input type="hidden" name="bpid" value="<%= bpid %>">
+                        <article class="jTable" autocomplete="off">
+                            <div class="row">
+                                <div class="col-12" style="margin-right:30px">
+                                    <div class="jTableRow">
+                                        <div class="jTableCell field_description">
+                                            <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Email</span>
+                                        </div>
+                                        <div class="jTableCell">
+                                            <input class="uk-input" type="email"
+                                                   name="email" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top:6px;"></div>
+                        </article>
+                    </section>
+                    <div class="jTableCell">
+                        <button class="uk-button uk-button-primary" type="submit">Add Email</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="editSCA" class="uploadPreview" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h4 class="uk-modal-title" style="font-size:24px;font-weight: 500;color: #0b2135;">
+                Edit Email</h4>
+        </div>
+        <div>
+            <div class="uk-card uk-card-body uk-card-hover uk-card-default uk-card-bodyPaddingLesser card-radius--all "
+                 style="height: auto">
+                <form method="POST">
+                    <input name="_method" type="hidden" value="PATCH">
+                    <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+                    <section class="userSelectNone profile">
+                        <input type="hidden" name="id" id="editEmailID">
+                        <article class="jTable" autocomplete="off">
+                            <div class="row">
+                                <div class="col-12" style="margin-right:30px">
+                                    <div class="jTableRow">
+                                        <div class="jTableCell field_description">
+                                            <span class="text-fontSize--def text-color--primeDark text-fontWeight--medium">Email</span>
+                                        </div>
+                                        <div class="jTableCell">
+                                            <input class="uk-input" type="email" name="email" required id="editEmailEmail"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top:6px;display:flex;justify-content:flex-end; width:98%;">
+                                <div class="jTableCell">
+                                    <button class="uk-button uk-button-primary" type="submit">Save Changes</button>
+                                </div>
+                            </div>
+                        </article>
+                    </section>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<form method="POST" id="deleteEmailForm">
+    <input name="_method" type="hidden" value="DELETE">
+    <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+    <input type="hidden" name="id" id="deleteEmailID">
+</form>
+<!-- Modals -->
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script>
+    function editEmail(data) {
+        document.getElementById('editEmailID').value = data.id;
+        document.getElementById('editEmailEmail').value = data.email;
+    }
+
+    function deleteEmail(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Delete'
+
+        }).then((result) => {
+            if (result.value) {
+                document.getElementById('deleteEmailID').value = id;
+                document.getElementById('deleteEmailForm').submit();
+            }
+        })
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+
+</html>

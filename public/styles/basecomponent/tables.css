@@ -1,0 +1,68 @@
+.assetTableA,
+.assetTableA td,
+.assetTableA th {
+  padding: 4px;
+  border-collapse: collapse;
+  font-weight: 500;
+  text-transform: capitalize;
+  font-size: 14px;
+  color: #0b2135;
+  letter-spacing: 0.25px;
+}
+
+
+.assetTableA tbody.bodyTbl td {
+  font-weight: 400;
+  text-transform: none;
+}
+
+.assetTableA .dblHead th {
+  border: 1px solid #d8dbd9;
+  text-align: center;
+}
+
+.assetTableA .dblHead th:nth-last-child(-2n + 2) {
+  border-right: none;
+}
+
+.assetTableA .dblHead th:last-child:empty {
+  border-left: none;
+}
+
+.assetTableA tr td {
+  border: 1px solid #d8dbd9;
+  vertical-align: middle;
+}
+
+.governanceTbl tr td:not(.th_th):nth-last-child(-n + 2) {
+  color: rgba(0, 0, 255);
+  font-weight: 400;
+}
+
+/* BACKWARDINCOMPATABILITY */
+.governanceTbl tr td.th_th {
+  color: var(--hue-textPrime, #0b2135);
+}
+
+.assetTableA.unsetValue td {
+  font-weight: 400;
+}
+
+/* Custodian Monthly Report Table */
+table.previewMonthTable tbody .tr_shaded td,
+table.previewMonthTable tbody td{
+  font-weight: 400;
+  white-space: normal;
+}
+table.previewMonthTable tbody .tr_shaded td:first-child{
+  font-weight: 400;
+}
+table.previewMonthTable tbody tr th,
+table.previewMonthTable thead tr th,
+table.previewMonthTable thead th{
+  border:1px solid #d8dbd9; 
+  background-color:#e7f3fd;
+  position:sticky;
+  top:-1px;
+}
+/* End Custodian Monthly Report Table */

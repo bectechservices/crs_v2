@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered - Trustee PPT</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" href="media/fav/favicon.ico">
+  <link rel="stylesheet" href="styles/uikit.min.css"/>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    :root {
+      --defFontFamily: Arial, Helvetica, sans-serif;
+      --scbBlue: darkblue;
+      --scbIndigo: indigo;
+      --scbGreen: #38d200;
+      --scbBlueLight: #0473ea;
+      --scbBlueLighter: #cde3fb;
+      --scbGreenShade1: #d7f6cc;
+      --scbGreenShade2: #d4d4d4;
+      --scbGradientBase: #293b8a;
+      --gradientAngle: 117;
+      --scbgradientA: linear-gradient(calc(var(--gradientAngle) * 1deg), #293b8a, indigo, #194aa2 60%, #025ec2);
+      --scbgradientLinear: linear-gradient(90deg, #2c3a88, #0061c8);
+      --scbgradientLinearReverse: linear-gradient(-90deg, #2c3a88 -9%, #0061c8);
+      --hue-lght: #ffffff;
+      --hue-dark: #1a1a1a;
+    }
+
+    .presentation-page {
+      font-family:var(--defFontFamily);
+    }
+
+    .presentation-page .contentSlide {
+      padding: 24px !important;
+    }
+
+    .presentation-page .headerInText {
+      margin-top: -12px;
+    }
+
+    .presentation-page :is(h1, h2, h3, h4, h5, span, div, p) {
+      font-family: var(--defFontFamily);
+    }
+
+    .aucSummaryTbl {
+      margin: 0;
+    }
+
+    .aucSummaryTbl,
+    .aucSummaryTblHead tr th,
+    .aucSummaryTblBody tr td {
+      padding: 4px;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 15px;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+    }
+
+    .aucSummaryTblHead tr th,
+    .aucSummaryTblBody tr td {
+      border: 1px solid #eee;
+    }
+
+    .aucSummaryTbl tr:last-child td:nth-child(-n+3) {
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    .aucSummaryTbl .aucSummaryTblHead tr th {
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 0.15px;
+    }
+
+    .aucSummaryTbl .aucSummaryTblHead tr th:first-child {
+      width: 35%;
+    }
+    .aucSummaryTbl .aucSummaryTblBody tr td:first-child{
+      background: var(--scbBlueLighter);
+      color: var(--hue-dark);
+    }
+
+    .aucSummaryTbl .aucSummaryTblBody tr td:nth-last-child(-n+3) {
+      color: var(--hue-dark);
+      text-align: center;
+      background-color: var(--scbGreenShade2);
+    }
+
+    .aucSummaryTbl .aucSummaryTblHead tr th {
+      background-color: var(--scbBlueLight);
+      color: var(--hue-lght);
+    }
+
+    .aucSummaryTbl .aucSummaryTblBody tr td:nth-child(3) {
+      text-align: right;
+    }
+
+    .aucSummaryTbl .aucSummaryTblBody tr td:last-of-type {
+      width: 20%;
+      font-weight: 700;
+    }
+
+    .aucSummaryTbl .aucSummaryTblBody tr td:last-of-type {
+      text-align: right;
+    }
+
+    .crs--content {
+      counter-reset: contentSlideCount;
+    }
+
+    .pageNumCount {
+      margin-left: 5px;
+      width: 20px;
+      text-align: center;
+      color: #999999;
+      font-size: 13px;
+      font-weight: 500;
+      counter-increment: contentSlideCount;
+    }
+
+    .pageNumCount::before {
+      content: counter(contentSlideCount);
+    }
+
+    .agendaTOC.agendaCount {
+      counter-reset: agendaCount;
+      list-style-type: none;
+
+    }
+
+    .enterprise .agendaTOC li {
+      font-size: 18px;
+      color: #525355;
+      margin: 4px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .agendaTOC li::before {
+      content: " ";
+      border: #9999 solid 1px;
+      padding: 5px;
+      width: 4px;
+      height: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      background-color: white;
+      color: var(--hue-lght);
+      box-shadow: 2px 2px 1px 0 rgba(205, 205, 205, 1)
+    }
+
+    .agendaTOC li a {
+      color: inherit !important;
+      text-decoration: none;
+    }
+
+    .monthlyContributions {
+      margin: 0;
+    }
+    body section .uk-table th{
+      text-transform:capitalize;
+    }
+
+    .monthlyContributions,
+    .monthlyContributions tr th,
+    .monthlyContributions tr td {
+      padding: 2px;
+      border-collapse: separate;
+      font-size: 15px;
+      letter-spacing: 0.25px;
+      cursor: pointer;
+      font-family:var(--defFontFamily);
+      text-align: center;
+      color: #0b2135;
+    }
+
+    .monthlyContributions tr th {
+      padding: 10px;
+      color: var(--hue-lght);
+      font-weight: 500;
+      font-size: 14px;
+      background: var(--scbGreen);
+      vertical-align: middle;
+      border: 1px solid #eee;
+    }
+
+    .monthlyTblBody tr td {
+      border: 1px solid #eee;
+      padding: 5px;
+      vertical-align: middle;
+    }
+
+    .monthlyTblBody tr td:nth-child(n+1) {
+      background-color: var(--scbGreenShade1);
+    }
+
+    .monthlyTblBody tr td:nth-child(n+2) {
+      background-color: var(--scbGreenShade2);
+    }
+
+    .monthlyTblBody tr td:nth-child(n+2) {
+      text-align: right;
+    }
+
+    .monthlyContributions tr:last-child td:nth-child(-n+2) {
+      font-weight: 600;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body style="overflow: hidden;">
+<div class="root pvReportPage">
+  <div class="crs-authedPage">
+    <%= partial("./partials/navbar.html") %>
+    <main class="crs--content">
+      <div class="uk-container uk-container-expand" style="padding-left: 10px;padding-right:10px;">
+        <div class="crs-authPage--content w-100 uk-margin-top">
+          <div class="crs-authPage--innerContent uk-margin">
+            <button class="backBtn uk-padding-remove flex flex-center--y" onclick="goBack()">
+              <span uk-icon="icon:  chevron-left; ratio: 1.3" style="color:#223CA9"></span>
+              <span style="padding-left: 5px;">Back</span>
+            </button>
+            <div style="height:85.0vh;padding:2px;overflow: auto;scroll-behavior: smooth">
+              <%# if(report_has_been_approved) {%>
+              <div class=""
+                   style="margin-bottom:15px;position:sticky;top:-2px;background-color:#f3f8fb; z-index: 10;height: 48px;">
+                <div class="flex flex-justifyContent--x1" style="max-width:1050px;margin:0 auto;">
+                  <button class="uk-button uk-button-primary" style="width: 300px" @click="exportToPPT">Export to
+                    Powerpoint
+                  </button>
+                </div>
+              </div>
+              <%# } %>
+              <div class="uk-container enterprise" style="max-width:1050px">
+                <div class="uk-grid" uk-grid>
+
+                  <section class="uk-width-1-1">
+                    <div class="uk-card uk-card-default masterSlide" style="height: 100vh;padding:16px;background-image:url('media/sctext.png'),var(--scbgradientLinear);background-position:left 85vh, center center;background-size:78% 100%, 100%;background-repeat-x:no-repeat;">
+                      <div class="h-100 flex flex-direction--column">
+                      <div style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">INTERNAL</div>
+                        <div class="header masterSlideHeader flex flex-direction--row"
+                          style="justify-content:space-between;height: 68px;position: relative;">
+                          <div class="headerClientLogo">
+                            <img src='/file-manager/<%= report_data[0]["client"]["image"] %>' alt="<%= report_name %>" style="object-fit: contain;width:100%;height:100%;">
+                          </div>
+                        </div>
+                        <div class="bodyContent"
+                        style="flex:1;height:100%;background-size: cover;margin-top:-2rem;position:relative;display:flex;justify-content: center; align-items: flex-start">
+                          <div class="flex flex-direction--column"
+                               style="align-items:flex-start;height: 160px;width:500px;">
+                               <div style="margin-bottom:3px">
+                              <h3 class="uk-margin-remove"
+                              style="font-weight:600;color:white;font-size: 30px;"><span><%= report_name %></span>&nbsp;Trustee
+                                Meeting
+                              </h3>
+                            </div>
+                            <div style="font-size:28px;color:white"><span><%= current_quarter %></span> Custodian Report</div>
+                            <div><span><%= report_data[0]["client"] %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="uk-width-1-1">
+                    <div class="uk-card uk-card-default contentSlide" style="height:100vh;padding:16px;">
+                      <div class="h-100 w-100 flex flex-direction--column">
+                      <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+
+                        <div class="header flex flex-direction--row"
+                            style="font-weight:600;height: 60px;position: relative;align-items: center;">
+                         <h4 class="uk-margin-remove"
+                              style="font-size: 24px;font-weight: 600;color:#0b2135;letter-spacing: 0.25px;margin:4px;">
+                            Agenda
+                          </h4>
+                        </div>
+                        <div class="bodyContent h-100" style="margin-top:-2px;position:relative;display:flex;">
+                          <div class="w-100 h-100">
+                            <ul class="agendaCount agendaTOC">
+                              <li v-if="templateOptions.pv_report"><a href="#slide1">Summary of Valuation Report</a>
+                              </li>
+                              <li v-if="templateOptions.total_summary_of_auc"><a href="#slide2">Summary of Assets under
+                                  custody</a></li>
+                              <li v-if="templateOptions.auc_trend"><a href="#slide3">AUC Trends</a></li>
+                              <li v-if="templateOptions.trade_volumes"><a href="#slide4">Trade Volumes</a></li>
+                              <li v-if="templateOptions.total_contribution"><a href="#slide5">Total Contributions</a>
+                              </li>
+                              <li v-if="templateOptions.corporate_action"><a href="#slide6">Corporate Action</a></li>
+                              <li v-if="templateOptions.gog_and_fd_maturities"><a href="#slide7">GOG and FD
+                                  Maturities</a></li>
+                              <li v-if="templateOptions.appendix_i"><a href="#slide8">Appendix I- AUC per Fund
+                                  Manager</a></li>
+                              <li v-if="templateOptions.appendix_ii"><a href="#slide9">Appendix II- Contributions</a>
+                              </li>
+                              <li v-if="templateOptions.unidentified_payments"><a href="#slide10">Unidentified
+                                  Payments</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <%= for(index,data) in report_data{ %>
+                  <%= if(len(report_data) > 1) { %>
+                  <section class="uk-width-1-1">
+                    <div class="uk-card uk-card-default contentSlide" id="slide2" style="height:100vh;padding:16px;">
+                      <div class="h-100 w-100 flex flex-direction--column">
+                      <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                        <div class="bodyContent"
+                             style="height:100%;margin-top:-2px;position:relative;display:flex;padding:16px;">
+                          <div class="h-100 w-100" style="display: flex;justify-content: center;align-items: center;">
+                            <p style="font-size: 24px;font-family: Calibri;font-style: italic;color: rgba(31,73,125)"><%= data["client"]["name"]%></p>
+                          </div>
+                        </div>
+                        <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                  <% } %>
+
+                  <section class="uk-width-1-1" v-if="templateOptions.pv_report">
+                    <div class="uk-card uk-card-default contentSlide" id="slide2" style="height:100vh;padding:16px;">
+                      <div class="h-100 w-100 flex flex-direction--column">
+                      <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                        <div class="header flex flex-direction--row"
+                             style="height: 60px;position: relative;align-items: center;">
+                          <h4 class="uk-margin-remove"
+                              style="font-size: 24px;font-weight: 500;color:#0b2135;letter-spacing: 0.25px;margin:4px;">
+                            AUC Summary (%) – <span><%= current_quarter_month_year %></span>
+                          </h4>
+                        </div>
+                        <div class="bodyContent"
+                             style="height:100%;position:relative;display:flex;padding:14px;">
+                          <div class="h-100"
+                               style="max-width: 95%; width: 95%;margin:0 auto;overflow:auto;">
+                            <div>
+                              <table class="uk-table aucSummaryTbl" id="aucSummaryTbl_<%= index %>"
+                                     style="font-size: 14px;font-family:var(--defFontFamily);table-layout:fixed;">
+                                <thead class="aucSummaryTblHead">
+                                <tr>
+                                  <th style="width:20%;font-size: 14px;padding:10px;font-family:calibri">DESCRIPTION</th>
+                                  <th style="width:15%;font-size: 14px;padding:10px;">NOMINAL VALUE/QUANTITY/COST</th>
+                                  <th style="width:15%;font-size: 14px;padding:10px;">VALUE LCY(GHS)</th>
+                                  <th style="width:15%;font-size: 14px;padding:10px;text-align:right">% OF TOTAL</th>
+                                </tr>
+                                </thead>
+                                <tbody class="aucSummaryTblBody">
+                                <%= for(summary) in data["client"]["pv_lumped_summary"] {%>
+                                <tr>
+                                  <td style="font-size: 14px;padding:8px;"><%= summary["security_type"] %></td>
+                                  <td style="font-size: 14px;padding:8px;"><%= summary["nominal_value"] %></td>
+                                  <td style="font-size: 14px;padding:8px;"><%= summary["lcy_amount"] %></td>
+                                  <td style="font-size: 14px;padding:8px;"><%= summary["percentage_total"] %></td>
+                                </tr>
+                                <% } %>
+                                <tr>
+                                  <td style="font-size:14px;padding:6px;">TOTAL</td>
+                                  <td style="font-size:14px;padding:6px;"><%= data["client"]["nominal_value_total"] %>
+                                  </td>
+                                  <td style="font-size:15px;padding:6px;"><%= data["client"]["value_lcy_total"] %></td>
+                                  <td style="font-size:15px;padding:6px;"><%= data["client"]["percentage_total"] %></td>
+                                </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="uk-width-1-1" v-if="templateOptions.total_summary_of_auc">
+                    <div class="uk-card uk-card-default contentSlide" id="slide1" style="height:100vh;padding:16px;background-color: var(--scbBlueLighter)">
+                      <div class="h-100 w-100 flex flex-direction--column">
+                      <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                        <div class="header flex flex-direction--row"
+                             style="height: 60px;position: relative;align-items: center;">
+                          <h4 class="uk-margin-remove"
+                              style="font-size: 24px;font-weight: 500;color:#0b2135;letter-spacing: 0.25px;margin:4px;">
+                            AUC Summary (%) – <span><%= current_quarter_month_year %></span>
+                          </h4>
+                        </div>
+                        <div class="bodyContent"
+                             style="height:100%;margin-top:-2px;position:relative;display:flex;padding: 15px">
+                          <div class="h-100" style="border:2px solid #eee;max-width: 95%; width: 90%;margin:0 auto;">
+                            <div class="flex flex-direction--row flex-center--y flex-center--x w-100"
+                                 style="height:30px;font-weight:500; letter-spacing: 0.2px;font-size: 18px;margin-top: 6px;color: #0b2135;">
+                              <span>AUC By Assets Class</span>
+                            </div>
+                            <article class="aucChart aucChartPie h-100" id="aucChart_<%= index %>"></article>
+                          </div>
+                        </div>
+                        <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="uk-width-1-1" v-if="templateOptions.auc_trend">
+                    <div class="uk-card uk-card-default contentSlide" id="slide3" style="height:100vh;padding:16px;">
+                      <div class="h-100 w-100 flex flex-direction--column">
+                      <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                        <div class="header flex flex-direction--row"
+                             style="height: 60px;position: relative;align-items: center;">
+                          <h4 class="uk-margin-remove"
+                              style="font-size: 24px;font-weight: 500;color:#0b2135;letter-spacing: 0.25px;margin:4px;">
+                            AUC Trend as at <span><%= current_quarter %></span>
+                          </h4>
+                        </div>
+                        <div class="flex flex-direction--column"
+                             style="border:2px solid #eee;max-width: 840px; width: 90%;margin:0 auto;position:relative;width:800px;height:435px;padding-bottom: 20px;">
+                          <div class="flex flex-direction--row flex-center--y flex-center--x w-100"
+                               style="height:20px;font-weight:500; letter-spacing: 0.2px;font-size: 18px;margin-top: 6px;color: #0b2135; ">
+                            <span>AUC TREND</span>
+                          </div>
+                          <canvas id="aucChartTrend_<%= index %>"></canvas>
+                        </div>
+                        <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="uk-width-1-1" v-if="templateOptions.trade_volumes">
+                    <div class="uk-card uk-card-default contentSlide" id="slide4" style="height: 125vh;padding:16px;">
+                      <div class="h-100 w-100 flex flex-direction--column">
+                      <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                        <div class="header flex flex-direction--row"
+                             style="height: 60px;position: relative;align-items: center;">
+                          <h4 class="uk-margin-remove"
+                              style="font-size: 24px;font-weight: 500;color:#0b2135;letter-spacing: 0.25px;margin:4px;">
+                            <%= txn_vols_heading %>
+                          </h4>
+                        </div>
+                        <div class="flex flex-direction--column"
+                             style="border:2px solid #eee;max-width: 840px; width: 90%;margin:0 auto;position:relative;width:800px;height:830px;padding-bottom: 5px;">
+                          <div class="userSelectNone flex flex-direction--row"
+                               style="justify-content: space-between; height: 30px;">
+                              <span class="flex flex-center--y flex-center--x"
+                                    style="flex:1;color:#0b2135;font-weight: 501;">Monthly Trade Volume</span>
+                            <span class="flex flex-center--y flex-center--x"
+                                  style="flex:1;color:#0b2135;font-weight: 501;">Trade Volume By Assset Class</span>
+                          </div>
+                          <div class="flex flex-direction--row" style="height:305px;">
+                            <div class="flex" style="border:1px solid #eee;width:50%;margin:6px 5px;">
+                              <canvas id="aucMonthTrend_<%= index %>"></canvas>
+                            </div>
+                            <div class="flex" style="border:1px solid #eee;width:50%;margin:6px 5px;">
+                              <canvas id="aucVolAsset_<%= index %>"></canvas>
+                            </div>
+                          </div>
+                          <div class="flex">
+                            <div class="flex flex-100 flex-direction--column" style="padding:5px;">
+                            <div class="w-100" style="margin:0 auto;height: 33px">
+                              <h4 class="uk-text-center"
+                                  style="margin:2px 5px;font-size: 17px;color: #0b2135;letter-spacing: 0.25px;font-weight: 700">
+                                Total volumes of trades as at Q<%= current_quarter_number %> – <%= data["total_txn_vols_by_asset_class"] %></h4>
+                            </div>
+                            <ul class="uk-margin-remove trnsVolSumList"
+                                style="display:table;width:400px;font-weight: 500;color:#0b2135;letter-spacing: 0.3px;font-size: 13px;">
+                              <%= for(key,value) in data["txn_by_asset_class_summary"] {%>
+                              <li style="display:table-row;width:100%;">
+                                <div style="width: 120px;display:table-cell"><%= key %></div>
+                                <div style="width: 100px;display:table-cell"><%= value %></div>
+                              </li>
+                              <% } %>
+                            </ul>
+                          </div>
+                            <div class="flex-100">
+                              <section style="margin-top: -5px;">
+                                <%= if(len(data["txn_vols_by_asset_class_for_past_months"]) > 0) {%>
+                                <table class="uk-table-striped uk-table assetTableA assetbyclass">
+
+                                  <thead style="display:none">
+                                  <tr>
+                                    <th style="font-size: 12px;">&nbsp;</th>
+                                    <%= for(me) in
+                                    first_data_of_txn_vol_by_asset_class(data["txn_vols_by_asset_class_for_past_months"])
+                                    { %>
+                                    <th style="font-size:12px;"><%= me.Asset %></th>
+                                    <% } %>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  <%= for(txn) in data["txn_vols_by_asset_class_for_past_months"] { %>
+                                  <tr>
+                                    <td style="width:18%; font-size:12px;"><%= txn.Month %></td>
+                                    <%= for(data) in txn.Data { %>
+                                    <td style="font-size:12px; text-align:center;"><%= data.Number %></td>
+                                    <% } %>
+                                  </tr>
+                                  <% } %>
+                                  </tbody>
+                                </table>
+                                <% } %>
+                              </section>
+                            </div>
+                          </div>
+                          
+                        </div>
+                        <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="uk-width-1-1" v-if="templateOptions.pv_report">
+                    <div class="uk-card uk-card-default contentSlide" id="slide4" style="height:100vh;padding:16px;">
+                      <div class="h-100 w-100 flex flex-direction--column">
+                      <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                        <div class="header flex flex-direction--row"
+                             style="height: 60px;position: relative;align-items: center;">
+                          <h4 class="uk-margin-remove"
+                              style="font-size: 24px;font-weight: 500;color:#0b2135;letter-spacing: 0.25px;margin:4px;">
+                            Portfolio Valuation Report
+                          </h4>
+                        </div>
+                        <div style="width:70%;height:100%;margin:20px auto 0;">
+
+                        </div>
+                        <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="uk-width-1-1" v-if="templateOptions.total_contribution">
+                    <div class="uk-card uk-card-default contentSlide" id="slide4" style="height:100vh;padding:16px;">
+                      <div class="h-100 w-100 flex flex-direction--column">
+                      <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                        <div class="header flex flex-direction--row"
+                             style="height: 60px;position: relative;align-items: center;">
+                          <h4 class="uk-margin-remove"
+                              style="font-size: 24px;font-weight: 500;color:#0b2135;letter-spacing: 0.25px;margin:4px;">
+                            Contributions as at <span>Q<%= current_quarter_number %></span>
+                          </h4>
+                        </div>
+                        <div style="display:flex;justify-content:center;width:65%;height:100%;margin:20px auto 0;">
+                          <div class="w-100">
+                            <table class=" w-100 uk-table monthlyContributions" id="quarterMonthContribution_<%= index %>">
+                              <thead class="monthlyTblHead">
+                              <tr>
+                                <th style="width:50%;text-align:center">Month</th>
+                                <th style="text-align: center; width:50%;">Contributions(GHS)</th>
+                              </tr>
+                              </thead>
+                              <tbody class="monthlyTblBody">
+                              <%= for(contribution) in data["monthly_contributions"] { %>
+                              <tr>
+                                <td style="text-align:center;padding: 6px;"><%= contribution.Date %></td>
+                                <td style="text-align:center;padding:6px;"><%= format_with_comma(contribution.Contributions,2) %>
+                                </td>
+                              </tr>
+                              <% } %>
+                              <tr>
+                                <td style="text-align:center;padding:6px;">Total</td>
+                                <td style="text-align:center;padding:6px;"><%=
+                                  format_with_comma(data["monthly_contributions_total"],2) %>
+                                </td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="uk-width-1-1" v-if="templateOptions.corporate_action">
+                    <div class="uk-card uk-card-default contentSlide" id="slide4" style="height:100vh;padding:16px;">
+                      <div class="h-100 w-100 flex flex-direction--column">
+                      <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                        <div class="header flex flex-direction--row"
+                             style="height: 60px;position: relative;align-items: center;">
+                          <h4 class="uk-margin-remove"
+                              style="font-size: 26px;font-weight: 500;color:#0b2135;letter-spacing: 0.25px;margin:4px;">
+                            Corporate Action Activites
+                          </h4>
+                        </div>
+                        <div style="display:flex;justify-content:center;width:70%;height:100%;margin:20px auto 0;">
+                          <div class="w-100">
+                            <table class=" w-100 uk-table monthlyContributions" id="corporateActionsTbl_<%= index %>">
+                              <thead class="monthlyTblHead">
+                              <tr>
+                                <th style="text-align:center;width:50%">Event Type</th>
+                                <th style="text-align:centerwidth:50%;">Number</th>
+                              </tr>
+                              </thead>
+                              <tbody class="monthlyTblBody">
+                              <%= for(action) in data["corporate_actions"] { %>
+                              <tr>
+                                <td style="padding:6px;text-align:center;"><%= action.Activity %></td>
+                                <td style="padding:6px;text-align:center;"><%= action.Number %></td>
+                              </tr>
+                              <% } %>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="uk-width-1-1" v-if="templateOptions.gog_and_fd_maturities">
+                    <div class="uk-card uk-card-default contentSlide" id="slide4" style="height:100vh;padding:16px;">
+                      <div class="h-100 w-100 flex flex-direction--column">
+                      <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                        <div class="header flex flex-direction--row"
+                             style="height: 60px;position: relative;align-items: center;">
+                          <h4 class="uk-margin-remove"
+                              style="font-size: 26px;font-weight: 500;color:#0b2135;letter-spacing: 0.25px;margin:4px;">
+                            Maturites for GOG Securities
+                          </h4>
+                        </div>
+                        <div class="uk-margin">
+                          <h4 style="font-size: 16px;font-weight:bold;color: #0b2135;text-align:center">Q<%= current_quarter_number %>
+                            Maturites for GOG
+                            Securities</h4>
+                        </div>
+                        <div style="display:flex;justify-content:center;width:70%;height:100%;margin:20px auto 0;">
+                          <div class="w-100">
+                            <table class=" w-100 uk-table monthlyContributions" id="quarterGOGSecuritiesTbl_<%= index %>">
+                              <thead class="monthlyTblHead">
+                              <tr>
+                                <th style="width: 33.33%; text-align:center">Month</th>
+                                <th style="width: 33.33%; text-align:center">No. of Maturities</th>
+                                <th style="width: 33.33%; text-align:center">Amount(GHS)</th>
+                              </tr>
+                              </thead>
+                              <tbody class="monthlyTblBody">
+                              <%= for(gog) in data["gog_maturities"] {%>
+                              <tr>
+                                <td style="text-align:center;padding:6px;"><%= gog.Month %></td>
+                                <td style="text-align:center;padding:6px;"><%= gog.NumberOfMaturities %></td>
+                                <td style="text-align:center;padding:6px;"><%= format_with_comma(gog.Amount,2) %></td>
+                              </tr>
+                              <% } %>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="uk-width-1-1" v-if="templateOptions.gog_and_fd_maturities">
+                    <div class="uk-card uk-card-default contentSlide" id="slide4" style="height:100vh;padding:16px;">
+                      <div class="h-100 w-100 flex flex-direction--column">
+                      <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                        <div class="header flex flex-direction--row"
+                             style="height: 60px;position: relative;align-items: center;">
+                          <h4 class="uk-margin-remove"
+                              style="font-size: 26px;font-weight: 500;color:#0b2135;letter-spacing: 0.25px;margin:4px;">
+                            Maturites for Fixed Deposites
+                          </h4>
+                        </div>
+
+                        <div style="width:78%;height:100%;margin:20px auto 0;">
+                          <section class="flex h-100">
+                            <div class="flex flex-100">
+                              <div class="flex" style="border:1px solid #eee;width:90%;margin:6px 5px;">
+                                <canvas id="maturitiesFD_<%= index %>"></canvas>
+                              </div>
+                            </div>
+                            <div class="h-100 flex flex-direction--column" style="width:190px;padding: 5px;">
+                              <div class="" style="height:80px;">
+                                Total Number of Matured FDs in Q<%= current_quarter_number %> are <span class="font-heavy"><%= data["fd_maturities_count"] %></span>
+                              </div>
+                              <div class="flex-100">
+                                <!--UPLOADED DOCUMENT MODAL-->
+                              </div>
+                            </div>
+                          </section>
+                        </div>
+                        <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="uk-width-1-1" v-if="templateOptions.unidentified_payments">
+                    <div class="uk-card uk-card-default contentSlide" id="slide4" style="height:100vh;padding:16px;">
+                      <div class="h-100 w-100 flex flex-direction--column">
+                      <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                        <div class="header flex flex-direction--row"
+                             style="height: 60px;position: relative;align-items: center;">
+                          <h4 class="uk-margin-remove"
+                              style="font-size: 26px;font-weight: 500;color:#0b2135;letter-spacing: 0.25px;margin:4px;">
+                            Unidentified Payments
+                          </h4>
+                        </div>
+
+                        <div style="display:flex;justify-content:center;width:70%;height:100%;margin:20px auto 0;">
+                          <div class="w-100">
+                            <table class=" w-100 uk-table monthlyContributions" id="unidentifiedPaymentsTbl_<%= index %>">
+                              <thead class="monthlyTblHead">
+                              <tr>
+                                <th style="width:25%;text-align:center">Category</th>
+                                <th style="width:25%;text-align:center">Total</th>
+                                <th style="width:25%;text-align:center">Done</th>
+                                <th style="width:25%;text-align:center">Pending</th>
+                              </tr>
+                              </thead>
+                              <tbody class="monthlyTblBody">
+                              <%= for(payment) in data["unidentified_payments"] { %>
+                              <tr>
+                                <td><%= payment.Type %></td>
+                                <td><%= payment.Total %></td>
+                                <td><%= payment.Done %></td>
+                                <td><%= payment.Pending %></td>
+                              </tr>
+                              <% } %>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <template v-if="templateOptions.appendix_i">
+                    <%= for(client_summary) in data["individual_pvs"] { %>
+                    <section class="uk-width-1-1">
+                      <div class="uk-card uk-card-default contentSlide" id="slide2" style="height:100vh;padding:16px;">
+                        <div class="h-100 w-100 flex flex-direction--column">
+                        <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                          <div class="header flex flex-direction--row"
+                               style="height: 60px;position: relative;align-items: center;">
+                            <h4 class="uk-margin-remove"
+                                style="font-size: 26px;font-weight: 500;color:#0b2135;letter-spacing: 0.25px;margin:4px;">
+                              Appendix I– Summary for&nbsp;<span><%= client_summary.Client %></span>
+                            </h4>
+                          </div>
+                          <div class="bodyContent"
+                               style="height:100%;margin-top:-2px;position:relative;display:flex;padding:12px;">
+                            <div class="h-100"
+                                 style="border:1px solid #eee;max-width: 95%; width: 90%;margin:0 auto;box-shadow: inset 0 1px 8px 0 rgba(5, 6, 10, 0.045);overflow:auto;padding: 2px;">
+                              <div>
+                                <table class="uk-table aucSummaryTbl"
+                                       id="summaryFor_<%= client_summary.HTMLTableID %>_<%= remove_spaces(client_summary.Client) %>_<%= index %>">
+                                  <thead class="aucSummaryTblHead">
+                                  <tr>
+                                    <th style="font-size: 15px;padding:6px;">DESCRIPTION</th>
+                                    <th style="font-size: 15px;padding:6px;">NOMINAL VALUE/QUANTITY/ COST</th>
+                                    <th style="font-size: 15px;padding:6px;">VALUE LCY(GHS)</th>
+                                    <th style="font-size: 15px;padding:6px; text-align:right">% OF TOTAL</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody class="aucSummaryTblBody">
+                                  <%= for(summary) in client_summary.Summary {%>
+                                  <tr>
+                                    <td style="font-size:15px;padding: 6px;"><%= summary.SecurityType %></td>
+                                    <td style="font-size:15px;padding: 6px;"><%=
+                                      format_with_comma(summary.NominalValue,2) %>
+                                    </td>
+                                    <td style="font-size:15px;padding: 6px;"><%= format_with_comma(summary.LCYAmount,2)
+                                      %>
+                                    </td>
+                                    <td style="font-size:15px;padding: 6px;"><%= summary.PercentageOfTotal %></td>
+                                  </tr>
+                                  <% } %>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+                    </section>
+                    <% } %>
+                  </template>
+
+                  <template v-if="templateOptions.appendix_ii">
+                    <%= for(client_contribution) in data["individual_contributions"] { %>
+                    <section class="uk-width-1-1">
+                      <div class="uk-card uk-card-default contentSlide" id="slide4" style="height:100vh;padding:16px;">
+                        <div class="h-100 w-100 flex flex-direction--column">
+                        <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                          <div class="header flex flex-direction--row"
+                               style="height: 60px;position: relative;align-items: center;">
+                            <h4 class="uk-margin-remove"
+                                style="font-size: 26px;font-weight: 500;color:#0b2135;letter-spacing: 0.25px;margin:4px;">
+                              Appendix II - Contributions for <%= client_contribution.Client %>
+                            </h4>
+                          </div>
+
+                          <div style="width:70%;height:100%;margin:20px auto 0;">
+                            <div>
+                              <table class="uk-table monthlyContributions"
+                                     id="contributionsFor_<%= client_contribution.HTMLTableID %>_<%= remove_spaces(client_contribution.Client) %>_<%= index %>">
+                                <thead class="monthlyTblHead">
+                                <tr>
+                                  <th style="width:50%;text-align:center; padding:7px;font-size:15px;">Month</th>
+                                  <th style="width:50%;text-align:center; padding:7px;font-size:15px;">
+                                    Contributions(GHS)
+                                  </th>
+                                </tr>
+                                </thead>
+                                <tbody class="monthlyTblBody">
+                                <%= for(contribution) in client_contribution.Contributions { %>
+                                <tr>
+                                  <td style="text-align:center;font-weight:400; font-size: 15px;padding:8px;"><%= contribution.Date %>
+                                  </td>
+                                  <td style="text-align:center;font-weight:400; font-size: 15px;padding:8px;"><%= format_with_comma(contribution.Contributions,2) %>
+                                  </td>
+                                </tr>
+                                <% } %>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+                    </section>
+                    <% } %>
+                  </template>
+
+                  <!-- End Slide -->
+                  <% } %>
+                  <section class="uk-width-1-1" style="padding-bottom: 50px">
+                    <div class="uk-card uk-card-default contentSlide" id="slide4" style="height: 85vh;padding:16px;background-image:var(--scbgradientLinearReverse);">
+                      <div class="h-100 w-100 flex flex-direction--column">
+                      <div
+                            style="text-transform:uppercase;font-size:11px;user-select:none;pointer-events: none;color:red;">
+                            confidential</div>
+                      <div class="flex flex-center--x flex-center--y flex-direction--column"
+                            style="width:70%;height:100%;margin:20px auto 0;">
+                            <h3 class="userSelectNone"
+                              style="font-weight:bold;font-size: 42px;font-family:Arial, Helvetica, sans-serif;color: white">
+                              Thank you
+                            </h3>
+                          </div>
+                          <div class="slideFooter flex flex-direction--row"
+                             style="height: 60px;justify-content: space-between; align-items: center;position: relative;">
+                          <div
+                                  style="order:2;background-image:url(media/logo/standard-chartered-mobile.png);height:85%;flex:1;background-size:contain;background-repeat:no-repeat;background-position-x:right">
+                          </div>
+                          <div class="flex flex-justifyContent--x1"
+                               style="flex:1;height: 100%;margin-right:25px; align-items:center;">
+                               <span class="pageNumCount" style="opacity:0;width:10%;align-self:flex-center;text-align:left"></span>
+                               <span style="color: #999999;font-size:12px;display:flex;width:100%;align-items:flex-center">
+                               <span><%= report_name %>&nbsp;</span><%= current_quarter %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                  <!-- End Slide End -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script>
+  window.NumberOfRecords = <%= len(report_data) %>
+    <%= for(index,data) in report_data{ %>
+    const data_<%=index %> = [];
+    <%= for(summary) in data["client"]["pv_lumped_summary"] { %>
+        data_<%=index %>.push({
+            dataName: '<%= summary["security_type"] %>',
+            dataValue: <%= summary["percentage_total"] %>
+    })
+    <% } %>
+    window.AUCAssetByClassData_<%=index %> = data_<%=index %>;
+    window.AUCChartTrendData_<%=index %> = <%= json(data["auc_for_past_months"]) %>;
+    window.TxnVolsTrendData_<%=index %> = <%= json(data["txn_vols_for_past_months"]) %>;
+    let volAssetsMonths_<%=index %> = [];
+    let volAssets6Months_<%=index %> = [];
+    let volAssetsData_<%=index %> = new Map();
+    <%= json(data["txn_vols_by_asset_class_for_past_months"]) %>.forEach((each) => {
+        volAssets6Months_<%=index %>.push(each.Month)
+        each.Data.forEach((data) => {
+            if (volAssetsData_<%=index %>.has(data.Asset)) {
+                volAssetsData_<%=index %>.set(data.Asset, [...volAssetsData_<%=index %>.get(data.Asset), data.Number])
+            } else {
+                volAssetsData_<%=index %>.set(data.Asset, [data.Number])
+            }
+        })
+    });
+    let dynamoColor_<%=index %> =()=>{
+        let r = Math.floor(Math.random() * 255);
+        let g = Math.floor(Math.random() * 255);
+        let b = Math.floor(Math.random() * 255);
+        let rgb = "rgba(" + r + "," + g + "," + b + ", 0.8)";
+        function rgbToHex(swatch){
+            return ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+        }
+        return "#" + rgbToHex(rgb)
+    }
+    let volAssetsGraphData_<%=index %> = [];
+    let volAssetsPPTData_<%=index %> = [];
+    volAssetsData_<%=index %>.forEach((data, key) => {
+        volAssetsMonths_<%=index %>.push(key);
+        volAssetsGraphData_<%=index %>.push({
+            data,
+            labels: key,
+            borderColor: dynamoColor_<%=index %>(),
+            fill: false,
+            lineTension: 0,
+            pointBackgroundColor: "#fff",
+            pointBorderColor: "#ffb88c",
+            pointHoverBackgroundColor: "#ffb88c",
+            pointHoverBorderColor: "#fff",
+            pointRadius: 1,
+            pointHoverRadius: 1,
+        })
+        volAssetsPPTData_<%=index %>.push({
+            name: key,
+            values: data,
+            labels: volAssets6Months_<%=index %>,
+            color: dynamoColor_<%=index %>()
+        })
+    });
+
+    window.volAssetsMonths_<%=index %> = volAssetsMonths_<%=index %>;
+    window.volAssetsGraphData_<%=index %> = volAssetsGraphData_<%=index %>;
+    window.volAssetsPPTData_<%=index %> = volAssetsPPTData_<%=index %>;
+    const summaryForPast3MonthsData_<%=index %> = <%= json(data["lumped_pv_summary_for_past_3_quarters"]) %>;
+    const headers_<%=index %> = [...new Set(summaryForPast3MonthsData_<%=index %>.flat().map((each)=> each.security_type))];
+    window.SummaryForPast3MonthsLabels_<%=index %> = headers_<%=index %>;
+    let month1_<%=index %> = [];
+    let month2_<%=index %> = [];
+    let month3_<%=index %> = [];
+    headers_<%=index %>.forEach((each)=>{
+        let found_<%=index %> = summaryForPast3MonthsData_<%=index %>[0].find((one)=>{
+            return one.security_type == each
+        });
+        if(found_<%=index %>){
+            month1_<%=index %>.push(found_<%=index %>.lcy_amount)
+        }else{
+            month1_<%=index %>.push(0)
+        }
+    })
+    headers_<%=index %>.forEach((each)=>{
+        let found_<%=index %> = summaryForPast3MonthsData_<%=index %>[1].find((one)=>{
+            return one.security_type == each
+        });
+        if(found_<%=index %>){
+            month2_<%=index %>.push(found_<%=index %>.lcy_amount)
+        }else{
+            month2_<%=index %>.push(0)
+        }
+    })
+    headers_<%=index %>.forEach((each)=>{
+        let found_<%=index %> = summaryForPast3MonthsData_<%=index %>[2].find((one)=>{
+            return one.security_type == each
+        });
+        if(found_<%=index %>){
+            month3_<%=index %>.push(found_<%=index %>.lcy_amount)
+        }else{
+            month3_<%=index %>.push(0)
+        }
+    });
+    window.DataForMonth1_<%=index %> = month1_<%=index %>;
+    window.DataForMonth2_<%=index %> = month2_<%=index %>;
+    window.DataForMonth3_<%=index %> = month3_<%=index %>;
+    <% } %>
+</script>
+<script>
+    <%= for(index,data) in report_data{ %>
+    window.CRS_CLIENT_<%=index %> = <%= json(data["client"]) %>
+    window.CRS_PPT_MISC_<%=index %> = {
+        quarter:'<%= current_quarter %>',
+        report_name: '<%= report_name %>'.replace(/\&amp;/g,'&'),
+        asset_by_class: window.AUCAssetByClassData_<%=index %>,
+        chart_trend_data: window.AUCChartTrendData_<%=index %>,
+        txn_trend_vols: window.TxnVolsTrendData_<%=index %>,
+        total_number_of_txn_vols: <%= data["total_txn_vols_by_asset_class"] %>,
+        summaryForFDs: <%= json(data["individual_pvs"]) %>.map((each)=> `${each.HTMLTableID}`+'_'+each.Client.replace(/\s/g,'')),
+        contributionsForFDs: <%= json(data["individual_contributions"]) %>.map((each)=> `${each.HTMLTableID}`+'_'+each.Client.replace(/\s/g,'')),
+        addons:{
+        month1: window.DataForMonth1_<%=index %>,
+            month2: window.DataForMonth2_<%=index %>,
+            month3: window.DataForMonth3_<%=index %>,
+            labels: window.SummaryForPast3MonthsLabels_<%=index %>
+    },
+    tradeByAssetClassSummary: <%= json(data["txn_by_asset_class_summary"]) %>,
+        tradeByAssetClassData: window.volAssetsPPTData_<%=index %>,
+        current_quarter_number: <%= current_quarter_number %>,
+        current_quarter_month_year: '<%= current_quarter_month_year %>',
+        txn_vols_heading: '<%= txn_vols_heading %>',
+        fdMaturities: <%= json(data["fd_maturities"]) %>,
+        fdMaturitiesCount: '<%= data["fd_maturities_count"] %>'
+    }
+  <% } %>
+</script>
+<%= partial("./partials/footer.html") %>
+<%= partial("./partials/system.html") %>
+<%= javascriptTag("pv_report.js") %>
+<script src="scripts/main.js"></script>
+<script src="scripts/uikit.min.js"></script>
+<script src="scripts/uikit-icons.min.js"></script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+<!-- AM-CHART -->
+<style>
+  #aucChart {
+    width: 100%;
+    height: 100%;
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: left center;
+  }
+
+  g text tspan {
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.2px;
+    fill: #0b2135;
+    letter-spacing: 0.2px;
+  }
+</style>
+<script src="scripts/core.js"></script>
+<script src="scripts/charts.js"></script>
+<script src="scripts/chart.js"></script>
+<script src="scripts/animated.js"></script>
+<script src="scripts/aucCharts.js"></script>
+<script src="scripts/gcharts.js"></script>
+<script src="scripts/aucChartTrend.js"></script>
+</body>
+</html>

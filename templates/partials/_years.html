@@ -1,0 +1,7 @@
+<%= for (i) in between(2014,current_year_constant + 1) { %>
+    <%= if (i == current_year_constant) { %>
+        <option value="<%= i %>" selected><%= i %></option>
+    <%  } else { %>
+        <option value="<%= i %>"><%= i %></option>
+    <% } %>
+<% } %>

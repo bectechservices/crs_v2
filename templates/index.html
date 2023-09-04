@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Standard Chartered — Login</title>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="shortcut icon" href="/media/fav/favicon.ico">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/media/fav/favicon-194x194.png" sizes="194x194">
+  <link rel="stylesheet" href="/styles/uikit.min.css"/>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+<div class="root">
+  <div class="uk-container uk-container-expand crs-LoginApp-root no-padding">
+    <div class="crs-LoginRoot crs-scbStripe">
+      <div class="crs-LoginContainer w-100" style="max-width: 1200px;margin: 0 auto">
+        <div class="uk container uk-container-large h-100">
+          <div class="uk-grid-match h-100" uk-grid style="margin:0;">
+            <div class="uk-width-1-2@l uk-width-1-2@m uk-width-1-1@s crs-LoginForm--LeftContent"
+                 style="padding:10px;">
+              <div class="crs-form__title--back">Custody Reporting System
+                <div class="userSelectNone"
+                     style="font-size: 14px;color:white;font-weight: bold;letter-spacing: 0.2px;">GHANA
+                </div>
+              </div>
+            </div>
+            <div class="uk-width-1-2@l uk-width-1-2@m uk-with-1-1@s crs-LoginForm--RightContent"
+                 style="padding:10px;margin-top:40px;">
+              <div class="uk-container" style="max-width:75%; margin:0 auto;">
+                <div class="flex w-100 h-100 flex-direction--column" style="padding:10px;">
+                  <div class="formSection" style="padding:20px;">
+                    <form class="uk-form-stacked" method="POST" action="/login">
+                      <%= csrf() %>
+                      <div class="crs-LoginLabel uk-margin">Log in</div>
+                      <div class="uk-margin">
+                        <label class="uk-form-label text-upperCase text-numericSpacing--prop">Staff ID</label>
+                        <div class="uk-inline uk-width-1-1">
+                          <span class="uk-form-icon" uk-icon="icon: user"></span>
+                          <input class="uk-input" type="text" name="staff_id">
+                        </div>
+                      </div>
+                      <div class="uk-margin">
+                        <div class="uk-form-label text-upperCase text-numericSpacing--prop">Password</div>
+                        <div class="uk-inline uk-width-1-1">
+                          <span class="uk-form-icon uk-form-icon" uk-icon="icon: lock"></span>
+                          <input class="uk-input" type="password" name="password" required>
+                        </div>
+                      </div>
+                      <div class="uk-margin">
+                        <button
+                                class="uk-button crs-button-default text-upperCase uk-width-1-1 text-numericSpacing--prop"
+                                type="submit">log in
+                        </button>
+                      </div>
+                      <div style="display: flex;justify-content: flex-end;">
+                        <a href="javascript:void(0);" uk-toggle="target: #modal-close-default">Forgot Password?</a>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="crs-accessWarning">
+                    <div class="title" style="font-weight: bolder">Access Warning</div>
+                    <div>
+                        <span class="text-fontSize--12-LS text-numericSpacing--prop text-wrap--Wrap">
+                          <span>This computer system, its network and data contained therein is the
+                            property of <span class="text-cap">standard chartered group.</span>
+                            Access to
+                            this computer and network is restricted to persons and programs authorized
+                            by the group. Access by others is prohibited and unauthorized and is
+                            wrongful under law.Do not proceed if you are not authorized. Any unauthorized
+                            access will be prosecuted to the fullest extent of the law.</span>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modal-close-default" class="addUser" uk-modal>
+  <div class="uk-modal-dialog">
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <div class="uk-modal-header">
+      <h4 class="uk-modal-title" style="font-size:25px;font-weight: 500;color: #0b2135;">
+        Reset Password</h4>
+    </div>
+    <form method="POST" action="/reset-password">
+      <input name="authenticity_token" type="hidden" value="<%= authenticity_token %>">
+      <div class="uk-modal-body" uk-overflow-auto style="padding: 10px 10px;">
+        <div class="uk-container uk-container-expand" style="padding: 5px;">
+          <div style="width: 85%;margin:0 auto;">
+            <div class="uk-grid" uk-grid>
+              <div class="uk-width-1-1">
+                <div>
+                  <div style="padding: 5px;">
+                    <section class="uk-grid-small misxInput" uk-grid name="signup" action="#0" autocomplete="off">
+                      <div class="uk-width-1-1@l uk-width-1-1@m uk-width-1-1@s">
+                        <div class="uk-inline w-100 h-100">
+                          <label
+                                  style="color:#0b2315;font-size:13px;font-weight:500;letter-spacing:0.3px;">STAFF
+                            ID</label>
+                          <input class="uk-input w-100" type="text" placeholder="Staff Id" required
+                                 autocomplete="new-name" name="staffID">
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="uk-modal-footer uk-text-right">
+        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+        <button class="uk-button uk-button-primary" type="submit">Reset</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+<script src="/scripts/uikit.min.js"></script>
+<script src="/scripts/uikit-icons.min.js"></script>
+<%= partial("./partials/system.html") %>
+</body>
+</html>
