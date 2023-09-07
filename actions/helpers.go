@@ -1222,7 +1222,7 @@ func Export301ToExcel(data []NPRA0301) (*bytes.Buffer, error) {
 	excel.SetCellValue("sheet1", "O1", "Collective Investment Scheme [ghs]")
 	excel.SetCellValue("sheet1", "P1", "Alternative Investment Scheme [ghs]")
 	excel.SetCellValue("sheet1", "Q1", "Bank Balances [ghs]")
-	excel.SetRowHeight("sheet1", 2, 25)
+	excel.SetRowHeight("sheet1", 1, 25)
 
 	headingColor, _ := excel.NewStyle(`{"fill":{"type":"pattern","color":["#95b3d7"],"pattern":1}}`)
 	fmt.Println("########## Level 3 #############", headingColor)
@@ -1320,7 +1320,7 @@ func Export302ToExcel(data []NPRA0302) (*bytes.Buffer, error) {
 	excel.SetCellValue("sheet1", "AQ1", "Market Value[ghs]")
 	excel.SetCellValue("sheet1", "AR1", "Remaining Days to Maturity")
 	excel.SetCellValue("sheet1", "AS1", "Holding Period Return Per an Investment Weighted percent")
-	excel.SetRowHeight("sheet1", 2, 25)
+	excel.SetRowHeight("sheet1", 1, 25)
 
 	headingColor, _ := excel.NewStyle(`{"fill":{"type":"pattern","color":["#95b3d7"],"pattern":1}}`)
 	fmt.Println("########## Level 3 #############", headingColor)
@@ -1369,6 +1369,7 @@ func Export302ToExcel(data []NPRA0302) (*bytes.Buffer, error) {
 	excel.SetCellStyle("sheet1", "AN1", "AN1", headingColor)
 	excel.SetCellStyle("sheet1", "AO1", "AO1", headingColor)
 	excel.SetCellStyle("sheet1", "AP1", "AP1", headingColor)
+	excel.SetCellStyle("sheet1", "AQ1", "AQ1", headingColor)
 	excel.SetCellStyle("sheet1", "AR1", "AR1", headingColor)
 	excel.SetCellStyle("sheet1", "AS1", "AS1", headingColor)
 
@@ -1383,7 +1384,7 @@ func Export302ToExcel(data []NPRA0302) (*bytes.Buffer, error) {
 		excel.SetCellValue("sheet1", fmt.Sprintf("H%d", index+2), datum.IssuerName)
 		excel.SetCellValue("sheet1", fmt.Sprintf("I%d", index+2), datum.AssetTenure)
 		excel.SetCellValue("sheet1", "J%d", "")
-		excel.SetCellValue("sheet1", fmt.Sprintf("K%d", index+2), datum.ReportingDate)
+		excel.SetCellValue("sheet1", fmt.Sprintf("K%d", index+2), datum.ReportingDate.Format("2006-01-02"))
 		excel.SetCellValue("sheet1", "L%d", "")
 		excel.SetCellValue("sheet1", "M%d", "")
 		excel.SetCellValue("sheet1", "N%d", "")
@@ -1391,7 +1392,7 @@ func Export302ToExcel(data []NPRA0302) (*bytes.Buffer, error) {
 		excel.SetCellValue("sheet1", "P%d", "")
 		excel.SetCellValue("sheet1", "Q%d", "")
 		excel.SetCellValue("sheet1", "R%d", "")
-		excel.SetCellValue("sheet1", fmt.Sprintf("S%d", index+2), datum.MaturityDate)
+		excel.SetCellValue("sheet1", fmt.Sprintf("S%d", index+2), datum.MaturityDate.Format("2006-01-02"))
 		excel.SetCellValue("sheet1", "T%d", "")
 		excel.SetCellValue("sheet1", "U%d", "")
 		excel.SetCellValue("sheet1", "V%d", "")
@@ -1402,7 +1403,7 @@ func Export302ToExcel(data []NPRA0302) (*bytes.Buffer, error) {
 		excel.SetCellValue("sheet1", "AA%d", "")
 		excel.SetCellValue("sheet1", "AB%d", "")
 		excel.SetCellValue("sheet1", "AC%d", "")
-		excel.SetCellValue("sheet1", fmt.Sprintf("AD%d", index+2), datum.IssueDate)
+		excel.SetCellValue("sheet1", fmt.Sprintf("AD%d", index+2), datum.IssueDate.Format("2006-01-02"))
 		excel.SetCellValue("sheet1", "AE%d", "")
 		excel.SetCellValue("sheet1", "AF%d", "")
 		excel.SetCellValue("sheet1", "AG%d", "")
@@ -1418,6 +1419,64 @@ func Export302ToExcel(data []NPRA0302) (*bytes.Buffer, error) {
 		excel.SetCellValue("sheet1", fmt.Sprintf("AQ%d", index+2), FormatWithComma(datum.MarketValue, 2))
 		excel.SetCellValue("sheet1", "AR%d", "")
 		excel.SetCellValue("sheet1", "AS%d", "")
+	}
+	excel.SetActiveSheet(index)
+	return excel.WriteToBuffer()
+}
+
+// Export303ToExcel EXPORT NPRA 0303 REPORT
+func Export303ToExcel(data []NPRA0303) (*bytes.Buffer, error) {
+	excel := excelize.NewFile()
+	index := excel.NewSheet("sheet1")
+
+	excel.SetCellValue("sheet1", "A1", "Report Code")
+	excel.SetCellValue("sheet1", "B1", "Entity ID")
+	excel.SetCellValue("sheet1", "C1", "Report Code")
+	excel.SetCellValue("sheet1", "D1", "Reference Period Year")
+	excel.SetCellValue("sheet1", "E1", "Reference Period")
+	excel.SetCellValue("sheet1", "F1", "Unit Price")
+	excel.SetCellValue("sheet1", "G1", " Date of Valuation")
+	excel.SetCellValue("sheet1", "H1", "Daily NAV")
+	excel.SetCellValue("sheet1", "I1", "Unit Number")
+	excel.SetCellValue("sheet1", "J1", "NPRA Fees")
+	excel.SetCellValue("sheet1", "K1", "Trustee Fees")
+	excel.SetCellValue("sheet1", "L1", "Fund Managers Fees")
+	excel.SetCellValue("sheet1", "M1", "Fund Custodian Fees")
+	excel.SetRowHeight("sheet1", 1, 25)
+
+	headingColor, _ := excel.NewStyle(`{"fill":{"type":"pattern","color":["#95b3d7"],"pattern":1}}`)
+	fmt.Println("########## Level 3 #############", headingColor)
+	// if err != nil {
+	// 	return err
+	// }
+	excel.SetCellStyle("sheet1", "A1", "A1", headingColor)
+	excel.SetCellStyle("sheet1", "B1", "B1", headingColor)
+	excel.SetCellStyle("sheet1", "C1", "C1", headingColor)
+	excel.SetCellStyle("sheet1", "D1", "D1", headingColor)
+	excel.SetCellStyle("sheet1", "E1", "E1", headingColor)
+	excel.SetCellStyle("sheet1", "F1", "F1", headingColor)
+	excel.SetCellStyle("sheet1", "G1", "G1", headingColor)
+	excel.SetCellStyle("sheet1", "H1", "H1", headingColor)
+	excel.SetCellStyle("sheet1", "I1", "I1", headingColor)
+	excel.SetCellStyle("sheet1", "J1", "J1", headingColor)
+	excel.SetCellStyle("sheet1", "K1", "K1", headingColor)
+	excel.SetCellStyle("sheet1", "L1", "L1", headingColor)
+	excel.SetCellStyle("sheet1", "M1", "M1", headingColor)
+
+	for index, datum := range data {
+		excel.SetCellValue("sheet1", fmt.Sprintf("A%d", index+2), datum.ReportCode)
+		excel.SetCellValue("sheet1", fmt.Sprintf("B%d", index+2), datum.EntityID)
+		excel.SetCellValue("sheet1", fmt.Sprintf("C%d", index+2), datum.EntityName)
+		excel.SetCellValue("sheet1", fmt.Sprintf("D%d", index+2), datum.ReferencePeriodYear)
+		excel.SetCellValue("sheet1", fmt.Sprintf("E%d", index+2), datum.ReferencePeriod)
+		excel.SetCellValue("sheet1", fmt.Sprintf("F%d", index+2), FormatWithComma(datum.UnitPrice, 2))
+		excel.SetCellValue("sheet1", fmt.Sprintf("G%d", index+2), datum.DateValuation.Format("2006-01-02"))
+		excel.SetCellValue("sheet1", fmt.Sprintf("H%d", index+2), datum.UnitNumber)
+		excel.SetCellValue("sheet1", fmt.Sprintf("I%d", index+2), FormatWithComma(datum.DailyNav, 2))
+		excel.SetCellValue("sheet1", fmt.Sprintf("J%d", index+2), FormatWithComma(datum.NPRAFees, 2))
+		excel.SetCellValue("sheet1", fmt.Sprintf("K%d", index+2), FormatWithComma(datum.TrusteeFees, 2))
+		excel.SetCellValue("sheet1", fmt.Sprintf("L%d", index+2), FormatWithComma(datum.FundManagerFees, 2))
+		excel.SetCellValue("sheet1", fmt.Sprintf("M%d", index+2), FormatWithComma(datum.FundCustodianFees, 2))
 	}
 	excel.SetActiveSheet(index)
 	return excel.WriteToBuffer()

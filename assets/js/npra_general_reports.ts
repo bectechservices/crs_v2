@@ -12,7 +12,6 @@ import {
 import {
     CURRENT_YEAR,
     currentQuarterNumber,
-    searchMonthNumber,
     formatMoney,
     getPreviousQuarterShortDate,
     getShortDate,

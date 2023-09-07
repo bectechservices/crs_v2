@@ -116,6 +116,7 @@ func InsertIntoNPRA0302Report(bpId, reportDate string) {
 			MarketValue:         report.Value,
 			MaturityDate:        maturityDate,
 			IssuerName:          GetIssuerName(report.SecurityName, report.SecurityType),
+			AssetClass:          GetAssetClass(strings.TrimSpace(report.SecurityType)),
 		}
 
 		DatabaseConnection.Create(&_npra302)

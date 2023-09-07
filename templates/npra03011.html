@@ -23,7 +23,7 @@
     }
 
     /*.auditExcelDataTable .securityColsData:hover {*/
-    /*  background-color: #eeeeee;*/
+    /*  background-color: #eeeeee;*/ 
     /*}*/
 
     .auditExcelDataTable input {
@@ -120,7 +120,7 @@
                         <option value="11">November</option>
                         <option value="12">December</option>
                       </select>
-                      <select id="year" name="year" class="uk-select" style="width:200px;" v-model="year">
+                      <select id="year" name="year" class="uk-select" style="width:200px;" v-model="year" >
                         <%= partial("./partials/years.html") %>
                       </select>
                       <button type="submit" class="uk-button uk-button-primary uk-padding-remove"
@@ -141,9 +141,12 @@
                               <%= if(len(npra301s)>0) {%> 
                                 <div class="flex-100 flex flex-justifyContent--x1" style="height: 45px;margin-bottom: 5px">
                                   <button class="uk-button uk-padding-remove flex flex-center--x flex-center--y"
-                                          style="font-size: 13px;background-color:#d2F4FB;color:#223CA9;text-transform:initial;width:120px;" @click="export301MonthlyReport">
+                                          style="font-size: 13px;background-color:#d2F4FB;color:#223CA9;text-transform:initial;width:120px;" >
+                                          <a class="btn btn-light btn-fw pressureButton" href="/npra-301-report-excel?month=<%= month%>&year=<%= year%>">
+                                            <i class="mdi mdi-file-excel"></i>
+                                            <span class="font-weight-medium text-color--dark"> Export Excel </span> </a>
                                     <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
-                                    <span style="padding-left: 5px;">Export Excel</span>
+                                    <span style="padding-left: 5px;"></span>
                                   </button>
                                 </div>
                                 <% } %>
@@ -232,6 +235,8 @@
     function goBack() {
         window.history.back();
     }
+
+
 </script>
 
 </body>

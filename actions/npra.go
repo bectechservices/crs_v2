@@ -149,6 +149,10 @@ func HandleDeleteNPRAUploadedPV(c buffalo.Context) error {
 		return c.Render(200, r.JSON(map[string]interface{}{"error": true, "message": err.Error()}))
 	}
 	DeleteNPRAPV(request)
+	//delete NPRA0301 report
+	DatabaseConnection.Exec("DELETE FROM CRS_0301_NPRA_REPORT WHERE BP_ID=? AND reporting_date=?", request.BPID, request.Date)
+	//delete NPRA0302 report
+	DatabaseConnection.Exec("DELETE FROM CRS_0302_NPRA_REPORT WHERE BP_ID=? AND reporting_date=?", request.BPID, request.Date)
 	return c.Render(200, r.JSON(map[string]interface{}{"error": false, "message": "PV deleted"}))
 }
 
@@ -501,11 +505,13 @@ func LoadNPRA03021ReportPage(c buffalo.Context) error {
 	bpOrSca := c.Param("bpOrSca")
 	month := c.Param("month")
 	year := c.Param("year")
+	fmt.Println("###### BP, month, year ###############", bpOrSca, month, year)
 	var sdate time.Time
 	var npra0302s []NPRA0302
 	parsedDate, _ := time.Parse("2006-01", year+"-"+month)
 	sdate = now.New(parsedDate).EndOfMonth()
 	date := sdate.Format("2006-01-02")
+	fmt.Println("###### Date ###############", date)
 	npra0302s = LoadNPRA03021Reports(bpOrSca, date)
 	c.Set("npra302s", npra0302s)
 	c.Set("bpOrSca", bpOrSca)
@@ -611,7 +617,7 @@ func NPRA0301DataExists(bpId, reportDate string) bool {
 	DatabaseConnection.Raw("select * from CRS_0301_NPRA_REPORT where bp_id = ? and reporting_date = ?",
 		bpId, reportDate).Scan(&npra301Data)
 
-	return len(npra301Data) > 1
+	return len(npra301Data) >= 1
 }
 
 // LoadUploadedPVForEyeBalling loads the pv data for eyeballing
@@ -637,26 +643,20 @@ func Load301ForEyeBalling(c buffalo.Context) error {
 // Export301ReportToExcel exports the NPRA 0301 data to excel
 func Export301ReportToExcel(c buffalo.Context) error {
 	request := &MonthAndYear{}
-
 	month := c.Param("month")
 	year := c.Param("year")
-	c.Set("month", month)
-	c.Set("year", year)
 	var sdate time.Time
-
-	parsedDate, _ := time.Parse("2006-01", request.Year+"-"+request.Month)
+	parsedDate, _ := time.Parse("2006-01", year+"-"+month)
 	sdate = now.New(parsedDate).EndOfMonth()
-
 	if err := c.Bind(request); err != nil {
 		return err
 	}
-	c.Response().Header().Set("Content-Disposition", "attachment; filename=local-variance.xlsx")
+	c.Response().Header().Set("Content-Disposition", "attachment; filename=npra-301-report.xlsx")
 	c.Response().Header().Set("Content-Transfer-Encoding", "binary")
 	return c.Render(200, r.Func("application/octet-stream", func(w io.Writer, d render.Data) error {
 
 		date := sdate.Format("2006-01-02")
 		data := Load301data(date)
-
 		bytes, err := Export301ToExcel(data)
 		if err != nil {
 			return err
@@ -672,29 +672,37 @@ func Export302ReportToExcel(c buffalo.Context) error {
 	month := c.Param("month")
 	bpOrSca := c.Param("bpOrSca")
 	year := c.Param("year")
-	c.Set("month", month)
-	c.Set("bpOrSca", bpOrSca)
-	c.Set("year", year)
 	var sdate time.Time
-	fmt.Println("############## Level 1 date @@@@@@@@@@@@@@@@@@@@@", month)
-	fmt.Println("############## Level 2 DATE @@@@@@@@@@@@@@@@@@@@@", year)
 	//---------------------------
-	parsedDate, _ := time.Parse("2006-01", request.Year+"-"+request.Month)
+	parsedDate, _ := time.Parse("2006-01", year+"-"+month)
 	sdate = now.New(parsedDate).EndOfMonth()
-	fmt.Println("############## Level 3 date @@@@@@@@@@@@@@@@@@@@@", parsedDate)
-	fmt.Println("############## Level 4 DATE @@@@@@@@@@@@@@@@@@@@@", sdate)
 	if err := c.Bind(request); err != nil {
 		return err
 	}
-	c.Response().Header().Set("Content-Disposition", "attachment; filename=local-variance.xlsx")
+	c.Response().Header().Set("Content-Disposition", "attachment; filename=npra-302-report.xlsx")
 	c.Response().Header().Set("Content-Transfer-Encoding", "binary")
 	return c.Render(200, r.Func("application/octet-stream", func(w io.Writer, d render.Data) error {
 
 		date := sdate.Format("2006-01-02")
-		fmt.Println("@@@@@@@@@@@@@@LOOKING for DATE @@@@@@@@@@@@@@@@@@@@@", date)
 		data := Load302data(date, bpOrSca)
-		fmt.Println("@@@@@@@@@@@@@@LOOKING for DATA for Date @@@@@@@@@@@@@@@@@@@@@", data)
 		bytes, err := Export302ToExcel(data)
+		if err != nil {
+			return err
+		}
+		_, writeError := w.Write(bytes.Bytes())
+		return writeError
+	}))
+}
+
+// Export301ReportToExcel exports the NPRA 0301 data to excel
+func Export303ReportToExcel(c buffalo.Context) error {
+	search := c.Param("search")
+	c.Response().Header().Set("Content-Disposition", "attachment; filename=npra-303-report.xlsx")
+	c.Response().Header().Set("Content-Transfer-Encoding", "binary")
+	return c.Render(200, r.Func("application/octet-stream", func(w io.Writer, d render.Data) error {
+
+		data := Load303data(search)
+		bytes, err := Export303ToExcel(data)
 		if err != nil {
 			return err
 		}

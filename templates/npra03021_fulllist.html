@@ -95,7 +95,7 @@
         <div class="crs-authPage--content w-100 uk-margin-small-top">
           <article class="crs-authPage--innerContent uk-margin">
             <article style="height:85vh;padding:2px;overflow: auto;scroll-behavior: auto;">
-              <article class="uk-container" style="max-width:2260px;">
+              <article class="uk-container" style="max-width:4260px;">
                 <div class="flex uk-margin-small-bottom jSticky" style="top:-3px;height:40px;">
                   <button class="backBtn uk-padding-remove flex flex-center--y" onclick="goBack()">
                     <span uk-icon="icon:  chevron-left; ratio: 1.3" style="color:#223CA9"></span>
@@ -149,7 +149,7 @@
                   <div class="flex-100 flex flex-justifyContent--x1" style="height: 45px;margin-bottom: 5px">
                     <button class="uk-button uk-padding-remove flex flex-center--x flex-center--y"
                             style="font-size: 13px;background-color:#d2F4FB;color:#223CA9;text-transform:initial;width:120px;" >
-                            <a class="btn btn-light btn-fw pressureButton" href="/npra-302-report-excel?bpOrSca=<%= bpOrSca %>&month=<%= month%>&year=<%= year%>">
+                            <a class="btn btn-light btn-fw pressureButton" href="/npra-302-report-excel?bpOrSca=<%= bpOrSca%>&month=<%= month%>&year=<%= year%>">
                               <i class="mdi mdi-file-excel"></i>
                               <span class="font-weight-medium text-color--dark"> Export Excel </span> </a>
                       <span uk-icon="icon: push; ratio: 0.9" style="color:#223CA9"></span>
@@ -183,12 +183,40 @@
                                   <th>Instrument</th>
                                   <th>Issuer Name</th>
                                   <th>Asset Tenure</th>
+                                  <th>Date of Investment</th>
                                   <th>Reporting Date</th>
+                                  <th>Amount Invested[ghs]</th>
+                                  <th>Accrued Interest/Coupon for the Month</th>
+                                  <th>Coupon Paid</th>
+                                  <th>Accrued Interest Since Purchase/Coupon since payment Date</th>
+                                  <th>Outstanding Interest to Maturity</th>
+                                  <th>Amount Impaired[ghs]</th>
+                                  <th>Asset Allocation Actual Percent</th>
                                   <th>Maturity Date</th>
+                                  <th>Type of Investment Charge</th>
+                                  <th>Investment Charge Rate Percent</th>
+                                  <th>Investment Charge Amount[ghs]</th>
                                   <th>Face Value[ghs]</th>
+                                  <th>Interest Rate Percent</th>
+                                  <th>Discount Rate Percent</th>
+                                  <th>Disposal Proceeds[ghs]</th>
+                                  <th>Disposal Instructions</th>
+                                  <th>Yield on Disposal[GHS]</th>
+                                  <th>Issue Date</th>
+                                  <th>Price Per Unit/Share at Value Price</th>
+                                  <th>Capital Gains</th>
+                                  <th>Dividend Received</th>
+                                  <th>Number of Units/Shares</th>
+                                  <th>Holding Period Return per an investment(Percent)</th>
+                                  <th>Day Run</th>
+                                  <th>Currency Conversion Rate</th>
                                   <th>Currency</th>
+                                  <th>Amount Investment Foreign Currency(Eurobond/External Investment)</th>
                                   <th>Asset Class</th>
+                                  <th>Price Per unit/Share at Last value Date</th>
                                   <th>Market Value[ghs]</th>
+                                  <th>Remaining Days to Maturity</th>
+                                  <th>Holding Period Return Per an Investment Weighted percent</th>
                                 </tr>
                                 <tbody>
                                 <%= for(npraclient) in npra302s { %>
@@ -202,12 +230,40 @@
                                 <td><%= npraclient.Instrument %></td>
                                 <td><%= npraclient.IssuerName %></td>
                                 <td><%= npraclient.AssetTenure %></td>
+                                <td></td>
                                 <td><%= npraclient.ReportingDate.Format("2 January 2006") %></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td><%= npraclient.MaturityDate.Format("2 January 2006") %></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td><%= format_with_comma(npraclient.FaceValue,2) %></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td><%= npraclient.Currency %></td>
+                                <td></td>
                                 <td><%= npraclient.AssetClass %></td>
+                                <td></td>
                                 <td><%= format_with_comma(npraclient.MarketValue,2) %></td>
+                                <td></td>
+                                <td></td>
                                 </tr>
                                 <% } %>
                                 </tbody>
@@ -254,7 +310,34 @@
    
 </script>
 
+<script>
+  new Vue({
+    el: '#app',
+    data: () => ({
+      formData: {
+        bpOrSca: '',
+        month: '',
+        year: ''
+      }
+    }),
+    methods: {
+      initFormDataState(){
+        const formData = JSON.parse(sessionStorage.getItem('formData') || '');
+        if(formData){
+          this.formData = formData;
+        }
+      },
+      saveFormDataState(){
+        const formData = JSON.stringify(this.formData);
+        sessionStorage.setItem('formData', formData);
+      }
+    },
 
+    created(){
+      this.initFormDataState();
+    }
+  });
+</script>
 
 </body>
 

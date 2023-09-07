@@ -378,9 +378,11 @@ func App() *buffalo.App {
 		app.POST("/details-0301-for-eyeballing", Load301ForEyeBalling)
 
 		//----------------------------------------
-		app.POST("/npra-301-report-excel", Export301ReportToExcel)
+		app.GET("/npra-301-report-excel", Export301ReportToExcel)
 
-		app.POST("/npra-302-report-excel", Export302ReportToExcel)
+		app.GET("/npra-302-report-excel", Export302ReportToExcel)
+
+		app.GET("/npra-303-report-excel", Export303ReportToExcel)
 		//---------------------------------------
 		app.GET("/assetclass", HandleLoadAssetClass)
 

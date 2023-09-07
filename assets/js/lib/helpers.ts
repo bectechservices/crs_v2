@@ -152,7 +152,7 @@ export function currentQuarterNumber(): string {
         return "3"
     }
 }
-export function currentMonthNumber(month: string): string {
+export function currentMonth(month: any): string {
     
     //const date = new Date()
     //const month = date.getMonth() + 1;

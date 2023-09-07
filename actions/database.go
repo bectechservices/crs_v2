@@ -910,7 +910,9 @@ func LoadAssetClassReports() []AssetClass {
 
 func LoadNPRA03021Reports(bpOrSca, date string) []NPRA0302 {
 	data := make([]NPRA0302, 0)
-	DatabaseConnection.Where("bp_id = ? or client_code=? and reporting_date=?", bpOrSca, bpOrSca, date).Order("created_at asc").Find(&data)
+	fmt.Println("####### BP_ID ###########", bpOrSca)
+	fmt.Println("####### Reporting Date ###########", date)
+	DatabaseConnection.Raw("SELECT report_code, entity_id, entity_name, reference_period_year, reference_period, investment_id, instrument, issuer_name, asset_tenure, reporting_date, maturity_date, face_value, issue_date, currency, asset_class, market_value FROM CRS_0302_NPRA_REPORT WHERE (bp_id = ? OR client_code = ?) and reporting_date = ? ORDER BY created_at ASC", bpOrSca, bpOrSca, date).Find(&data)
 	return data
 }
 func LoadNPRA03011Reports(date string) []NPRA0301 {
@@ -2756,7 +2758,7 @@ func Load302data(date, bpOrSca string) []NPRA0302 {
 	fmt.Println("$$$$$$$$$$Load Data $$$$$$$$$$$$$$$$$$$$$", date)
 	fmt.Println("$$$$$$$$$$Load Data $$$$$$$$$$$$$$$$$$$$$", bpOrSca)
 	npra302 := make([]NPRA0302, 0)
-	DatabaseConnection.Raw(" SELECT report_code, entity_id, entity_name, reference_period_year, reference_period, investment_id, instrument, issuer_name, asset_tenure, reporting_date, maturity_date, face_value, issue_date, currency, asset_class, market_value FROM CRS_0302_NPRA_REPORT WHERE reporting_date = ? and bp_id = ? ORDER BY created_at ASC", date, bpOrSca).Scan(&npra302)
+	DatabaseConnection.Raw(" SELECT report_code, entity_id, entity_name, reference_period_year, reference_period, investment_id, instrument, issuer_name, asset_tenure, reporting_date, maturity_date, face_value, issue_date, currency, asset_class, market_value FROM CRS_0302_NPRA_REPORT WHERE (reporting_date = ? and bp_id = ?) ORDER BY created_at ASC", date, bpOrSca).Scan(&npra302)
 	data := make([]NPRA0302, len(npra302))
 	for index, datum := range npra302 {
 
@@ -2777,6 +2779,33 @@ func Load302data(date, bpOrSca string) []NPRA0302 {
 			Currency:            datum.Currency,
 			AssetClass:          datum.AssetClass,
 			MarketValue:         datum.MarketValue,
+		}
+	}
+	return data
+}
+
+// Load301data loads the sec local variance data
+func Load303data(search string) []NPRA0303 {
+	query := "%" + search + "%"
+	npra303 := make([]NPRA0303, 0)
+	DatabaseConnection.Raw(" SELECT report_code ,entity_id,entity_name,reference_period_year,reference_period,unit_price,date_valuation,unit_number,daily_nav, npra_fees,trustee_fees,fund_manager_fees,fund_custodian_fees FROM CRS_0303_NPRA_REPORT where entity_name like ? ", query).Scan(&npra303)
+	data := make([]NPRA0303, len(npra303))
+	for index, datum := range npra303 {
+
+		data[index] = NPRA0303{
+			ReportCode:          datum.ReportCode,
+			EntityID:            datum.EntityID,
+			EntityName:          datum.EntityName,
+			ReferencePeriodYear: datum.ReferencePeriodYear,
+			ReferencePeriod:     datum.ReferencePeriod,
+			UnitPrice:           datum.UnitPrice,
+			DateValuation:       datum.DateValuation,
+			UnitNumber:          datum.UnitNumber,
+			DailyNav:            datum.DailyNav,
+			NPRAFees:            datum.NPRAFees,
+			TrusteeFees:         datum.TrusteeFees,
+			FundManagerFees:     datum.FundManagerFees,
+			FundCustodianFees:   datum.FundCustodianFees,
 		}
 	}
 	return data

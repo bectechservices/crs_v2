@@ -6,6 +6,7 @@ import {
 
 } from "./lib/types";
 import {
+    currentMonth,
     CURRENT_YEAR
 } from "./lib/helpers";
 //@ts-ignore
@@ -21,18 +22,23 @@ interface Data {
 }
 
 interface Methods {
+    export301MonthlyReport: () => Promise<void>;
+    export302MonthlyReport: () => Promise<void>;   
 }
 
 export default new Vue<Data, Methods>({
     el: ".npra030Reports",
 
     data: {
-        month: '06',
-        year: CURRENT_YEAR,
-        bpOrSca: '',
+        
+        month: '',
+        year: '',
+        bpOrSca: ''
+        
     },
     methods: {
 
+   
         export301MonthlyReport: async function () {
             // this.month = makeShortDate(this.month, this.year);
              const month = this.month
@@ -52,7 +58,6 @@ export default new Vue<Data, Methods>({
              download(response.data, `NPRA301-${month}-${year} REPORT.xlsx`);
          },
          export302MonthlyReport: async function () {
-            //this.date = makeMonthFormalDate(this.month, this.year);
              const month = this.month
             const bpOrSca = this.bpOrSca
              const year = this.year;
